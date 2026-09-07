@@ -1,3 +1,4 @@
+import PageIntro from '../components/PageIntro';
 import Link from 'next/link';
 import { ESTRADAS } from '../lib/estradas';
 import { ufName } from '../lib/ufs';
@@ -42,28 +43,21 @@ export default function EstradasIndex() {
         </div>
       </nav>
 
-      <section className="ph-intro">
-        <div className="wrap">
-          <div className="head">
-            <div>
-              <span className="ig-eyebrow" style={{ color: 'var(--ink-soft)' }}>No mapa</span>
-              <h1>Estradas para<br />rodar no Brasil</h1>
-            </div>
-          </div>
-          <p className="lede">As serras e estradas que todo motociclista quer rodar pelo menos uma vez. Onde fica cada uma, a melhor época, o tipo de piso e o que esperar — selecionadas pela comunidade Pistaviva.</p>
-        </div>
-      </section>
+      <PageIntro eyebrow="O caminho também é destino" title="Cada curva, uma nova história." image="/materias/bmw-motorrad-fest-2026/comboio-serra.jpg" imageAlt="Motociclistas viajando por Campos do Jordão" action={{ href: "/rotas", label: "Traçar minha rota" }}>
+        Explore serras e estradas do Brasil. Confira o piso, a melhor época e o que esperar antes de colocar a moto na estrada.
+      </PageIntro>
 
       <div className="wrap">
-        <div className="ph-grid">
+        <div className="ph-grid pv-collection-grid">
           {ESTRADAS.map((e) => (
             <Link className="ph-card" key={e.slug} href={`/estradas/${e.slug}`}>
               <div className="body" style={{ padding: '16px 18px' }}>
                 <span className="eyebrow" style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--clay)', textTransform: 'uppercase', letterSpacing: '.06em' }}>
                   {e.uf.map((u) => ufName(u)).join(' · ')}
                 </span>
-                <h3 style={{ margin: '4px 0 6px' }}>{e.nome}</h3>
+                <h2 style={{ margin: '4px 0 6px' }}>{e.nome}</h2>
                 <p className="desc">{e.resumo}</p>
+                <span className="pv-card-action">Conhecer a estrada <span aria-hidden="true">↗</span></span>
                 <div className="foot"><span className="loc">{e.regiao}</span></div>
               </div>
             </Link>

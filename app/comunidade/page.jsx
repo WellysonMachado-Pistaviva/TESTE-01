@@ -1,3 +1,4 @@
+import PageIntro from '../components/PageIntro';
 import Link from 'next/link';
 import Cover from '../components/Cover';
 import SpaPage from '../components/SpaPage';
@@ -67,19 +68,12 @@ export default async function Comunidade() {
   } : null;
 
   return (
-    <div className="wrap section page-light community-page" style={{ paddingTop: 'clamp(40px,6vw,72px)' }}>
+    <div className="page-light community-page">
       {feedLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(feedLd) }} />}
-      <div className="section-head">
-        <div>
-          <p className="eyebrow eyebrow--moss">Gente de verdade</p>
-          <h1>Quem está na estrada</h1>
-          <p className="lede" style={{ maxWidth: 720, marginTop: 8 }}>
-            O ponto de encontro de quem roda o Brasil: relatos de estrada, paradas indicadas e rolês ao vivo.
-            Sem cadastro pra ler, sem algoritmo escondendo post — quem manda aqui é quem tá na estrada.
-          </p>
-        </div>
-        <Link className="link" href="/blog">Ver matérias →</Link>
-      </div>
+      <PageIntro eyebrow="Gente de verdade" title="O melhor da estrada é quem vai junto." image="/motosul/g-turma.jpg" imageAlt="Turma reunida no Motosul Festival" action={{ href: "#feed", label: "Contar minha história" }}>
+        Relatos de viagem, paradas indicadas e encontros. Compartilhe o que viveu e encontre seu próximo motivo para sair.
+      </PageIntro>
+      <div className="wrap pv-community-content">
 
       {/* O que dá pra fazer aqui — ações diretas, mobile-first */}
       <div className="acoes-row" style={{ display: 'flex', flexWrap: 'wrap', gap: 10, margin: '4px 0 2.2rem' }}>
@@ -129,6 +123,7 @@ export default async function Comunidade() {
       </div>
 
       <SeoContent secoes={SECOES} faqs={FAQS} />
+      </div>
     </div>
   );
 }

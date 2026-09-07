@@ -1,3 +1,4 @@
+import PageIntro from '../components/PageIntro';
 import FipeSearch from './FipeSearch';
 
 export const metadata = {
@@ -17,20 +18,14 @@ export default function FipePage() {
   return (
     <div className="ignis fipe-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <section className="pg-head">
-        <div className="wrap">
-          <h1>Tabela FIPE<br />da sua moto</h1>
-          <span className="eyebrow" style={{ marginTop: 16 }}>Marca, modelo e ano · valor atualizado · grátis</span>
-        </div>
-      </section>
-      <main className="pg-main">
+      <PageIntro eyebrow="Antes de negociar" title="Conheça o valor da sua moto." compact>
+        Selecione marca, modelo e ano para consultar a referência FIPE. Grátis e sem cadastro.
+      </PageIntro>
+      <section className="pg-main">
         <div className="wrap" style={{ maxWidth: 760, marginInline: 'auto' }}>
-          <p style={{ fontFamily: 'var(--font)', color: 'var(--paper-dim)', maxWidth: '60ch', marginBottom: '1.8rem' }}>
-            Escolha marca, modelo e ano e veja o valor atualizado da Tabela FIPE. Rápido, grátis e sem cadastro.
-          </p>
           <FipeSearch />
         </div>
-      </main>
+      </section>
     </div>
   );
 }

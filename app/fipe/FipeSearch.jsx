@@ -46,22 +46,25 @@ export default function FipeSearch() {
   const sel = { width: '100%', padding: '12px 14px', marginBottom: 12, background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontFamily: 'inherit', fontSize: 15 };
 
   return (
-    <div style={{ maxWidth: 560 }}>
-      <select style={sel} value={marca} onChange={e => selMarca(e.target.value)}>
+    <div className="pv-form-card" style={{ maxWidth: 560 }}>
+      <label className="pv-field-label" htmlFor="fipe-marca">Marca</label>
+      <select id="fipe-marca" style={sel} value={marca} onChange={e => selMarca(e.target.value)}>
         <option value="">1. Escolha a marca</option>
         {marcas.map(m => <option key={m.codigo} value={m.codigo}>{m.nome}</option>)}
       </select>
-      <select style={sel} value={modelo} onChange={e => selModelo(e.target.value)} disabled={!marca || !modelos.length}>
+      <label className="pv-field-label" htmlFor="fipe-modelo">Modelo</label>
+      <select id="fipe-modelo" style={sel} value={modelo} onChange={e => selModelo(e.target.value)} disabled={!marca || !modelos.length}>
         <option value="">2. Escolha o modelo</option>
         {modelos.map(m => <option key={m.codigo} value={m.codigo}>{m.nome}</option>)}
       </select>
-      <select style={sel} value={ano} onChange={e => selAno(e.target.value)} disabled={!modelo || !anos.length}>
+      <label className="pv-field-label" htmlFor="fipe-ano">Ano</label>
+      <select id="fipe-ano" style={sel} value={ano} onChange={e => selAno(e.target.value)} disabled={!modelo || !anos.length}>
         <option value="">3. Escolha o ano</option>
         {anos.map(a => <option key={a.codigo} value={a.codigo}>{a.nome}</option>)}
       </select>
 
-      {loading && <div className="spinner-wrap"><span className="loading-spinner" /></div>}
-      {err && <p style={{ color: 'var(--danger)' }}>{err}</p>}
+      {loading && <div className="pv-loading" role="status"><span className="loading-spinner" aria-hidden="true" /> Consultando FIPE…</div>}
+      {err && <p role="alert" style={{ color: 'var(--danger)' }}>{err}</p>}
 
       {res && (
         <div style={{ marginTop: 18, background: 'linear-gradient(160deg,var(--ink-3),var(--ink-2))', border: '1px solid var(--clay)', borderRadius: 14, padding: '24px', textAlign: 'center' }}>

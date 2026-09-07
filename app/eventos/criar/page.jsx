@@ -1,3 +1,4 @@
+import PageIntro from '../../components/PageIntro';
 import EventBuilder from './EventBuilder';
 
 export const metadata = {
@@ -8,5 +9,10 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <EventBuilder />;
+  return <>
+    <PageIntro eyebrow="Reúna sua turma" title="Seu encontro começa aqui." compact>
+      Conte onde, quando e o que vai acontecer. Prepare a página do seu evento e convide a comunidade.
+    </PageIntro>
+    <EventBuilder />
+  </>;
 }

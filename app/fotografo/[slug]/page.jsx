@@ -63,7 +63,7 @@ export default async function FotografoPage({ params }) {
         </div>
       </nav>
 
-      <main className="ph-prof">
+      <section className="ph-prof">
         <div className="wrap">
           <span className="eyebrow">Fotógrafo{f.local ? ' · ' + f.local : ''}</span>
           <h1>{f.nome}</h1>
@@ -114,7 +114,7 @@ export default async function FotografoPage({ params }) {
             </aside>
           </div>
         </div>
-      </main>
+      </section>
     </div>
   );
 }

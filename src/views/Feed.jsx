@@ -148,7 +148,7 @@ const Feed = ({ deviceId = 'anon', identity, promptIdentity }) => {
   return (
     <div className="feed-page">
       <div className="page-header">
-        <h1 className="page-title">COMUNIDADE</h1>
+        <h2 className="page-title">Relatos da comunidade</h2>
         <p className="page-subtitle">Aventuras compartilhadas pelos membros</p>
       </div>
 

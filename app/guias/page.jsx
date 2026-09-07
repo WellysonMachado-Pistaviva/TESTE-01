@@ -1,3 +1,4 @@
+import PageIntro from '../components/PageIntro';
 import Link from 'next/link';
 import { GUIAS } from '../lib/guias';
 
@@ -41,26 +42,19 @@ export default function GuiasIndex() {
         </div>
       </nav>
 
-      <section className="ph-intro">
-        <div className="wrap">
-          <div className="head">
-            <div>
-              <span className="ig-eyebrow" style={{ color: 'var(--ink-soft)' }}>Antes da partida</span>
-              <h1>Caderno de<br />viagem</h1>
-            </div>
-          </div>
-          <p className="lede">Tudo que você precisa saber antes de cair na estrada: planejamento, equipamento, segurança e os perrengues que dá pra evitar. Guias práticos da comunidade Pistaviva.</p>
-        </div>
-      </section>
+      <PageIntro eyebrow="Antes da partida" title="A aventura começa no preparo." image="/motosul/mantiqueira.jpg" imageAlt="Serras e paisagem da Mantiqueira" action={{ href: "/guias/primeira-viagem-de-moto", label: "Minha primeira viagem" }}>
+        Planejamento, equipamento e dicas práticas para viajar de moto. Do primeiro bate-volta à viagem que você sempre quis fazer.
+      </PageIntro>
 
       <div className="wrap">
-        <div className="ph-grid">
+        <div className="ph-grid pv-collection-grid">
           {GUIAS.map((g) => (
             <Link className="ph-card" key={g.slug} href={`/guias/${g.slug}`}>
               <div className="body" style={{ padding: '16px 18px' }}>
                 <span className="eyebrow" style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--clay)', textTransform: 'uppercase', letterSpacing: '.06em' }}>{g.categoria}</span>
-                <h3 style={{ margin: '4px 0 6px' }}>{g.h1}</h3>
+                <h2 style={{ margin: '4px 0 6px' }}>{g.h1}</h2>
                 <p className="desc">{g.resumo}</p>
+                <span className="pv-card-action">Abrir guia <span aria-hidden="true">↗</span></span>
               </div>
             </Link>
           ))}

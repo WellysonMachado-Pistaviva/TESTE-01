@@ -1,3 +1,4 @@
+import ProductShowcase from '../components/ProductShowcase';
 import SpaPage from '../components/SpaPage';
 import SpaIntro from '../components/SpaIntro';
 
@@ -12,9 +13,10 @@ export const metadata = {
 export default function Page() {
   return (
     <>
-      <SpaIntro eyebrow="Vista a comunidade" title="Loja Pistaviva">
+      <SpaIntro image="/products/community/casal-moto-real.jpg" imageAlt="Casal motociclista da comunidade Pistaviva" eyebrow="Vista a comunidade" title="Loja Pistaviva">
         Vestuário técnico e casual para quem vive sobre duas rodas. Produtos e itens da comunidade de mototurismo Pistaviva.
       </SpaIntro>
+      <ProductShowcase />
       <SpaPage name="loja" />
     </>
   );

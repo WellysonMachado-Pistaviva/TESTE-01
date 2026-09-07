@@ -68,7 +68,7 @@ export default async function DestinoPage({ params }) {
         </div>
       </nav>
 
-      <main className="ph-prof">
+      <section className="ph-prof">
         <div className="wrap">
           <span className="eyebrow">{d.bandeira} {d.regiao}</span>
           <h1>{d.nome}</h1>
@@ -149,7 +149,7 @@ export default async function DestinoPage({ params }) {
             </div>
           </div>
         </div>
-      </main>
+      </section>
     </div>
   );
 }

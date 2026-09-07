@@ -1,3 +1,4 @@
+import PageIntro from '../components/PageIntro';
 import Link from 'next/link';
 import DiretorioClient from './DiretorioClient';
 
@@ -72,19 +73,9 @@ export default function DiretorioPage() {
       </div>
 
       {/* HEADER */}
-      <section className="ph-intro" style={{ borderBottom: '1px solid var(--snow-line)', paddingBottom: '32px' }}>
-        <div className="wrap">
-          <div className="head">
-            <div>
-              <span className="ig-eyebrow" style={{ color: 'var(--ink-soft)' }}>Ecossistema de Duas Rodas</span>
-              <h1>Diretório Duas Rodas</h1>
-            </div>
-          </div>
-          <p className="lede">
-            Os principais portais de notícias de moto, blogs de mototurismo, diários de viagens e referências da cultura estradeira no Brasil organizados e curados em um só lugar.
-          </p>
-        </div>
-      </section>
+      <PageIntro eyebrow="Cultura sobre duas rodas" title="Mais vozes. A mesma paixão." action={{ href: "/blog", label: "Ler matérias" }}>
+        Portais, blogs e diários de viagem para descobrir novas perspectivas do motociclismo brasileiro.
+      </PageIntro>
 
       {/* FILTERABLE LIST COMPONENT */}
       <DiretorioClient />

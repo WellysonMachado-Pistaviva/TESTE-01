@@ -14,7 +14,7 @@ export default async function Page({ searchParams }) {
   return (
     <>
       <SpaIntro eyebrow="Antes de sair" title="Planeje sua próxima viagem">
-        Trace a rota com modo curvas, calcule distância, combustível e custo, salve seus roteiros e veja trechos lendários e expedições da comunidade. Tudo num lugar só, antes de cair na estrada.
+        Escolha o caminho, estime combustível e custos e salve seu roteiro. Sua próxima viagem começa aqui.
       </SpaIntro>
       <RotasHub initial={tab} />
     </>

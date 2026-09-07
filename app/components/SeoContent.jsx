@@ -9,12 +9,12 @@ export default function SeoContent({ secoes = [], faqs = [], children }) {
   } : null;
 
   return (
-    <section className="wrap" style={{ maxWidth: 760, marginInline: 'auto', padding: '8px 0 28px' }}>
+    <section className="wrap pv-help-content">
       {faqLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />}
 
       {secoes.map((s, i) => (
         <div key={i} style={{ marginBottom: 24 }}>
-          <h2 style={{ fontFamily: 'var(--display)', fontSize: 'clamp(18px,3vw,22px)', marginBottom: 10 }}>{s.h}</h2>
+          <h2 style={{ fontFamily: 'var(--display)', fontSize: 'clamp(26px,3vw,32px)', marginBottom: 10 }}>{s.h}</h2>
           {s.p?.map((par, j) => (
             <p key={j} style={{ lineHeight: 1.6, color: 'var(--paper-dim)', margin: '0 0 12px' }}>{par}</p>
           ))}
@@ -36,10 +36,10 @@ export default function SeoContent({ secoes = [], faqs = [], children }) {
           <h2 style={{ fontFamily: 'var(--display)', marginBottom: 12 }}>Perguntas frequentes</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {faqs.map((f, i) => (
-              <div key={i} style={{ border: '1px solid var(--border)', borderRadius: 12, padding: '14px 16px' }}>
-                <h3 style={{ fontFamily: 'var(--display)', fontSize: 16, marginBottom: 6 }}>{f.q}</h3>
-                <p style={{ color: 'var(--paper-dim)', fontSize: 14, lineHeight: 1.5, margin: 0 }}>{f.a}</p>
-              </div>
+              <details key={i} className="pv-faq">
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+              </details>
             ))}
           </div>
         </div>

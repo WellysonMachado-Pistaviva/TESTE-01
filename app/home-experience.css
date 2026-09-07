@@ -1,0 +1,105 @@
+/* Home: discovery, planning, then community. Scoped to the public home. */
+.home-story { --ride-muted: #bfc0c3; }
+.ride-hero { position: relative; isolation: isolate; background: #17191a; color: #fff; }
+.ride-hero-photo, .ride-hero-shade { position: absolute; inset: 0; z-index: -1; }
+.ride-hero-photo img { object-position: center 55% !important; }
+.ride-hero-shade { background: linear-gradient(90deg,rgba(10,12,13,.94),rgba(10,12,13,.72) 45%,rgba(10,12,13,.18)),linear-gradient(0deg,rgba(10,12,13,.8),transparent 45%); }
+.ride-hero-inner { padding-top: clamp(72px,9vw,132px); padding-bottom: 28px; }
+.ride-kicker { display: flex; align-items: center; gap: 10px; color: #ffd5be; font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+.ride-kicker > span { width: 22px; height: 2px; background: var(--pv-orange); }
+.ride-hero h1 { max-width: 1050px; margin: 24px 0; font-family: var(--display); font-size: clamp(52px,7.7vw,110px); line-height: .98; letter-spacing: -.025em; font-weight: 800; text-transform: uppercase; }
+.ride-hero h1 em { font-style: normal; color: #ff8a4b; }
+.ride-hero p { max-width: 49ch; font-size: clamp(16px,1.5vw,19px); line-height: 1.65; color: #e0e0e2; }
+.ride-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.ride-button { display: inline-flex; justify-content: center; align-items: center; gap: 18px; min-height: 52px; padding: 13px 22px; border: 1px solid var(--pv-orange); border-radius: 4px; background: var(--pv-orange); color: #131313; font-weight: 700; text-decoration: none; transition: background 180ms ease; }
+.ride-button:hover { background: #ff8038; color: #131313; }
+.ride-button--outline { color: #fff; background: rgba(12,12,13,.5); border-color: #a3a3a3; }
+.ride-button--outline:hover { background: #303033; color: #fff; }
+.ride-button svg { width: 20px; height: 20px; }
+.ride-hero-bottom { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-top: 88px; padding-top: 16px; border-top: 1px solid #ffffff35; font-size: 13px; color: #dbdbdd; }
+.ride-hero-bottom a { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; color: #fff; }
+.ride-journeys { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); padding-top: 0; padding-bottom: 0; gap: 0; }
+.ride-journey { display: flex; align-items: flex-start; gap: 16px; padding: 32px 24px; color: #18181b; background: #f4f3ef; border: 0; border-right: 1px solid #d8d6d0; border-radius: 0; transition: border-color 180ms ease, background 180ms ease; }
+.ride-journey:hover { background: #eae7df; }
+.ride-journey-icon { color: #b83d00; padding-top: 5px; }
+.ride-journey-copy { display: flex; flex-direction: column; gap: 5px; }
+.ride-journey-copy small { font-size: 10px; color: #62616a; letter-spacing: .1em; }
+.ride-journey-copy strong { font-size: 19px; line-height: 1.3; }
+.ride-journey-copy > span { font-size: 14px; line-height: 1.5; color: #62616a; }
+.ride-journey-arrow { margin-left: auto; flex-shrink: 0; width: 17px; color: #62616a; }
+.home-story .home-next { padding: 56px 0; }
+.home-story .home-next-head h2 { max-width: 19ch; font-size: clamp(38px,4.5vw,62px); line-height: 1.02; }
+.home-story .home-next-head p { color: var(--ride-muted); }
+.home-story .home-next-card { border-radius: 8px; }
+.home-story .home-next-content strong { line-height: 1.04; }
+.home-story .home-next-grid--no-destination { grid-template-columns: 1fr; }
+.home-next-grid--no-destination .home-next-stack { grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: auto; }
+.home-story .home-preflight { margin-top: 24px; border: 1px solid #38383c; border-radius: 6px; overflow: hidden; }
+.home-story .home-preflight a { min-height: 76px; }
+.home-story .home-preflight a small { color: var(--ride-muted); }
+.home-story .home-preflight a:hover { background: #26262a; }
+.home-story .ig-sechead .ig-title { line-height: 1.05; }
+@media (max-width: 1000px) {
+  .ride-journeys { gap: 0; }
+  .ride-journey { padding: 18px 14px; gap: 10px; }
+  .ride-journey-arrow { display: none; }
+}
+@media (max-width: 760px) {
+  .ride-hero-shade { background: linear-gradient(90deg,rgba(10,12,13,.9),rgba(10,12,13,.48)),linear-gradient(0deg,#0c0c0d,transparent); }
+  .ride-hero h1 { font-size: clamp(46px,10vw,72px); }
+  .ride-hero-inner { padding-top: 48px; }
+  .ride-hero-bottom { margin-top: 32px; }
+  .ride-hero-bottom > span { display: none; }
+  .ride-journeys { grid-template-columns: 1fr; padding-top: 0; padding-bottom: 0; }
+  .ride-journey { padding: 20px; gap: 16px; border-right: 0; border-bottom: 1px solid #d8d6d0; }
+  .ride-journey-copy small { display: none; }
+  .ride-journey-arrow { display: block; align-self: center; }
+  .home-story .home-next { padding: 36px 0; }
+  .home-next-grid--no-destination .home-next-stack { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+  .ride-hero-actions { flex-direction: column; }
+  .ride-button { width: 100%; }
+  .ride-journey-copy strong { font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-story *, .home-story *::before, .home-story *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+.home-story .pvb-pause { min-width: 64px; min-height: 44px; padding: 8px 12px; border: 1px solid #ffffff80; border-radius: 4px; background: #121214; color: #fff; cursor: pointer; font: inherit; font-size: 13px; }
+.home-story .pvb-dot { min-height: 44px; }
+
+/* Campaign scale from festival references; editorial clarity from motorcycle brands. */
+.ride-journeys.wrap { max-width: none; padding-left: max(var(--gut),calc((100% - 1136px)/2)); padding-right: max(var(--gut),calc((100% - 1136px)/2)); background: #f4f3ef; }
+.ride-journey:first-child { border-left: 1px solid #d8d6d0; }
+.ride-experiences { padding: clamp(48px,7vw,96px) 0; background: #f4f3ef; color: #19191b; }
+.ride-section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 36px; }
+.ride-section-head .ride-kicker { color: #974017; }
+.ride-section-head h2 { margin: 18px 0 0; font-family: var(--display); font-size: clamp(52px,6vw,84px); font-weight: 800; line-height: .98; letter-spacing: -.02em; text-transform: uppercase; }
+.ride-section-head p { max-width: 35ch; color: #5c5a59; font-size: 17px; line-height: 1.6; }
+.ride-experience-grid { display: grid; grid-template-columns: 1.45fr 1fr; gap: 20px; }
+.ride-experience { position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: space-between; min-height: 590px; padding: 32px; overflow: hidden; background: #202422; color: #fff; }
+.ride-experience > img { z-index: -2; transition: transform 300ms ease; }
+.ride-experience:hover > img { transform: scale(1.025); }
+.ride-experience-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.08) 28%,rgba(0,0,0,.82) 80%); }
+.ride-experience-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.ride-experience-top > svg { width: 42px; height: 42px; padding: 10px; border: 1px solid #ffffff80; border-radius: 50%; flex-shrink: 0; }
+.ride-experience-body { display: flex; align-items: flex-start; flex-direction: column; gap: 18px; margin-top: 80px; }
+.ride-place { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .07em; text-transform: uppercase; }
+.ride-experience-body strong { font-family: var(--display); font-size: clamp(52px,6vw,88px); font-weight: 800; line-height: .9; letter-spacing: -.02em; text-transform: uppercase; }
+.ride-experience-body strong em { font-style: normal; color: #ff995f; }
+.ride-experience--guide strong { font-size: clamp(44px,4.5vw,66px); }
+.ride-experience-body > span:not(.ride-place):not(.ride-experience-cta) { max-width: 30ch; font-size: 16px; line-height: 1.5; color: #e5e4e2; }
+.ride-experience-cta { display: inline-flex; align-items: center; gap: 20px; min-height: 44px; border-bottom: 1px solid #ffffff80; font-weight: 600; font-size: 14px; }
+.home-story .home-agenda { padding-top: 72px; padding-bottom: 72px; }
+.home-story .esplit { padding-top: 80px; padding-bottom: 80px; }
+.home-story .ig-band h2 { max-width: 19ch; line-height: 1.05; }
+@media (max-width: 760px) {
+  .ride-journey:first-child { border-left: 0; }
+  .ride-journeys.wrap { padding-left: 0; padding-right: 0; }
+  .ride-section-head { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .ride-section-head p { font-size: 16px; }
+  .ride-experience-grid { grid-template-columns: 1fr; gap: 16px; }
+  .ride-experience { min-height: 490px; padding: 24px; }
+  .ride-experience--guide { min-height: 400px; }
+  .home-story .home-agenda, .home-story .esplit { padding-top: 48px; padding-bottom: 48px; }
+}

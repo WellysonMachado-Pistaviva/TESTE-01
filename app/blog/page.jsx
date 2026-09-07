@@ -1,3 +1,4 @@
+import PageIntro from '../components/PageIntro';
 import Link from 'next/link';
 import Cover from '../components/Cover';
 import { getPublishedPosts } from '../lib/blog';
@@ -16,23 +17,15 @@ export default async function BlogList() {
 
   return (
     <div className="ignis ph-list">
-      <section className="ph-intro">
-        <div className="wrap">
-          <div className="head">
-            <div>
-              <span className="ig-eyebrow" style={{ color: 'var(--ink-soft)' }}>Caderno de bordo</span>
-              <h1>Matérias</h1>
-            </div>
-          </div>
-          <p className="lede">Reportagens, guias de rotas, eventos e cultura do mototurismo brasileiro — conteúdo de quem pega estrada.</p>
-        </div>
-      </section>
+      <PageIntro eyebrow="Caderno de bordo" title="Histórias que dão vontade de ir." image="/motosul/g-chegada.jpg" imageAlt="Motociclistas chegando ao Motosul Festival" action={{ href: "/comunidade", label: "Conhecer a comunidade" }}>
+        Reportagens, relatos e cultura do mototurismo. A estrada contada por quem vive cada quilômetro.
+      </PageIntro>
 
       <div className="wrap">
         {posts.length === 0 ? (
           <p style={{ color: 'var(--ink-soft)', padding: '10px 0 30px' }}>Ainda não há posts publicados. Volte em breve — conteúdo novo toda semana.</p>
         ) : (
-          <div className="ph-grid">
+          <div className="ph-grid pv-collection-grid">
             {posts.map(p => (
               <Link className="ph-card" key={p.id} href={`/blog/${p.slug}`}>
                 <div className="pic">

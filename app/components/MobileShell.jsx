@@ -87,7 +87,7 @@ export default function MobileShell() {
       {/* Bottom nav */}
       <nav className="igm-bottomnav" aria-label="Navegação">
         {PRIMARY.map(p => (
-          <Link key={p.href} href={p.href} className={`igm-navbtn${isActive(p.href) ? ' active' : ''}`} onClick={() => setOpen(false)}>
+          <Link key={p.href} href={p.href} aria-current={isActive(p.href) ? 'page' : undefined} className={`igm-navbtn${isActive(p.href) ? ' active' : ''}`} onClick={() => setOpen(false)}>
             <Svg>{p.icon}</Svg>{p.label}
           </Link>
         ))}

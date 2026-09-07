@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 
@@ -24,10 +25,21 @@ const MORE_LINKS = [
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const close = () => setOpen(false);
+  const moreRef = useRef(null);
+  const pathname = usePathname();
+  const active = (href) => pathname === href || pathname?.startsWith(`${href}/`);
+  const close = () => {
+    setOpen(false);
+    if (moreRef.current) moreRef.current.open = false;
+  };
 
   return (
-    <header className="site-head">
+    <header className="site-head" onKeyDown={(event) => {
+      if (event.key === 'Escape') {
+        if (moreRef.current?.open) moreRef.current.querySelector('summary')?.focus();
+        close();
+      }
+    }}>
       <div className="wrap bar">
         <Link className="brand" href="/" aria-label="Pistaviva — início" onClick={close}>
           <img className="brand-logo" src="/logo.svg" alt="Pistaviva" width="1222" height="88" />
@@ -35,13 +47,13 @@ export default function SiteHeader() {
 
         <nav className={`nav${open ? ' open' : ''}`} aria-label="Navegação principal">
           {PRIMARY_LINKS.map(l => (
-            <Link key={l.href} href={l.href} onClick={close}>{l.label}</Link>
+            <Link key={l.href} href={l.href} onClick={close} aria-current={active(l.href) ? 'page' : undefined}>{l.label}</Link>
           ))}
-          <details className="nav-more">
+          <details className="nav-more" ref={moreRef}>
             <summary>Mais</summary>
             <div className="nav-more-panel">
               {MORE_LINKS.map(l => (
-                <Link key={l.href} href={l.href} onClick={close}>{l.label}</Link>
+                <Link key={l.href} href={l.href} onClick={close} aria-current={active(l.href) ? 'page' : undefined}>{l.label}</Link>
               ))}
             </div>
           </details>

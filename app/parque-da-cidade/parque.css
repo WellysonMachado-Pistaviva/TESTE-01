@@ -1,32 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
-
-/* =========================================================
-   PARQUE DA CIDADE DE ITAJUBÁ — camada visual própria (/parque-da-cidade)
-
-   Layout no modelo dos parques de referência:
-   · Parque Capivari — fundo branco, laranja #ff7225, Montserrat, cards limpos.
-   · Hopi Hari       — acentos multicoloridos (#0064b4 #33afcc #03c100 #6d3bff),
-                       cantos bem arredondados e botões pill.
-   Tudo escopado em .pq para não vazar no resto do site.
-   ========================================================= */
+/* Parque da Cidade: uses the Pistaviva editorial system. Map categories keep semantic colors. */
 
 .pq{
-  --pq-paper:#ffffff;
-  --pq-paper-2:#fafbfc;
-  --pq-paper-3:#f2f3f7;
-  --pq-ink:#00060a;
+  --pq-paper:var(--pv-offwhite);
+  --pq-paper-2:var(--pv-white);
+  --pq-paper-3:#eae8e2;
+  --pq-ink:var(--pv-text-dark);
   --pq-ink-2:#3b4149;
   --pq-muted:#6c757d;
   --pq-line:#e8e6ed;
 
-  --pq-orange:#ff7225;
-  --pq-orange-dark:#e85f13;
+  --pq-orange:var(--pv-orange);
+  --pq-orange-dark:#a63a00;
   --pq-blue:#0064b4;
   --pq-cyan:#33afcc;
   --pq-green:#03c100;
   --pq-lime:#78c800;
   --pq-purple:#6d3bff;
-  --pq-yellow:#fbcd41;
+  --pq-yellow:#ffad7e;
 
   /* Aliases das categorias do mapa. */
   --pq-teal:var(--pq-cyan);
@@ -34,12 +24,12 @@
   --pq-violet:var(--pq-purple);
   --pq-gold:var(--pq-orange);
 
-  --pq-r:28px;
-  --pq-r-sm:16px;
-  --pq-shadow:0 10px 30px rgba(0,6,10,.08);
-  --pq-shadow-lg:0 18px 50px rgba(0,6,10,.14);
+  --pq-r:var(--pv-radius);
+  --pq-r-sm:var(--pv-radius-small);
+  --pq-shadow:none;
+  --pq-shadow-lg:none;
 
-  --pq-font:'Montserrat',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --pq-font:var(--font);
 
   background:var(--pq-paper);
   color:var(--pq-ink);
@@ -2285,3 +2275,29 @@
   line-height:1.6;
 }
 .pq-historia__fonte a{ color:var(--pq-orange-dark); font-weight:800; }
+
+/* Shared campaign rhythm, navigation and controls. */
+.pq .pq-display, .pq .pq-hero__titulo { font-family:var(--display); font-weight:800; text-transform:uppercase; letter-spacing:-.02em; line-height:1; }
+.pq .pq-display { font-size:clamp(36px,4.8vw,64px); }
+.pq .pq-promo { background:var(--pv-black-2); border-bottom:1px solid var(--pv-line-dark); }
+.pq .pq-promo a { border-radius:var(--pv-radius-small); min-height:44px; display:inline-flex; align-items:center; background:var(--pv-orange); color:var(--pv-black); }
+.pq .pq-hero { padding:0; }
+.pq .pq-hero__bg, .pq .pq-hero__veu { inset:0; border-radius:0; }
+.pq .pq-hero__in { max-width:var(--maxw); padding-inline:var(--gut); }
+.pq .pq-btn { justify-content:center; min-height:50px; border-radius:var(--pv-radius-small); padding:12px 24px; font-family:var(--font); font-weight:700; line-height:1.4; }
+.pq .pq-btn:hover { transform:none; box-shadow:none; }
+.pq .pq-btn--gold { color:var(--pv-black); background:var(--pv-orange); border-color:var(--pv-orange); }
+.pq .pq-btn--gold:hover { color:var(--pv-black); background:#ff8038; border-color:#ff8038; }
+.pq .pq-rule { height:2px; width:32px; border-radius:0; background:var(--pv-orange); }
+.pq .pq-wrap, .pq .pq-wrap--larga { max-width:var(--maxw); padding-inline:var(--gut); }
+.pq .pq-hero__ornamento { display:none; }
+.pq .pq-hero__titulo { font-size:clamp(54px,7vw,96px); }
+.pq .pq-hero__titulo > span { margin-top:12px; }
+.pq .pq-hero__claim { font-family:var(--font); font-size:clamp(20px,2.5vw,28px); font-weight:600; }
+.pq .pq-sec--evento { background:var(--pv-offwhite); }
+@media(max-width:768px) {
+  .pq .pq-promo { justify-content:flex-start; padding-inline:var(--gut); }
+  .pq .pq-promo p { flex:1 1 100%; font-size:12px; }
+  .pq .pq-hero__in { padding-top:48px; padding-bottom:40px; }
+  .pq .pq-hero__acoes { flex-direction:column; align-items:stretch; }
+}

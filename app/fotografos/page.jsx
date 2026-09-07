@@ -1,3 +1,4 @@
+import PageIntro from '../components/PageIntro';
 import Link from 'next/link';
 import Cover from '../components/Cover';
 import LiveBadge from '../components/LiveBadge';
@@ -17,23 +18,15 @@ export default async function Fotografos() {
   const fotos = await getPhotographers();
   return (
     <div className="ignis ph-list">
-      <section className="ph-intro">
-        <div className="wrap">
-          <div className="head">
-            <div>
-              <span className="ig-eyebrow" style={{ color: 'var(--ink-soft)' }}>Olhares da estrada</span>
-              <h1>Quem registra<br />cada curva</h1>
-            </div>
-          </div>
-          <p className="lede">Cadastre-se como fotógrafo de um trecho. Quando um motociclista planeja uma rota que passa pelo seu ponto, ele vê seu nome, Instagram e galeria.</p>
-        </div>
-      </section>
+      <PageIntro eyebrow="Olhares da estrada" title="Sua viagem merece ser lembrada." image="/motosul/g-bikers.jpg" imageAlt="Motociclistas reunidos no Motosul Festival" action={{ href: "/rotas", label: "Explorar rotas" }}>
+        Encontre fotógrafos de estrada, conheça seus pontos de trabalho e descubra quem registrou sua passagem.
+      </PageIntro>
 
       <div className="wrap">
         {fotos.length === 0 ? (
           <p style={{ color: 'var(--ink-soft)', padding: '20px 0 40px' }}>Nenhum fotógrafo cadastrado ainda. Seja o primeiro abaixo.</p>
         ) : (
-          <div className="ph-grid">
+          <div className="ph-grid pv-collection-grid">
             {fotos.map(f => (
               <Link className="ph-card" key={f.id} href={`/fotografo/${f.slug}`}>
                 <div className="pic">

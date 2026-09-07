@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import Cover from './components/Cover';
 import HomeBanner from './components/HomeBanner';
+import HomeDiscover from './components/HomeDiscover';
+import HomeExperiences from './components/HomeExperiences';
+import './home-experience.css';
 import HomeNextRide from './components/HomeNextRide';
 import EventsRail from './components/EventsRail';
 import CommunityRail from './components/CommunityRail';
@@ -53,20 +56,19 @@ export default async function Home() {
 
   return (
     <div className="ignis home-story">
-      <HomeBanner banners={banners} />
-      <h1 className="sr-only">Pistaviva — estradas, rotas e histórias reais sobre duas rodas</h1>
+      <HomeDiscover destination={destinos[0]} />
 
       <HomeNextRide destination={destinos[0]} event={eventos[0]} challenge={DESAFIOS[0]} />
-      <ProductShowcase />
+      {banners.length > 0 && <HomeBanner banners={banners} />}
 
       {agendaEventos.length > 0 && (
         <section className="ig-cats home-agenda" id="eventos">
           <div className="wrap">
             <div className="ig-sechead">
               <div className="lead">
-                <span className="ig-eyebrow">Depois da próxima</span>
-                <h2 className="ig-title">Agenda na sequência</h2>
-                <p>Mais datas para escolher caminho, encontrar turma e colocar saída no calendário.</p>
+                <span className="ig-eyebrow">Encontre sua turma</span>
+                <h2 className="ig-title">Marque a próxima viagem</h2>
+                <p>Encontros e eventos para transformar vontade de viajar em data marcada.</p>
               </div>
               <div className="home-section-actions">
                 <Link href="/motosul" className="ig-btn ig-btn--ghost">Motosul Festival</Link>
@@ -79,6 +81,7 @@ export default async function Home() {
         </section>
       )}
 
+      <HomeExperiences />
       <CommunityRail items={community} />
 
       {lead && (
@@ -127,6 +130,7 @@ export default async function Home() {
         </section>
       )}
 
+      <ProductShowcase />
       <AffiliateGear />
 
       <section className="ig-band">

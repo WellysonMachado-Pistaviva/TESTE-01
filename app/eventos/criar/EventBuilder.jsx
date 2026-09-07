@@ -194,7 +194,7 @@ export default function EventBuilder({ initial = null, onDone = null, onClose = 
 
       <div className="wrap">
         {/* ============ FORM ============ */}
-        <main>
+        <section className="evb-fields" aria-label="Informações do evento">
           <div className="steps">
             <div className="step active"><span className="n">1</span> Informações</div>
             <div className="step"><span className="n">2</span> Página</div>
@@ -344,7 +344,7 @@ export default function EventBuilder({ initial = null, onDone = null, onClose = 
               <div className="toggle-row"><div className="t"><b>Permitir compartilhar</b><span>Botões de compartilhar e copiar link</span></div><button className={`sw ${tog.share ? 'on' : ''}`} onClick={() => setTog(t => ({ ...t, share: !t.share }))} /></div>
             </div>
           </section>
-        </main>
+        </section>
 
         {/* ============ SIDEBAR PREVIEW ============ */}
         <aside className="side">

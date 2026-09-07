@@ -172,3 +172,13 @@ body.admin-route{overflow-x:hidden}
 .ig-gate .lock{width:64px;height:64px;border-radius:6px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin:0 auto 18px}
 .ig-gate h2{font-family:var(--disp);text-transform:uppercase;font-weight:800;font-size:32px;letter-spacing:-.01em}
 .ig-gate p{color:var(--mut);font-size:14px;margin:10px 0 20px}
+
+/* Admin uses the same brand tokens, with compact operational layouts. */
+.ignis-admin { --accent:var(--pv-orange); --ink:var(--pv-black); --ink-2:var(--pv-black-2); --ink-3:var(--pv-black-3); --txt:var(--pv-text-light); --mut:var(--pv-muted-light); --mut-2:#a1a1aa; --line:var(--pv-line-dark); --line-2:#46464d; }
+.ignis-admin .disp { line-height:1.04; }
+.ignis-admin .ig-btn { min-height:44px; border-radius:var(--pv-radius-small); font-size:13px; letter-spacing:.02em; }
+.ignis-admin .ig-btn--primary { color:var(--pv-black); }
+.ignis-admin .ig-card, .ignis-admin .ig-stat { border-radius:var(--pv-radius); }
+.ignis-admin .ig-link { min-height:44px; }
+.ignis-admin .ig-group { font-size:11px; }
+.ignis-admin .ig-sb-toggle { width:44px; height:44px; }

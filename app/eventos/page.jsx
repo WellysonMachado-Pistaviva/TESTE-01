@@ -79,7 +79,7 @@ export default async function Page() {
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
       ))}
 
-      <SpaIntro eyebrow="Ponto de encontro" title="Próximos rolês pelo Brasil">
+      <SpaIntro image="/motosul/hero-publico.jpg" imageAlt="Encontro de motociclistas no Motosul Festival" action={{ href: "/eventos/criar", label: "Divulgar meu evento" }} eyebrow="Ponto de encontro" title="Próximos rolês pelo Brasil">
         Agenda de encontros, festivais e eventos de mototurismo pelo Brasil. Confirme presença e descubra rolês de moto perto de você.
       </SpaIntro>
 

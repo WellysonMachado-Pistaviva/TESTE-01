@@ -73,7 +73,7 @@ export default async function DesafioPage({ params }) {
         </div>
       </nav>
 
-      <main className="ph-prof">
+      <section className="ph-prof">
         <div className="wrap">
           <span className="eyebrow">Desafio Pistaviva · {d.regiao}</span>
           <h1>{d.nome}</h1>
@@ -240,7 +240,7 @@ export default async function DesafioPage({ params }) {
             </div>
           </div>
         </div>
-      </main>
+      </section>
     </div>
   );
 }

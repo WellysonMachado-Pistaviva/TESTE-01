@@ -66,7 +66,7 @@ export default async function GuiaPage({ params }) {
         </div>
       </nav>
 
-      <main className="ph-prof">
+      <section className="ph-prof">
         <div className="wrap">
           <span className="eyebrow">{g.categoria}</span>
           <h1>{g.h1}</h1>
@@ -144,7 +144,7 @@ export default async function GuiaPage({ params }) {
             </div>
           </div>
         </div>
-      </main>
+      </section>
     </div>
   );
 }

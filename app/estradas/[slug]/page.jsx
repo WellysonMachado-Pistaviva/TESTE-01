@@ -69,7 +69,7 @@ export default async function EstradaPage({ params }) {
         </div>
       </nav>
 
-      <main className="ph-prof">
+      <section className="ph-prof">
         <div className="wrap">
           <span className="eyebrow">{e.regiao}</span>
           <h1>{e.nome}</h1>
@@ -178,7 +178,7 @@ export default async function EstradaPage({ params }) {
             </div>
           </div>
         </div>
-      </main>
+      </section>
     </div>
   );
 }

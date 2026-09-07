@@ -86,14 +86,16 @@ export default function HomeBanner({ banners = [] }) {
   const N = list.length;
   const [i, setI] = useState(0);
   const timer = useRef(null);
+  const [paused, setPaused] = useState(false);
+  const interacting = useRef(false);
   const trackRef = useRef(null);
 
   const go = useCallback((n) => setI(((n % N) + N) % N), [N]);
 
   const restart = useCallback(() => {
     clearInterval(timer.current);
-    if (N > 1) timer.current = setInterval(() => setI(p => (p + 1) % N), DUR);
-  }, [N]);
+    if (N > 1 && !paused && !interacting.current && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) timer.current = setInterval(() => setI(p => (p + 1) % N), DUR);
+  }, [N, paused]);
 
   useEffect(() => { restart(); return () => clearInterval(timer.current); }, [restart]);
 
@@ -113,8 +115,11 @@ export default function HomeBanner({ banners = [] }) {
     <section
       className="pvb pvb--overlay"
       aria-roledescription="carrossel"
-      onMouseEnter={() => clearInterval(timer.current)}
-      onMouseLeave={restart}
+      aria-label="Destaques da Pistaviva"
+      onFocusCapture={() => { interacting.current = true; clearInterval(timer.current); }}
+      onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) { interacting.current = false; restart(); } }}
+      onMouseEnter={() => { interacting.current = true; clearInterval(timer.current); }}
+      onMouseLeave={(event) => { interacting.current = event.currentTarget.contains(document.activeElement); restart(); }}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
@@ -134,7 +139,7 @@ export default function HomeBanner({ banners = [] }) {
           {list.map((b, k) => {
             const tag = TAG[b.kind] || TAG.lancamento;
             return (
-              <article className="pvb-slide" key={b.id || k}>
+              <article className="pvb-slide" key={b.id || k} aria-hidden={k !== i} inert={k !== i ? true : undefined}>
                 <div className="pvb-media">
                   <BannerMedia banner={b} active={k === i} priority={k === 0} />
                   <span className={tag.cls}><span className="dot" />{b.tag_label || tag.label}</span>
@@ -162,14 +167,14 @@ export default function HomeBanner({ banners = [] }) {
       </div>
 
       {N > 1 && (
-        <div className="pvb-dots" role="tablist" aria-label="Selecionar banner">
+        <div className="pvb-dots" role="group" aria-label="Selecionar banner">
+          <button type="button" className="pvb-pause" onClick={() => setPaused(value => !value)} aria-pressed={paused}>{paused ? 'Retomar' : 'Pausar'}</button>
           {list.map((_, k) => (
             <button
               key={k}
               className={`pvb-dot${k === i ? ' active' : ''}`}
-              role="tab"
               aria-label={`Banner ${k + 1}`}
-              aria-selected={k === i}
+              aria-pressed={k === i}
               onClick={() => { go(k); restart(); }}
             >
               <span className="fill" style={{ animationDuration: `${DUR}ms` }} />

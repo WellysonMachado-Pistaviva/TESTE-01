@@ -1,3 +1,4 @@
+import PageIntro from '../components/PageIntro';
 import Link from 'next/link';
 import { DESTINOS } from '../lib/destinos';
 
@@ -41,26 +42,19 @@ export default function DestinosIndex() {
         </div>
       </nav>
 
-      <section className="ph-intro">
-        <div className="wrap">
-          <div className="head">
-            <div>
-              <span className="ig-eyebrow" style={{ color: 'var(--ink-soft)' }}>Próxima saída</span>
-              <h1>Estradas que<br />pedem viagem</h1>
-            </div>
-          </div>
-          <p className="lede">Destinos escolhidos por quem conhece cada curva. Melhor época, caminho e preparação — da Patagônia à Rota 66.</p>
-        </div>
-      </section>
+      <PageIntro eyebrow="Próxima saída" title="Estradas que pedem viagem" image="/motosul/mantiqueira.jpg" imageAlt="Paisagem da Serra da Mantiqueira" action={{ href: "/rotas", label: "Planejar minha viagem" }}>
+        Destinos para ir além. Descubra a melhor época, o caminho e a preparação para tirar sua próxima viagem do papel.
+      </PageIntro>
 
       <div className="wrap">
-        <div className="ph-grid">
+        <div className="ph-grid pv-collection-grid">
           {DESTINOS.map((d) => (
             <Link className="ph-card" key={d.slug} href={`/destinos/${d.slug}`}>
               <div className="body" style={{ padding: '16px 18px' }}>
                 <span className="eyebrow" style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--clay)', textTransform: 'uppercase', letterSpacing: '.06em' }}>{d.bandeira} {d.regiao}</span>
-                <h3 style={{ margin: '4px 0 6px' }}>{d.nome}</h3>
+                <h2 style={{ margin: '4px 0 6px' }}>{d.nome}</h2>
                 <p className="desc">{d.resumo}</p>
+                <span className="pv-card-action">Explorar destino <span aria-hidden="true">↗</span></span>
               </div>
             </Link>
           ))}

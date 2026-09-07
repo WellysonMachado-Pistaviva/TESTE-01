@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { useAuth } from './AuthProvider';
 
 const Spinner = () => (
-  <div className="wrap section" style={{ paddingTop: 'clamp(24px,4vw,48px)' }}>
+  <div className="wrap section" role="status" aria-label="Carregando conteúdo" style={{ paddingTop: 'clamp(24px,4vw,48px)' }}>
     <div className="lead-skel">
       <div className="skeleton lead-skel__primary" />
       <div className="lead-skel__col">

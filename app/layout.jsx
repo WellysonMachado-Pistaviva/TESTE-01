@@ -5,18 +5,13 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;        // ex: G-XXXXXXXXXX
 const ADSENSE_ID = 'ca-pub-3461762705627085';
-import '../src/index.css';
-import '../src/App.css';
-import 'leaflet/dist/leaflet.css';
-import './globals.css';
-import './design-system.css';
+import './site.css';
 import AuthProvider from './components/AuthProvider';
 import AdSenseLoader from './components/AdSenseLoader';
 import SiteHeader from './components/SiteHeader';
 import SiteFooter from './components/SiteFooter';
 import AnnouncementBar from './components/AnnouncementBar';
 import MobileShell from './components/MobileShell';
-import OnlineCounter from './components/OnlineCounter';
 
 // Tipografia oficial: Saira Condensed (impacto), Saira (leitura) e
 // Saira Semi Condensed (navegação, labels e botões).
@@ -93,6 +88,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" className={`${display.variable} ${serif.variable} ${semi.variable} ${body.variable}`}>
       <body>
+        <a href="#app" className="pv-skip-link">Pular para o conteúdo</a>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
         <div className="topo" aria-hidden="true" />
         <AuthProvider>
@@ -100,11 +96,10 @@ export default function RootLayout({ children }) {
             <AnnouncementBar />
             <MobileShell />
             <SiteHeader />
-            <main id="app" style={{ flex: 1 }}>{children}</main>
+            <main id="app" tabIndex={-1} style={{ flex: 1 }}>{children}</main>
             <SiteFooter />
           </div>
         </AuthProvider>
-        <OnlineCounter />
         <Analytics />
         <SpeedInsights />
 

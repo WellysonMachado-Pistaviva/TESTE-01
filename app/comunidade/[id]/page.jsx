@@ -30,7 +30,7 @@ export default async function CommunityPostPage({ params }) {
   const place = [post.city, post.uf].filter(Boolean).join('/');
 
   return (
-    <main className="community-story">
+    <section className="community-story">
       <article className="community-story__card">
         <div className="community-story__media">
           {post.image
@@ -42,11 +42,12 @@ export default async function CommunityPostPage({ params }) {
             <span>{CATEGORY[post.category] || 'Direto da estrada'}</span>
             {place && <strong>{place}</strong>}
           </div>
+          <h1 className="community-story__title">{CATEGORY[post.category] || 'Relato'} de {post.author}</h1>
           <blockquote>{post.comment}</blockquote>
           <p>Por <strong>{post.author}</strong></p>
           <Link href="/comunidade">← Ver mais relatos da comunidade</Link>
         </div>
       </article>
-    </main>
+    </section>
   );
 }

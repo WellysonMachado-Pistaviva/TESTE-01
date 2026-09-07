@@ -23,3 +23,5 @@
 *.pem
 npm-debug.log*
 yarn-error.log*
+# Playwright CLI output (may contain credentials)
+.playwright-cli/

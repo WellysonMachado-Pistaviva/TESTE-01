@@ -477,7 +477,7 @@ const Comboio = ({ user, openAuthModal }) => {
     <div style={{ display: 'flex', flexDirection: 'column', ...(activeComboio ? { height: 'calc(100dvh - 120px - env(safe-area-inset-bottom))', overflow: 'hidden' } : { minHeight: 'auto', paddingBottom: 'calc(84px + env(safe-area-inset-bottom))' }) }}>
       {!activeComboio && (
         <div className="page-header" style={{ marginBottom: '20px' }}>
-          <h1 className="page-title">MEUS COMBOIOS</h1>
+          <h2 className="page-title">Meus comboios</h2>
           <p className="page-subtitle">Rodar junto é rodar seguro. Conecte-se em tempo real com seu grupo.</p>
         </div>
       )}

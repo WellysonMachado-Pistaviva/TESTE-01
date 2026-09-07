@@ -216,14 +216,8 @@ const Planner = () => {
 
   return (
     <div className="planner-ig">
-      <section className="pg-head">
-        <div className="wrap">
-          <h1>Planejador<br />de rotas</h1>
-          <span className="eyebrow" style={{ marginTop: 16 }}>Calcule rota, clima e custo em tempo real</span>
-        </div>
-      </section>
 
-      <main className="pg-main">
+      <section className="pg-main">
         <div className="wrap">
           <div className="pg-grid">
 
@@ -450,7 +444,7 @@ const Planner = () => {
 
           </div>{/* .pg-grid */}
         </div>{/* .wrap */}
-      </main>
+      </section>
 
       {/* ── NAVEGAÇÃO GPS (tela cheia) ── */}
       {riding && result && (

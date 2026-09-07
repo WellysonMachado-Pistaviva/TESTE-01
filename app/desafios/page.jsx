@@ -1,3 +1,4 @@
+import PageIntro from '../components/PageIntro';
 import Link from 'next/link';
 import { DESAFIOS } from '../lib/desafios';
 
@@ -18,7 +19,7 @@ export const metadata = {
 
 const NIVEL_COR = {
   'Iniciante a intermediário': '#2e7d32',
-  'Intermediário': '#e08a00',
+  'Intermediário': '#915900',
   'Avançado': '#c0392b',
 };
 
@@ -43,16 +44,12 @@ export default function DesafiosPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
-      <main className="ph-prof">
+      <PageIntro eyebrow="No seu ritmo" title="O próximo desafio é seu." image="/motosul/mantiqueira.jpg" imageAlt="Montanhas da Serra da Mantiqueira" action={{ href: "/guias/como-preparar-a-moto-para-viagem", label: "Preparar a moto" }}>
+        Roteiros com checkpoints, mapa e certificado digital. Complete a viagem no seu ritmo: aqui celebramos conclusão, não velocidade.
+      </PageIntro>
+      <section className="ph-prof pv-collection-body">
         <div className="wrap">
-          <span className="eyebrow">Complete e carimbe</span>
-          <h1>Desafios Pistaviva</h1>
-          <p className="lede" style={{ maxWidth: 760 }}>
-            Roteiros pra você completar no seu ritmo: checkpoints, mapa com o traçado e certificado digital grátis no final.
-            Aqui não tem corrida nem ranking de tempo — <strong>certificamos conclusão, não velocidade</strong>. O desafio é contra o sofá, não contra o relógio.
-          </p>
-
-          <div className="ph-grid" style={{ marginTop: 24 }}>
+          <div className="ph-grid pv-collection-grid" style={{ marginTop: 24 }}>
             {DESAFIOS.map((d) => (
               <Link className="ph-card" key={d.slug} href={`/desafios/${d.slug}`}>
                 <div className="body" style={{ padding: '16px 18px' }}>
@@ -103,7 +100,7 @@ export default function DesafiosPage() {
             </div>
           </section>
         </div>
-      </main>
+      </section>
     </div>
   );
 }

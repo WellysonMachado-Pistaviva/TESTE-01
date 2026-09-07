@@ -1,16 +1,22 @@
 import Link from 'next/link';
+import OnlineCounter from './OnlineCounter';
+import { ArrowUpRight } from 'lucide-react';
 
 export default function SiteFooter() {
   return (
     <footer className="site-foot">
       <div className="wrap">
+        <div className="pv-footer-invite">
+          <div><span className="pv-kicker">Seu próximo capítulo</span><h2>A estrada continua.<br /><em>Vamos juntos?</em></h2></div>
+          <Link href="/destinos" className="pv-action pv-action--primary">Encontrar meu próximo destino <ArrowUpRight size={20} aria-hidden="true" /></Link>
+        </div>
         <div className="foot-grid">
           <div className="foot-col">
             <Link className="brand" href="/"><img src="/logo.svg" alt="Pistaviva" width="1222" height="88" style={{ height: 24, width: 'auto', maxWidth: '70%' }} /></Link>
             <p>Estradas, roteiros e histórias reais de quem viaja de moto pelo Brasil. Feito por quem roda, para quem está preparando próxima saída.</p>
           </div>
           <div className="foot-col">
-            <h5>Na estrada</h5>
+            <h3>Na estrada</h3>
             <Link href="/destinos">Próxima saída</Link>
             <Link href="/estradas">Estradas para rodar</Link>
             <Link href="/desafios">Desafios</Link>
@@ -20,7 +26,7 @@ export default function SiteFooter() {
             <Link href="/rotas">Planejar viagem</Link>
           </div>
           <div className="foot-col">
-            <h5>Antes de sair</h5>
+            <h3>Antes de sair</h3>
             <Link href="/bora-rodar">Clima para rodar</Link>
             <Link href="/guias">Guias práticos</Link>
             <Link href="/fipe">Tabela FIPE</Link>
@@ -28,7 +34,7 @@ export default function SiteFooter() {
             <Link href="/fotografos">Fotógrafos de estrada</Link>
           </div>
           <div className="foot-col">
-            <h5>Comunidade</h5>
+            <h3>Comunidade</h3>
             <Link href="/comunidade">Quem está na estrada</Link>
             <Link href="/blog">Matérias</Link>
             <Link href="/diretorio-duas-rodas">Diretório Duas Rodas</Link>
@@ -39,6 +45,7 @@ export default function SiteFooter() {
             <Link href="/loja">Loja</Link>
           </div>
         </div>
+        <OnlineCounter />
         <div className="foot-legal">
           <Link href="/sobre">Sobre</Link>
           <Link href="/contato">Contato</Link>

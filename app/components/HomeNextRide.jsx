@@ -21,17 +21,17 @@ export default function HomeNextRide({ destination, event, challenge }) {
   const days = remainingDays(event);
 
   return (
-    <section className="home-next" aria-labelledby="home-next-title">
+    <section className="home-next" id="proxima-saida" aria-labelledby="home-next-title">
       <div className="wrap">
         <header className="home-next-head">
           <div>
-            <span className="ig-eyebrow">Seu roadbook</span>
-            <h2 id="home-next-title">Próxima saída, sem enrolação.</h2>
+            <span className="ig-eyebrow">Inspiração para sair</span>
+            <h2 id="home-next-title">Seu próximo destino está aqui.</h2>
           </div>
-          <p>Escolha caminho, veja quem vai e confira o necessário antes de ligar a moto.</p>
+          <p>Um lugar para conhecer, um encontro para participar ou um desafio para chamar de seu.</p>
         </header>
 
-        <div className="home-next-grid">
+        <div className={`home-next-grid${destination ? "" : " home-next-grid--no-destination"}`}>
           {destination && (
             <SmartLink href={destination.link || '/destinos'} className="home-next-card home-next-card--destination">
               <span className="home-next-media">

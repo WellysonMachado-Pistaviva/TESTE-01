@@ -1023,6 +1023,34 @@ export default function MotosulPage() {
         </div>
       </section>
 
+      {/* ── O GARGALO DE HOSPEDAGEM ── */}
+      <section className="ms-sec" id="impacto" aria-labelledby="ms-impacto-title">
+        <div className="ms-wrap">
+          <p className="ms-eyebrow">O gargalo</p>
+          <h2 className="ms-display" id="ms-impacto-title"><span className="is-accent">1.050 pessoas</span><br />queriam dormir<br />e não coube.</h2>
+          <span className="ms-rule" aria-hidden="true" />
+          <p className="ms-lead">Itajubá tem 600 leitos. Na 2ª edição eles lotaram — e a fila continuou do lado de fora.<br />Quem não achou quarto dormiu em Pouso Alegre, Santa Rita, Campos do Jordão. Ou nem dormiu.</p>
+
+          <div className="ms-split">
+            <div>
+              <b className="ms-big">900</b>
+              <span>Pessoas cabem na cidade</span>
+            </div>
+            <div>
+              <b className="ms-big is-accent">1.950</b>
+              <span>Queriam ficar</span>
+            </div>
+          </div>
+
+          <p className="ms-lead">Quase 6 em cada 10 fazem bate e volta. Boa parte não por escolha: por não ter onde ficar.<br />O Motosul não provou que falta gente querendo vir para a Mantiqueira. Provou o contrário.</p>
+
+          <p className="ms-kicker-big">Não falta gente.<br /><span className="is-accent">Falta leito.</span></p>
+
+          <p className="ms-source-note">Leitos e ocupação levantados junto à rede hoteleira de Itajubá. Intenção de pernoite declarada por 1.541 inscritos da 2ª edição, 39% do público estimado. Capacidade calculada a 1,5 pessoa por leito.</p>
+
+        </div>
+      </section>
+
       {/* ── HOTÉIS PARCEIROS ── */}
       <section className="ms-sec" id="hoteis">
         <div className="ms-wrap">
