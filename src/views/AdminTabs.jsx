@@ -17,6 +17,7 @@ const F = ({ label, hint, children }) => (
   </div>
 );
 import { getAllUsers } from '../services/auth';
+import PV from '../palette';
 
 const loadAsync = (fn, setter) => fn().then(setter).catch(() => {});
 
@@ -91,7 +92,7 @@ export const OverviewTab = () => {
                 width: '32px', height: '32px', borderRadius: '50%', flexShrink: 0,
                 background: 'linear-gradient(135deg,var(--accent),hsl(14,90%,48%))',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '14px', fontWeight: '900', color: '#fff',
+                fontSize: '14px', fontWeight: '900', color: PV.white,
               }}>{u.nome?.charAt(0)?.toUpperCase() || '?'}</div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: '700' }}>{u.nome}</div>
@@ -287,7 +288,7 @@ export const ConfigTab = ({ toast }) => {
               background: cfg[t.key] ? 'var(--accent)' : 'var(--bg3)', border: '1px solid var(--border)', transition: 'var(--transition)',
             }}>
               <div style={{
-                width: '18px', height: '18px', borderRadius: '50%', background: '#fff', position: 'absolute',
+                width: '18px', height: '18px', borderRadius: '50%', background: PV.white, position: 'absolute',
                 top: '2px', left: cfg[t.key] ? '20px' : '2px', transition: 'left .2s',
               }} />
             </div>

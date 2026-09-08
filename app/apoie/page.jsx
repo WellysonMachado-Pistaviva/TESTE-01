@@ -1,3 +1,4 @@
+import PV, { withAlpha } from '../../src/palette';
 import Link from 'next/link';
 import { Globe2, LockKeyhole, MapPinned, RadioTower, UsersRound } from 'lucide-react';
 
@@ -72,7 +73,7 @@ export default function ApoiePage() {
         <div className="wrap" style={{ textAlign: 'center', maxWidth: 760, marginInline: 'auto' }}>
           <span className="ig-eyebrow on-dark" style={{ justifyContent: 'center' }}>Qualquer valor ajuda</span>
           <h2 className="ig-title" style={{ marginTop: 14 }}>Bora rodar essa<br />junto?</h2>
-          <p style={{ fontFamily: 'var(--font)', color: 'rgba(255,255,255,.74)', fontSize: 16, lineHeight: 1.6, margin: '16px auto 28px', maxWidth: '52ch' }}>
+          <p style={{ fontFamily: 'var(--font)', color: withAlpha(PV.white, 0.72), fontSize: 16, lineHeight: 1.6, margin: '16px auto 28px', maxWidth: '52ch' }}>
             Contribua uma vez ou todo mês — você escolhe o valor no checkout seguro. É rápido, dá pra pagar no Pix ou cartão. Cada apoio mantém o Pistaviva aberto pra próxima curva.
           </p>
           <a href={CHECKOUT} target="_blank" rel="noopener noreferrer" className="ig-btn ig-btn--primary" style={{ fontSize: 15, padding: '17px 34px' }}>

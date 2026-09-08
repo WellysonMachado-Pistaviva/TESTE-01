@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import PV from '../../src/palette';
 
 // "Bora Rodar?" — painel de condições de pilotagem por cidade.
 // Necessidade diária: checar antes de cada rolê se dá pra rodar.
@@ -26,9 +27,9 @@ function indice(d) {
   return 'bom';
 }
 const META = {
-  bom:     { label: 'Bora rodar!', cor: '#16a34a', sub: 'Condições boas pra cair na estrada.' },
-  atencao: { label: 'Rode com atenção', cor: '#d97706', sub: 'Dá pra rodar, mas redobre o cuidado.' },
-  ruim:    { label: 'Melhor não rodar', cor: '#dc2626', sub: 'Condições ruins. Se puder, deixe pra depois.' },
+  bom:     { label: 'Bora rodar!', cor: PV.success, sub: 'Condições boas pra cair na estrada.' },
+  atencao: { label: 'Rode com atenção', cor: PV.warning, sub: 'Dá pra rodar, mas redobre o cuidado.' },
+  ruim:    { label: 'Melhor não rodar', cor: PV.danger, sub: 'Condições ruins. Se puder, deixe pra depois.' },
 };
 const DIAS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 

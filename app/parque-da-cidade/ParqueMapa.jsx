@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { ATRACOES, CATEGORIAS, ZONAS } from './dados';
+import PV from '../../src/palette';
 
 // Planta viva: o mapa esquemático e a lista de setores compartilham o mesmo
 // estado. Filtrar por categoria apaga os pinos fora do filtro; selecionar um
@@ -65,12 +66,12 @@ export default function ParqueMapa() {
                 <circle cx="1.5" cy="1.5" r="1.1" />
               </pattern>
               <radialGradient id="pq-agua" cx="42%" cy="34%" r="72%">
-                <stop offset="0%" stopColor="#4fc3e8" />
-                <stop offset="100%" stopColor="#0064b4" />
+                <stop offset="0%" stopColor={PV.mapWaterLight} />
+                <stop offset="100%" stopColor={PV.mapWater} />
               </radialGradient>
               <linearGradient id="pq-serra" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#9fd6b4" />
-                <stop offset="100%" stopColor="#d9eede" />
+                <stop offset="0%" stopColor={PV.mapGreenLight} />
+                <stop offset="100%" stopColor={PV.mapGreenPale} />
               </linearGradient>
             </defs>
 

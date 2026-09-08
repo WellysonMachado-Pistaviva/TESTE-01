@@ -5,6 +5,7 @@ import { supabase } from '../../../src/lib/supabaseClient';
 import { adminImportImageUrl, adminUploadFile, adminWrite, shouldImportRemoteImageUrl } from '../../lib/adminDb';
 import { getReportsQueue, resolveReport, getAllRouteComments, deleteRouteComment, getAnnouncement, saveAnnouncement } from '../../../src/services/storage';
 import { useAuth, showToast } from '../../components/AuthProvider';
+import PV, { withAlpha } from '../../../src/palette';
 
 // Configuração de cada tipo de conteúdo moderável.
 const SECTIONS = [
@@ -170,7 +171,7 @@ function Section({ cfg }) {
                 <div key={i} style={{ position: 'relative', aspectRatio: '1', borderRadius: 8, overflow: 'hidden', border: '1px solid var(--border)' }}>
                   <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   {i === 0 && <span style={{ position: 'absolute', top: 4, left: 4, fontSize: 9, fontWeight: 800, background: 'var(--clay)', color: 'var(--ink)', padding: '2px 6px', borderRadius: 4 }}>CAPA</span>}
-                  <button type="button" onClick={() => setPfotos(p => p.filter((_, k) => k !== i))} style={{ position: 'absolute', top: 4, right: 4, width: 22, height: 22, borderRadius: '50%', background: 'rgba(0,0,0,.7)', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 800 }}>×</button>
+                  <button type="button" onClick={() => setPfotos(p => p.filter((_, k) => k !== i))} style={{ position: 'absolute', top: 4, right: 4, width: 22, height: 22, borderRadius: '50%', background: withAlpha(PV.black, 0.72), color: PV.white, border: 'none', cursor: 'pointer', fontWeight: 800 }}>×</button>
                 </div>
               ))}
               {pfotos.length < 3 && (
@@ -208,7 +209,7 @@ function ReportsQueue() {
           {rows.map(r => (
             <div key={r.id} style={{ background: 'var(--bg2)', border: '1px solid var(--danger)', borderRadius: 10, padding: '12px 14px' }}>
               <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-                <span style={{ fontFamily: 'var(--mono)', fontSize: 11, background: 'var(--danger)', color: '#fff', padding: '2px 8px', borderRadius: 4 }}>{TARGET[r.target_type] || r.target_type}</span>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: 11, background: 'var(--danger)', color: PV.white, padding: '2px 8px', borderRadius: 4 }}>{TARGET[r.target_type] || r.target_type}</span>
                 <span style={{ flex: 1, minWidth: 120, fontSize: 13 }}>{r.target_label || r.target_id}</span>
                 <button className="btn btn--ghost" style={{ padding: '.4rem .8rem' }} onClick={async () => { await resolveReport(r.id); load(); }}>Ignorar</button>
                 <button className="btn btn--ghost" style={{ padding: '.4rem .8rem', borderColor: 'var(--danger)', color: 'var(--danger)' }} onClick={() => delTarget(r)}>Excluir conteúdo</button>
@@ -325,7 +326,7 @@ function LinkPicker({ onPick }) {
   const sel = { width: '100%', padding: '9px 11px', marginBottom: 9, background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontFamily: 'inherit', fontSize: 14 };
 
   return (
-    <div style={{ background: 'rgba(255,90,0,.05)', border: '1px solid var(--border)', borderRadius: 8, padding: '10px 12px', marginBottom: 10 }}>
+    <div style={{ background: withAlpha(PV.orange, 0.04), border: '1px solid var(--border)', borderRadius: 8, padding: '10px 12px', marginBottom: 10 }}>
       <label style={{ fontSize: 12, color: 'var(--paper-mut)' }}>Apontar para…</label>
       <select style={sel} value={type} onChange={e => { setType(e.target.value); const x = LINK_TYPES.find(o => o.v === e.target.value); if (x?.fixed) onPick(x.fixed); }}>
         <option value="">— escolha o tipo —</option>
@@ -451,7 +452,7 @@ function BannersEditor() {
               <button className="btn btn--ghost" style={{ padding: '2px 7px', fontSize: 11 }} disabled={idx === 0} onClick={() => move(idx, -1)}>▲</button>
               <button className="btn btn--ghost" style={{ padding: '2px 7px', fontSize: 11 }} disabled={idx === rows.length - 1} onClick={() => move(idx, 1)}>▼</button>
             </div>
-            <div style={{ width: 72, height: 42, borderRadius: 5, overflow: 'hidden', flex: '0 0 auto', background: 'var(--bg3,#222)' }}>
+            <div style={{ width: 72, height: 42, borderRadius: 5, overflow: 'hidden', flex: '0 0 auto', background: 'var(--bg3)' }}>
               {row.image_url && <img src={row.image_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
@@ -620,7 +621,7 @@ function DestinosEditor() {
               <button className="btn btn--ghost" style={{ padding: '2px 7px', fontSize: 11 }} disabled={idx === 0} onClick={() => move(idx, -1)}>▲</button>
               <button className="btn btn--ghost" style={{ padding: '2px 7px', fontSize: 11 }} disabled={idx === rows.length - 1} onClick={() => move(idx, 1)}>▼</button>
             </div>
-            <div style={{ width: 46, height: 58, borderRadius: 6, overflow: 'hidden', flex: '0 0 auto', background: 'var(--bg3,#222)' }}>
+            <div style={{ width: 46, height: 58, borderRadius: 6, overflow: 'hidden', flex: '0 0 auto', background: 'var(--bg3)' }}>
               {row.image_url && <img src={row.image_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>

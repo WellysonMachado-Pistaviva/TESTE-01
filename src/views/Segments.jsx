@@ -5,6 +5,7 @@ import {
   getSegments, getSegmentLeaderboard, getUserSegmentBest, saveSegmentCompletion,
   getSegmentComments, addSegmentComment, getMoto,
 } from '../services/storage';
+import PV, { withAlpha } from '../palette';
 
 // ── Haversine ─────────────────────────────────────────────────
 const distKm = (a1, o1, a2, o2) => {
@@ -30,7 +31,7 @@ const DestWeather = ({ lat, lng }) => {
     <div style={{ display:'inline-flex', alignItems:'center', gap:'6px', padding:'5px 12px', borderRadius:'999px', fontSize:'12px', fontWeight:700, background:`${weather.color}18`, border:`1px solid ${weather.color}40`, color:weather.color }}>
       <span>{weather.icon}</span>
       <span>{weather.temp}°C · {weather.label}</span>
-      <span style={{ background:weather.color, color:'#fff', padding:'1px 7px', borderRadius:'999px', fontSize:'10px', fontWeight:800 }}>{weather.riding}</span>
+      <span style={{ background:weather.color, color:PV.white, padding:'1px 7px', borderRadius:'999px', fontSize:'10px', fontWeight:800 }}>{weather.riding}</span>
     </div>
   );
 };
@@ -60,7 +61,7 @@ const Leaderboard = ({ segmentId, userId, refreshKey }) => {
   return (
     <div>
       {userBest && (
-        <div style={{ padding:'10px 14px', borderRadius:'10px', background:'rgba(249,115,22,.08)', border:'1px solid rgba(249,115,22,.2)', marginBottom:'10px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div style={{ padding:'10px 14px', borderRadius:'10px', background:withAlpha(PV.orange, 0.08), border:`1px solid ${withAlpha(PV.orange, 0.24)}`, marginBottom:'10px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
           <div>
             <div style={{ fontSize:'11px', color:'var(--accent)', fontWeight:700, letterSpacing:'1px', marginBottom:'2px' }}>⏱ MEU MELHOR</div>
             <div style={{ fontSize:'20px', fontWeight:900 }}>{fmtTime(userBest.time_secs)}</div>
@@ -76,15 +77,15 @@ const Leaderboard = ({ segmentId, userId, refreshKey }) => {
       ) : (
         <div style={{ display:'flex', flexDirection:'column', gap:'6px' }}>
           {board.map((r, i) => (
-            <div key={r.id} style={{ display:'flex', alignItems:'center', gap:'10px', padding:'9px 12px', borderRadius:'10px', background: r.user_id === userId ? 'rgba(249,115,22,.06)' : 'var(--bg3)', border:`1px solid ${r.user_id === userId ? 'rgba(249,115,22,.2)' : 'var(--border)'}` }}>
+            <div key={r.id} style={{ display:'flex', alignItems:'center', gap:'10px', padding:'9px 12px', borderRadius:'10px', background: r.user_id === userId ? withAlpha(PV.orange, 0.04) : 'var(--bg3)', border:`1px solid ${r.user_id === userId ? withAlpha(PV.orange, 0.24) : 'var(--border)'}` }}>
               <div style={{ width:'26px', textAlign:'center', fontWeight:900, fontSize: i < 3 ? '16px' : '13px', color:'var(--muted)' }}>{i < 3 ? medals[i] : `${i+1}º`}</div>
               <div style={{ flex:1, minWidth:0 }}>
-                <div style={{ fontWeight:700, fontSize:'13px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', color: r.user_id === userId ? 'var(--accent)' : '#fff' }}>
+                <div style={{ fontWeight:700, fontSize:'13px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', color: r.user_id === userId ? 'var(--accent)' : PV.white }}>
                   {r.user_id === userId ? 'Você' : r.user_name}
                 </div>
                 {r.moto_name && <div style={{ fontSize:'11px', color:'var(--muted)' }}>🏍️ {r.moto_name}</div>}
               </div>
-              <div style={{ fontWeight:900, fontSize:'15px', color: i === 0 ? '#f97316' : '#fff' }}>{fmtTime(r.time_secs)}</div>
+              <div style={{ fontWeight:900, fontSize:'15px', color: i === 0 ? PV.orange : PV.white }}>{fmtTime(r.time_secs)}</div>
             </div>
           ))}
         </div>
@@ -132,7 +133,7 @@ const ActiveBanner = ({ seg, onCancel, onComplete }) => {
     };
   }, [seg, phase]); // eslint-disable-line
 
-  const color = phase === 'running' ? '#f97316' : phase === 'done' ? '#22c55e' : '#3b82f6';
+  const color = phase === 'running' ? PV.orange : phase === 'done' ? PV.success : PV.info;
 
   return (
     <div style={{ position:'sticky', top:0, zIndex:100, background:'var(--bg)', border:`1px solid ${color}40`, borderRadius:'var(--radius)', padding:'12px 16px', marginBottom:'12px', boxShadow:`0 4px 20px ${color}20` }}>
@@ -156,7 +157,7 @@ const ActiveBanner = ({ seg, onCancel, onComplete }) => {
           🏁 {distExit < 1 ? `${(distExit*1000).toFixed(0)}m` : `${distExit.toFixed(1)}km`} para a chegada
         </div>
       )}
-      {phase === 'done' && <div style={{ fontSize:'12px', color:'#22c55e', fontWeight:700, marginTop:'4px' }}>Tempo salvo no ranking! 🎉</div>}
+      {phase === 'done' && <div style={{ fontSize:'12px', color:PV.success, fontWeight:700, marginTop:'4px' }}>Tempo salvo no ranking! 🎉</div>}
       {phase !== 'done' && (
         <button onClick={onCancel} style={{ marginTop:'8px', background:'none', border:'none', color:'var(--danger)', fontSize:'12px', fontWeight:700, cursor:'pointer', padding:0 }}>
           Cancelar monitoramento
@@ -176,8 +177,8 @@ const SegmentCard = ({ seg, user, activeSegId, onActivate }) => {
   const [refreshKey] = useState(0);
   const isActive = activeSegId === seg.id;
   const highlights = Array.isArray(seg.highlights) ? seg.highlights : JSON.parse(seg.highlights || '[]');
-  const diffColors = { Fácil:'#22c55e', Intermediário:'#f97316', Avançado:'#ef4444' };
-  const diffColor = seg.diff_color || diffColors[seg.difficulty] || '#f97316';
+  const diffColors = { Fácil:PV.success, Intermediário:PV.orange, Avançado:PV.danger };
+  const diffColor = seg.diff_color || diffColors[seg.difficulty] || PV.orange;
 
   useEffect(() => {
     if (!expanded || comments.length > 0) return;
@@ -199,7 +200,7 @@ const SegmentCard = ({ seg, user, activeSegId, onActivate }) => {
   };
 
   return (
-    <div style={{ background:'var(--bg2)', borderRadius:'var(--radius)', border:`1px solid ${isActive ? 'rgba(249,115,22,.4)' : 'var(--border)'}`, overflow:'hidden', transition:'var(--transition)' }}>
+    <div style={{ background:'var(--bg2)', borderRadius:'var(--radius)', border:`1px solid ${isActive ? withAlpha(PV.orange, 0.4) : 'var(--border)'}`, overflow:'hidden', transition:'var(--transition)' }}>
       {/* Header */}
       <div style={{ padding:'16px 18px', cursor:'pointer' }} onClick={() => setExpanded(e => !e)}>
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:'8px' }}>
@@ -217,7 +218,7 @@ const SegmentCard = ({ seg, user, activeSegId, onActivate }) => {
             <span style={{ padding:'3px 10px', borderRadius:'999px', fontSize:'10px', fontWeight:800, background:`${diffColor}18`, color:diffColor, border:`1px solid ${diffColor}40` }}>
               {seg.difficulty}
             </span>
-            {isActive && <div style={{ width:'8px', height:'8px', borderRadius:'50%', background:'#f97316', animation:'pulse-sos 1.5s infinite' }} />}
+            {isActive && <div style={{ width:'8px', height:'8px', borderRadius:'50%', background:PV.orange, animation:'pulse-sos 1.5s infinite' }} />}
             {expanded ? <ChevronUp size={14} color="var(--muted)" /> : <ChevronDown size={14} color="var(--muted)" />}
           </div>
         </div>
@@ -226,7 +227,7 @@ const SegmentCard = ({ seg, user, activeSegId, onActivate }) => {
 
       {/* Expandido */}
       {expanded && (
-        <div style={{ borderTop:'1px solid var(--border)', padding:'16px 18px', background:'rgba(0,0,0,.1)' }}>
+        <div style={{ borderTop:'1px solid var(--border)', padding:'16px 18px', background:withAlpha(PV.black, 0.12) }}>
 
           {/* Clima */}
           {seg.dest_lat && (
@@ -252,7 +253,7 @@ const SegmentCard = ({ seg, user, activeSegId, onActivate }) => {
 
           {/* Dica */}
           {seg.tip && (
-            <div style={{ padding:'10px 14px', borderRadius:'10px', background:'rgba(249,115,22,.06)', border:'1px solid rgba(249,115,22,.2)', fontSize:'13px', color:'var(--muted)', marginBottom:'16px', display:'flex', gap:'8px' }}>
+            <div style={{ padding:'10px 14px', borderRadius:'10px', background:withAlpha(PV.orange, 0.04), border:`1px solid ${withAlpha(PV.orange, 0.24)}`, fontSize:'13px', color:'var(--muted)', marginBottom:'16px', display:'flex', gap:'8px' }}>
               <span style={{ flexShrink:0, color:'var(--accent)', fontWeight:800 }}>💡</span>{seg.tip}
             </div>
           )}
@@ -265,7 +266,7 @@ const SegmentCard = ({ seg, user, activeSegId, onActivate }) => {
                   <Square size={15} /> CANCELAR GPS
                 </button>
               ) : activeSegId ? (
-                <div style={{ flex:1, padding:'10px', borderRadius:'var(--radius-sm)', background:'rgba(255,255,255,.04)', border:'1px solid var(--border)', fontSize:'12px', color:'var(--muted)', textAlign:'center' }}>
+                <div style={{ flex:1, padding:'10px', borderRadius:'var(--radius-sm)', background:withAlpha(PV.white, 0.04), border:'1px solid var(--border)', fontSize:'12px', color:'var(--muted)', textAlign:'center' }}>
                   Outro trecho ativo. Cancele primeiro.
                 </div>
               ) : (
@@ -274,7 +275,7 @@ const SegmentCard = ({ seg, user, activeSegId, onActivate }) => {
                 </button>
               )
             ) : (
-              <div style={{ flex:1, padding:'10px', borderRadius:'var(--radius-sm)', background:'rgba(249,115,22,.06)', border:'1px solid rgba(249,115,22,.2)', fontSize:'12px', color:'var(--muted)', textAlign:'center' }}>
+              <div style={{ flex:1, padding:'10px', borderRadius:'var(--radius-sm)', background:withAlpha(PV.orange, 0.04), border:`1px solid ${withAlpha(PV.orange, 0.24)}`, fontSize:'12px', color:'var(--muted)', textAlign:'center' }}>
                 Login para entrar no ranking
               </div>
             )}
@@ -362,7 +363,7 @@ const Segments = ({ user, openAuthModal }) => {
       </div>
 
       {/* Como funciona */}
-      <div style={{ padding:'12px 14px', borderRadius:'var(--radius-sm)', background:'rgba(249,115,22,.06)', border:'1px solid rgba(249,115,22,.15)', marginBottom:'16px', fontSize:'13px', color:'var(--muted)', lineHeight:1.7 }}>
+      <div style={{ padding:'12px 14px', borderRadius:'var(--radius-sm)', background:withAlpha(PV.orange, 0.04), border:`1px solid ${withAlpha(PV.orange, 0.16)}`, marginBottom:'16px', fontSize:'13px', color:'var(--muted)', lineHeight:1.7 }}>
         <strong style={{ color:'var(--text)' }}>Como funciona:</strong> Toque em <strong style={{ color:'var(--accent)' }}>INICIAR NO APP</strong> para ativar o GPS — o cronômetro inicia sozinho quando você entra na zona de largada e para na chegada. Use <strong style={{ color:'var(--text)' }}>MAPS</strong> para navegar com o Google Maps enquanto o app cronometra em paralelo.
       </div>
 

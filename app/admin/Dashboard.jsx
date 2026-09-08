@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { supabase } from '../../src/lib/supabaseClient';
 import { adminGet, adminImportImageUrl, adminUploadFile, adminWrite, shouldImportRemoteImageUrl } from '../lib/adminDb';
 import { useAuth, showToast } from '../components/AuthProvider';
+import PV from '../../src/palette';
 
 // ── helpers ─────────────────────────────────────────────────────
 const fmtDate = (iso) => iso ? new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: '2-digit' }) : '—';
@@ -297,8 +298,8 @@ function Users() {
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                       {u.nome}
-                      {u.isAdmin && <span style={{ fontSize: 10, fontWeight: 800, padding: '2px 7px', borderRadius: 999, background: 'var(--accent)', color: '#fff' }}>ADMIN</span>}
-                      {u.isBlocked && <span style={{ fontSize: 10, fontWeight: 800, padding: '2px 7px', borderRadius: 999, background: 'var(--danger)', color: '#fff' }}>BLOQUEADO</span>}
+                      {u.isAdmin && <span style={{ fontSize: 10, fontWeight: 800, padding: '2px 7px', borderRadius: 999, background: 'var(--accent)', color: PV.white }}>ADMIN</span>}
+                      {u.isBlocked && <span style={{ fontSize: 10, fontWeight: 800, padding: '2px 7px', borderRadius: 999, background: 'var(--danger)', color: PV.white }}>BLOQUEADO</span>}
                       {!u.confirmed && <span style={{ fontSize: 10, fontWeight: 800, padding: '2px 7px', borderRadius: 999, background: 'var(--ink-4)', color: 'var(--paper-mut)' }}>email não confirmado</span>}
                     </div>
                     <div style={{ fontSize: 12, color: 'var(--paper-mut)' }}>{u.email} · {[u.cidade, u.uf].filter(Boolean).join('/') || 'sem cidade'} · entrou {fmtDate(u.createdAt)}</div>

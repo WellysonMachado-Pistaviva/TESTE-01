@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Compass, Newspaper, Flame, ExternalLink, Search, Globe, ChevronRight } from 'lucide-react';
+import PV, { withAlpha } from '../../src/palette';
 
 const CATEGORIES = [
   { id: 'Todos', label: 'Todos os Sites', icon: null },
@@ -155,7 +156,7 @@ export default function DiretorioClient() {
         .search-input:focus {
           border-color: var(--clay);
           background: var(--snow);
-          box-shadow: 0 0 0 3px rgba(255, 90, 0, 0.1);
+          box-shadow: 0 0 0 3px ${withAlpha(PV.orange, 0.12)};
           outline: none;
         }
         .search-icon {
@@ -203,7 +204,7 @@ export default function DiretorioClient() {
         .filter-btn.active {
           background: var(--clay);
           border-color: var(--clay);
-          color: #fff;
+          color: ${PV.white};
         }
         .results-count {
           font-family: var(--mono);
@@ -246,13 +247,13 @@ export default function DiretorioClient() {
           display: flex;
           flex-direction: column;
           transition: all 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
-          box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+          box-shadow: 0 2px 8px ${withAlpha(PV.black, 0)};
           min-height: 250px;
         }
         .site-card:hover {
           transform: translateY(-4px);
           border-color: var(--clay);
-          box-shadow: 0 16px 40px rgba(10, 11, 13, 0.08);
+          box-shadow: 0 16px 40px ${withAlpha(PV.black0, 0.08)};
         }
         .card-header {
           display: flex;
@@ -272,9 +273,9 @@ export default function DiretorioClient() {
           font-size: 9.5px;
           padding: 4px 8px;
           border-radius: 4px;
-          background: rgba(255, 90, 0, 0.08);
+          background: ${withAlpha(PV.orange, 0.08)};
           color: var(--clay);
-          border: 1px solid rgba(255, 90, 0, 0.15);
+          border: 1px solid ${withAlpha(PV.orange, 0.16)};
         }
         .site-title {
           font-family: var(--display);
@@ -403,7 +404,7 @@ export default function DiretorioClient() {
           font-size: 12.5px;
           padding: 14px 24px;
           background: var(--clay);
-          color: #fff;
+          color: ${PV.white};
           border-radius: 4px;
           border: none;
           cursor: pointer;
@@ -413,7 +414,7 @@ export default function DiretorioClient() {
           gap: 8px;
         }
         .cta-btn:hover {
-          background: #e84e00;
+          background: ${PV.orangeStrong};
           transform: translateY(-1px);
         }
       `}</style>

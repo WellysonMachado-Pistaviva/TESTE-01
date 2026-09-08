@@ -2,6 +2,7 @@ import { Saira, Saira_Condensed, Saira_Semi_Condensed } from 'next/font/google';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import PV from '../src/palette';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;        // ex: G-XXXXXXXXXX
 const ADSENSE_ID = 'ca-pub-3461762705627085';
@@ -52,7 +53,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: '#0e1311',
+  themeColor: PV.black,
   width: 'device-width',
   initialScale: 1,
 };

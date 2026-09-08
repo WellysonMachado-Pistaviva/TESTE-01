@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { TILES } from '../../src/lib/mapTiles';
+import PV, { withAlpha } from '../../src/palette';
 
 // Mapa do desafio: checkpoints numerados + traçado real por estrada (BRouter via
 // /api/route). Se o roteamento falhar, cai pra linha reta tracejada entre os pontos.
@@ -12,7 +13,7 @@ import { TILES } from '../../src/lib/mapTiles';
 const numIcon = (n, chegada) =>
   L.divIcon({
     className: 'dsf-pin',
-    html: `<span style="display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:${chegada ? '#0e1311' : '#ff5a00'};color:#fff;font-weight:800;font-size:13px;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.35);font-family:var(--font)">${chegada ? '🏁' : n}</span>`,
+    html: `<span style="display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:${chegada ? PV.black : PV.orange};color:${PV.white};font-weight:800;font-size:13px;border:2.5px solid ${PV.white};box-shadow:0 2px 8px ${withAlpha(PV.black, 0.32)};font-family:var(--font)">${chegada ? '🏁' : n}</span>`,
     iconSize: [30, 30],
     iconAnchor: [15, 15],
     popupAnchor: [0, -14],
@@ -63,11 +64,11 @@ export default function DesafioMapaInner({ checkpoints = [], fecharAnel = false 
         {rota && rota !== 'erro' ? (
           <>
             {/* contorno + linha: traçado legível sobre qualquer tile */}
-            <Polyline positions={rota.line} pathOptions={{ color: '#0e1311', weight: 7, opacity: 0.5 }} />
-            <Polyline positions={rota.line} pathOptions={{ color: '#ff5a00', weight: 4, opacity: 0.95 }} />
+            <Polyline positions={rota.line} pathOptions={{ color: PV.black, weight: 7, opacity: 0.5 }} />
+            <Polyline positions={rota.line} pathOptions={{ color: PV.orange, weight: 4, opacity: 0.95 }} />
           </>
         ) : (
-          <Polyline positions={pontos} pathOptions={{ color: '#ff5a00', weight: 3, dashArray: '8 8', opacity: 0.8 }} />
+          <Polyline positions={pontos} pathOptions={{ color: PV.orange, weight: 3, dashArray: '8 8', opacity: 0.8 }} />
         )}
         {checkpoints.map((c, i) => {
           const chegada = !fecharAnel && i === checkpoints.length - 1;
@@ -84,12 +85,12 @@ export default function DesafioMapaInner({ checkpoints = [], fecharAnel = false 
 
       {/* selo de distância do traçado real */}
       {rota && rota !== 'erro' && rota.distanceKm ? (
-        <div style={{ position: 'absolute', top: 10, right: 10, zIndex: 500, background: '#0e1311', color: '#fff', fontSize: 12.5, fontWeight: 700, padding: '6px 11px', borderRadius: 100, boxShadow: '0 2px 8px rgba(0,0,0,.3)' }}>
+        <div style={{ position: 'absolute', top: 10, right: 10, zIndex: 500, background: PV.black, color: PV.white, fontSize: 12.5, fontWeight: 700, padding: '6px 11px', borderRadius: 100, boxShadow: `0 2px 8px ${withAlpha(PV.black, 0.32)}` }}>
           ≈ {Math.round(rota.distanceKm)} km de traçado
         </div>
       ) : null}
       {rota === null && (
-        <div style={{ position: 'absolute', top: 10, right: 10, zIndex: 500, background: 'rgba(14,19,17,.85)', color: '#fff', fontSize: 12, padding: '6px 11px', borderRadius: 100 }}>
+        <div style={{ position: 'absolute', top: 10, right: 10, zIndex: 500, background: withAlpha(PV.forestDeep, 0.85), color: PV.white, fontSize: 12, padding: '6px 11px', borderRadius: 100 }}>
           Traçando rota…
         </div>
       )}

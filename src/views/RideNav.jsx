@@ -4,6 +4,7 @@ import L from 'leaflet';
 import { X, Crosshair, Navigation, Volume2, VolumeX, CornerUpLeft, CornerUpRight, AlertTriangle, Compass } from 'lucide-react';
 import { useWakeLock } from '../hooks/useWakeLock';
 import { TILES } from '../lib/mapTiles';
+import PV, { withAlpha } from '../palette';
 
 const toRad = d => d * Math.PI / 180;
 const toDeg = r => r * 180 / Math.PI;
@@ -28,7 +29,7 @@ const distToSeg = (p, a, b) => {
   return Math.hypot(px - cx, py - cy);
 };
 
-const destIcon = L.divIcon({ html: `<div style="width:26px;height:26px;border-radius:50%;background:#ef4444;border:2px solid #fff;display:grid;place-items:center;font-size:13px;">🏁</div>`, className: '', iconSize: [26, 26], iconAnchor: [13, 13] });
+const destIcon = L.divIcon({ html: `<div style="width:26px;height:26px;border-radius:50%;background:${PV.danger};border:2px solid ${PV.white};display:grid;place-items:center;font-size:13px;">🏁</div>`, className: '', iconSize: [26, 26], iconAnchor: [13, 13] });
 
 function Follow({ pos, follow }) {
   const map = useMap();
@@ -128,7 +129,7 @@ export default function RideNav({ line = [], dest, originName, destName, onClose
   const waze = dLat != null ? `https://waze.com/ul?ll=${dLat},${dLng}&navigate=yes` : null;
 
   return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 4000, background: '#0a0a0b' }}>
+    <div style={{ position: 'fixed', inset: 0, zIndex: 4000, background: PV.black0 }}>
       {/* Viewport recorta; o "stage" é maior que a tela e gira pra direção (heading-up) */}
       <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
         <div style={{
@@ -138,8 +139,8 @@ export default function RideNav({ line = [], dest, originName, destName, onClose
         }}>
           <MapContainer center={center} zoom={15} style={{ height: '100%', width: '100%' }} zoomControl={false} attributionControl={false} dragging={!headingUp} doubleClickZoom={false}>
             <TileLayer attribution={TILES.topo.attribution} url={TILES.topo.url} />
-            {traveled.length > 1 && <Polyline positions={traveled} color="#6b7280" weight={5} opacity={0.7} />}
-            {remaining.length > 1 && <Polyline positions={remaining} color="#f97316" weight={6} opacity={0.95} />}
+            {traveled.length > 1 && <Polyline positions={traveled} color={PV.mapTrack} weight={5} opacity={0.7} />}
+            {remaining.length > 1 && <Polyline positions={remaining} color={PV.orange} weight={6} opacity={0.95} />}
             {dLat != null && <Marker position={[dLat, dLng]} icon={destIcon} />}
             <Follow pos={pos} follow={follow} />
           </MapContainer>
@@ -150,9 +151,9 @@ export default function RideNav({ line = [], dest, originName, destName, onClose
       {pos && (
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', zIndex: 4001, pointerEvents: 'none' }}>
           <div style={{ transform: headingUp ? 'none' : `rotate(${heading}deg)`, transition: 'transform .4s ease-out' }}>
-            <svg width="40" height="40" viewBox="0 0 40 40" style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,.6))' }}>
-              <circle cx="20" cy="20" r="8" fill="rgba(249,115,22,.25)" />
-              <path d="M20 5 L30 30 L20 24 L10 30 Z" fill="#f97316" stroke="#fff" strokeWidth="2" strokeLinejoin="round" />
+            <svg width="40" height="40" viewBox="0 0 40 40" style={{ filter: `drop-shadow(0 2px 6px ${withAlpha(PV.black, 0.6)})` }}>
+              <circle cx="20" cy="20" r="8" fill={withAlpha(PV.orange, 0.24)} />
+              <path d="M20 5 L30 30 L20 24 L10 30 Z" fill={PV.orange} stroke={PV.white} strokeWidth="2" strokeLinejoin="round" />
             </svg>
           </div>
         </div>
@@ -161,7 +162,7 @@ export default function RideNav({ line = [], dest, originName, destName, onClose
       {/* banner de curva / saiu da rota */}
       {(offRoute || cue) && (
         <div style={{ position: 'absolute', top: 'calc(86px + env(safe-area-inset-top))', left: 12, right: 12, zIndex: 4002, display: 'flex', justifyContent: 'center' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '12px 18px', borderRadius: 14, color: '#fff', fontWeight: 800, fontFamily: 'var(--display)', textTransform: 'uppercase', letterSpacing: '.02em', background: offRoute ? '#b91c1c' : (cue?.sharp ? '#b45309' : 'rgba(8,8,9,.9)'), border: '1px solid rgba(255,255,255,.18)', boxShadow: '0 8px 24px rgba(0,0,0,.5)' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '12px 18px', borderRadius: 14, color: PV.white, fontWeight: 800, fontFamily: 'var(--display)', textTransform: 'uppercase', letterSpacing: '.02em', background: offRoute ? PV.danger : (cue?.sharp ? PV.warning : withAlpha(PV.black, 0.85)), border: `1px solid ${withAlpha(PV.white, 0.16)}`, boxShadow: `0 8px 24px ${withAlpha(PV.black, 0.5)}` }}>
             {offRoute ? <><AlertTriangle size={22} /> Você saiu da rota</>
               : <>{cue.side === 'esquerda' ? <CornerUpLeft size={24} /> : <CornerUpRight size={24} />} {cue.sharp ? 'Curva acentuada' : 'Curva'} à {cue.side} · {cue.dist}m</>}
           </div>
@@ -170,24 +171,24 @@ export default function RideNav({ line = [], dest, originName, destName, onClose
 
       {/* HUD topo */}
       <div style={{ position: 'absolute', top: 'calc(12px + env(safe-area-inset-top))', left: 12, right: 12, zIndex: 4001, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-        <div style={{ flex: 1, background: 'rgba(8,8,9,.82)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,.12)', borderRadius: 14, padding: '12px 14px', color: '#fff' }}>
-          <div style={{ fontFamily: 'var(--mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '.1em', color: 'rgba(255,255,255,.6)' }}>{originName ? `${originName.split(',')[0]} → ` : ''}{destName?.split(',')[0] || 'Destino'}</div>
+        <div style={{ flex: 1, background: withAlpha(PV.black, 0.85), backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', border: `1px solid ${withAlpha(PV.white, 0.12)}`, borderRadius: 14, padding: '12px 14px', color: PV.white }}>
+          <div style={{ fontFamily: 'var(--mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '.1em', color: withAlpha(PV.white, 0.6) }}>{originName ? `${originName.split(',')[0]} → ` : ''}{destName?.split(',')[0] || 'Destino'}</div>
           <div style={{ display: 'flex', gap: 18, marginTop: 6, alignItems: 'baseline' }}>
-            <div><span style={{ fontFamily: 'var(--display)', fontWeight: 900, fontSize: 30, color: '#ff7a1a' }}>{restante != null ? restante.toFixed(restante < 10 ? 1 : 0) : '--'}</span> <span style={{ fontSize: 12, color: 'rgba(255,255,255,.6)' }}>km restantes</span></div>
-            <div><span style={{ fontFamily: 'var(--display)', fontWeight: 900, fontSize: 22 }}>{Math.round(speed)}</span> <span style={{ fontSize: 11, color: 'rgba(255,255,255,.6)' }}>km/h</span></div>
+            <div><span style={{ fontFamily: 'var(--display)', fontWeight: 900, fontSize: 30, color: PV.orangeSoft }}>{restante != null ? restante.toFixed(restante < 10 ? 1 : 0) : '--'}</span> <span style={{ fontSize: 12, color: withAlpha(PV.white, 0.6) }}>km restantes</span></div>
+            <div><span style={{ fontFamily: 'var(--display)', fontWeight: 900, fontSize: 22 }}>{Math.round(speed)}</span> <span style={{ fontSize: 11, color: withAlpha(PV.white, 0.6) }}>km/h</span></div>
           </div>
-          {err && <div style={{ fontSize: 12, color: '#ffb300', marginTop: 6 }}>{err}</div>}
+          {err && <div style={{ fontSize: 12, color: PV.warning, marginTop: 6 }}>{err}</div>}
         </div>
-        <button onClick={() => setVoice(v => !v)} aria-label="Voz" style={{ width: 44, height: 44, borderRadius: 12, background: voice ? '#f97316' : 'rgba(8,8,9,.82)', border: '1px solid rgba(255,255,255,.12)', color: '#fff', display: 'grid', placeItems: 'center', cursor: 'pointer', flexShrink: 0 }}>{voice ? <Volume2 size={20} /> : <VolumeX size={20} />}</button>
-        <button onClick={onClose} aria-label="Encerrar" style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(8,8,9,.82)', border: '1px solid rgba(255,255,255,.12)', color: '#fff', display: 'grid', placeItems: 'center', cursor: 'pointer', flexShrink: 0 }}><X size={22} /></button>
+        <button onClick={() => setVoice(v => !v)} aria-label="Voz" style={{ width: 44, height: 44, borderRadius: 12, background: voice ? PV.orange : withAlpha(PV.black, 0.85), border: `1px solid ${withAlpha(PV.white, 0.12)}`, color: PV.white, display: 'grid', placeItems: 'center', cursor: 'pointer', flexShrink: 0 }}>{voice ? <Volume2 size={20} /> : <VolumeX size={20} />}</button>
+        <button onClick={onClose} aria-label="Encerrar" style={{ width: 44, height: 44, borderRadius: 12, background: withAlpha(PV.black, 0.85), border: `1px solid ${withAlpha(PV.white, 0.12)}`, color: PV.white, display: 'grid', placeItems: 'center', cursor: 'pointer', flexShrink: 0 }}><X size={22} /></button>
       </div>
 
       {/* botões base */}
       <div style={{ position: 'absolute', bottom: 'calc(16px + env(safe-area-inset-bottom))', left: 12, right: 12, zIndex: 4001, display: 'flex', gap: 8 }}>
-        <button onClick={() => setFollow(f => !f)} style={{ flex: '0 0 auto', padding: '13px 15px', borderRadius: 12, background: follow ? '#f97316' : 'rgba(8,8,9,.82)', color: '#fff', border: '1px solid rgba(255,255,255,.15)', cursor: 'pointer', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 7 }}><Crosshair size={16} /> {follow ? 'Seguindo' : 'Centralizar'}</button>
-        <button onClick={() => setHeadingUp(h => !h)} aria-label="Direção/Norte" title={headingUp ? 'Mapa na direção' : 'Mapa ao norte'} style={{ flex: '0 0 auto', padding: '13px 15px', borderRadius: 12, background: headingUp ? '#f97316' : 'rgba(8,8,9,.82)', color: '#fff', border: '1px solid rgba(255,255,255,.15)', cursor: 'pointer', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 7 }}><Compass size={16} /> {headingUp ? 'Direção' : 'Norte'}</button>
-        {gmaps && <a href={gmaps} target="_blank" rel="noopener noreferrer" style={{ flex: 1, padding: '13px 15px', borderRadius: 12, background: 'rgba(8,8,9,.82)', color: '#fff', border: '1px solid rgba(255,255,255,.15)', textAlign: 'center', fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 7 }}><Navigation size={16} /> Maps (voz)</a>}
-        {waze && <a href={waze} target="_blank" rel="noopener noreferrer" style={{ flex: '0 0 auto', padding: '13px 15px', borderRadius: 12, background: 'rgba(8,8,9,.82)', color: '#fff', border: '1px solid rgba(255,255,255,.15)', textAlign: 'center', fontWeight: 700, textDecoration: 'none' }}>Waze</a>}
+        <button onClick={() => setFollow(f => !f)} style={{ flex: '0 0 auto', padding: '13px 15px', borderRadius: 12, background: follow ? PV.orange : withAlpha(PV.black, 0.85), color: PV.white, border: `1px solid ${withAlpha(PV.white, 0.16)}`, cursor: 'pointer', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 7 }}><Crosshair size={16} /> {follow ? 'Seguindo' : 'Centralizar'}</button>
+        <button onClick={() => setHeadingUp(h => !h)} aria-label="Direção/Norte" title={headingUp ? 'Mapa na direção' : 'Mapa ao norte'} style={{ flex: '0 0 auto', padding: '13px 15px', borderRadius: 12, background: headingUp ? PV.orange : withAlpha(PV.black, 0.85), color: PV.white, border: `1px solid ${withAlpha(PV.white, 0.16)}`, cursor: 'pointer', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 7 }}><Compass size={16} /> {headingUp ? 'Direção' : 'Norte'}</button>
+        {gmaps && <a href={gmaps} target="_blank" rel="noopener noreferrer" style={{ flex: 1, padding: '13px 15px', borderRadius: 12, background: withAlpha(PV.black, 0.85), color: PV.white, border: `1px solid ${withAlpha(PV.white, 0.16)}`, textAlign: 'center', fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 7 }}><Navigation size={16} /> Maps (voz)</a>}
+        {waze && <a href={waze} target="_blank" rel="noopener noreferrer" style={{ flex: '0 0 auto', padding: '13px 15px', borderRadius: 12, background: withAlpha(PV.black, 0.85), color: PV.white, border: `1px solid ${withAlpha(PV.white, 0.16)}`, textAlign: 'center', fontWeight: 700, textDecoration: 'none' }}>Waze</a>}
       </div>
     </div>
   );

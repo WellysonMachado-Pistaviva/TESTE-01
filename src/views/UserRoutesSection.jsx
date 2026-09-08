@@ -3,9 +3,10 @@ import { MapPin, Navigation, Send, Plus } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import { uploadPostImage, getRouteComments, addRouteComment } from '../services/storage';
 import PhotoCarousel from '../../app/components/PhotoCarousel';
+import PV, { withAlpha } from '../palette';
 
 const DIFFS = ['Fácil', 'Intermediário', 'Avançado'];
-const DIFF_COLOR = { 'Fácil': '#22c55e', 'Intermediário': '#eab308', 'Avançado': '#ef4444' };
+const DIFF_COLOR = { 'Fácil': PV.success, 'Intermediário': PV.warning, 'Avançado': PV.danger };
 const inp = { width: '100%', padding: '11px 13px', marginBottom: 10, background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontFamily: 'inherit', fontSize: 14 };
 
 // Autocomplete simples (open-meteo, BR)
@@ -45,7 +46,7 @@ function RouteComments({ routeId, promptIdentity, identity, deviceId }) {
     <div style={{ marginTop: 12, borderTop: '1px solid var(--border)', paddingTop: 12 }}>
       <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--muted)', marginBottom: 8 }}>{comments ? comments.length : 0} relato{(comments?.length || 0) === 1 ? '' : 's'} de quem fez</div>
       {comments && comments.map(c => (
-        <div key={c.id} style={{ marginBottom: 8, fontSize: 13 }}><b style={{ color: 'var(--accent-2,#ff7a1a)' }}>{c.user || c.author_name}</b> <span style={{ color: 'var(--text)' }}>{c.text || c.content}</span></div>
+        <div key={c.id} style={{ marginBottom: 8, fontSize: 13 }}><b style={{ color: 'var(--accent-2)' }}>{c.user || c.author_name}</b> <span style={{ color: 'var(--text)' }}>{c.text || c.content}</span></div>
       ))}
       <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
         <input style={{ ...inp, marginBottom: 0, flex: 1, fontSize: 13 }} placeholder="Conte como foi sua experiência..." value={text} onChange={e => setText(e.target.value)} onKeyDown={e => e.key === 'Enter' && send()} />
@@ -142,7 +143,7 @@ export default function UserRoutesSection({ promptIdentity, identity, deviceId }
               {f.fotos.map((src, i) => (
                 <div key={i} style={{ position: 'relative', aspectRatio: '1', borderRadius: 8, overflow: 'hidden', border: '1px solid var(--border)' }}>
                   <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  <button type="button" onClick={() => setF(s => ({ ...s, fotos: s.fotos.filter((_, k) => k !== i) }))} style={{ position: 'absolute', top: 4, right: 4, width: 22, height: 22, borderRadius: '50%', background: 'rgba(0,0,0,.7)', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 800 }}>×</button>
+                  <button type="button" onClick={() => setF(s => ({ ...s, fotos: s.fotos.filter((_, k) => k !== i) }))} style={{ position: 'absolute', top: 4, right: 4, width: 22, height: 22, borderRadius: '50%', background: withAlpha(PV.black, 0.72), color: PV.white, border: 'none', cursor: 'pointer', fontWeight: 800 }}>×</button>
                 </div>
               ))}
               {f.fotos.length < 3 && <label style={{ aspectRatio: '1', borderRadius: 8, border: '1.5px dashed var(--border)', display: 'grid', placeItems: 'center', cursor: 'pointer', color: 'var(--muted)', fontSize: 13, textAlign: 'center' }}>{uploading ? '…' : <span>📷<br />Add</span>}<input type="file" accept="image/*" hidden onChange={addFoto} disabled={uploading} /></label>}

@@ -5,6 +5,7 @@ import L from 'leaflet';
 import { useWeather } from '../hooks/useWeather';
 import { getRoutes, getPresetRoutes, getRouteComments, addRouteComment } from '../services/storage';
 import UserRoutesSection from './UserRoutesSection';
+import PV, { withAlpha } from '../palette';
 
 const distMeters = (aLat, aLng, bLat, bLng) => {
   const R = 6371000, toR = Math.PI / 180;
@@ -24,11 +25,11 @@ const FitBounds = ({ points }) => {
 };
 
 const destIcon = L.divIcon({
-  html: `<div style="width:22px;height:22px;border-radius:50%;background:#ef4444;display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 6px rgba(239,68,68,.6);border:2px solid #fff;">🏁</div>`,
+  html: `<div style="width:22px;height:22px;border-radius:50%;background:${PV.danger};display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 6px ${withAlpha(PV.danger, 0.6)};border:2px solid ${PV.white};">🏁</div>`,
   className: '', iconSize: [22, 22], iconAnchor: [11, 11],
 });
 const selfIcon = L.divIcon({
-  html: `<div style="width:22px;height:22px;border-radius:50%;background:#f97316;display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 6px rgba(249,115,22,.6);border:2px solid #fff;">📍</div>`,
+  html: `<div style="width:22px;height:22px;border-radius:50%;background:${PV.orange};display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 6px ${withAlpha(PV.orange, 0.6)};border:2px solid ${PV.white};">📍</div>`,
   className: '', iconSize: [22, 22], iconAnchor: [11, 11],
 });
 
@@ -45,7 +46,7 @@ const DestWeather = ({ lat, lng }) => {
     }}>
       <span>{weather.icon}</span>
       <span>{weather.temp}°C · {weather.label}</span>
-      <span style={{ background: weather.color, color: '#fff', padding: '1px 7px', borderRadius: '999px', fontSize: '10px', fontWeight: 800 }}>
+      <span style={{ background: weather.color, color: PV.white, padding: '1px 7px', borderRadius: '999px', fontSize: '10px', fontWeight: 800 }}>
         {weather.riding}
       </span>
     </div>
@@ -134,14 +135,14 @@ const RouteCard = ({ route, userLocation, promptIdentity, identity, deviceId }) 
         </div>
         <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '8px' }}>
           {(route.tags || []).map(t => (
-            <span key={t} style={{ padding: '2px 8px', borderRadius: '999px', fontSize: '10px', fontWeight: 700, background: 'var(--accent-subtle)', color: 'var(--accent)', border: '1px solid rgba(249,115,22,.2)' }}>#{t}</span>
+            <span key={t} style={{ padding: '2px 8px', borderRadius: '999px', fontSize: '10px', fontWeight: 700, background: 'var(--accent-subtle)', color: 'var(--accent)', border: `1px solid ${withAlpha(PV.orange, 0.24)}` }}>#{t}</span>
           ))}
         </div>
       </div>
 
       {/* Expanded */}
       {expanded && (
-        <div style={{ borderTop: '1px solid var(--border)', padding: '18px 20px', background: 'rgba(0,0,0,.12)' }}>
+        <div style={{ borderTop: '1px solid var(--border)', padding: '18px 20px', background: withAlpha(PV.black, 0.12) }}>
           {/* ── MINI MAPA: sua posição → destino ── */}
           <div style={{ marginBottom: '16px', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)', height: '160px' }}>
             <MapContainer
@@ -155,7 +156,7 @@ const RouteCard = ({ route, userLocation, promptIdentity, identity, deviceId }) 
               <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
 
               {/* Traçado da rota (pelas estradas) */}
-              {routeLine && <Polyline positions={routeLine} color="#e8821e" weight={4} opacity={0.95} />}
+              {routeLine && <Polyline positions={routeLine} color={PV.orange} weight={4} opacity={0.95} />}
 
               {/* Início e fim da rota */}
               <Marker position={[start.lat, start.lng]} icon={selfIcon} />
@@ -165,7 +166,7 @@ const RouteCard = ({ route, userLocation, promptIdentity, identity, deviceId }) 
               {userLocation && (
                 <>
                   <Marker position={[userLocation.lat, userLocation.lng]} icon={selfIcon} />
-                  <Polyline positions={[[userLocation.lat, userLocation.lng], [start.lat, start.lng]]} color="#6f9a5e" weight={2.5} dashArray="6 6" opacity={0.7} />
+                  <Polyline positions={[[userLocation.lat, userLocation.lng], [start.lat, start.lng]]} color={PV.mapGreen} weight={2.5} dashArray="6 6" opacity={0.7} />
                 </>
               )}
 
@@ -193,7 +194,7 @@ const RouteCard = ({ route, userLocation, promptIdentity, identity, deviceId }) 
           </div>
 
           {route.tip && (
-            <div style={{ padding: '12px 16px', borderRadius: 'var(--radius-sm)', background: 'rgba(249,115,22,.06)', border: '1px solid rgba(249,115,22,.2)', fontSize: '13px', color: 'var(--muted)', marginBottom: '16px', display: 'flex', gap: '8px' }}>
+            <div style={{ padding: '12px 16px', borderRadius: 'var(--radius-sm)', background: withAlpha(PV.orange, 0.04), border: `1px solid ${withAlpha(PV.orange, 0.24)}`, fontSize: '13px', color: 'var(--muted)', marginBottom: '16px', display: 'flex', gap: '8px' }}>
               <span style={{ flexShrink: 0, color: 'var(--accent)', fontWeight: 800 }}>💡</span>{route.tip}
             </div>
           )}
@@ -201,7 +202,7 @@ const RouteCard = ({ route, userLocation, promptIdentity, identity, deviceId }) 
           <a
             href={`https://www.google.com/maps/dir/?api=1&destination=${route.destLat},${route.destLng}&travelmode=driving`}
             target="_blank" rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 18px', borderRadius: 'var(--radius-sm)', background: 'linear-gradient(135deg,var(--accent),hsl(14,90%,48%))', color: '#fff', fontWeight: 800, fontSize: '12px', letterSpacing: '1px', textDecoration: 'none', marginBottom: '18px' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 18px', borderRadius: 'var(--radius-sm)', background: 'linear-gradient(135deg,var(--accent),hsl(14,90%,48%))', color: PV.white, fontWeight: 800, fontSize: '12px', letterSpacing: '1px', textDecoration: 'none', marginBottom: '18px' }}
           >
             <Navigation size={14} /> NAVEGAR ATÉ O DESTINO
           </a>
@@ -301,7 +302,7 @@ const MyRoutes = ({ user, promptIdentity, identity, deviceId }) => {
             {REGION_FILTERS.map(f => <button key={f} className={`filter-chip ${regionFilter === f ? 'active' : ''}`} onClick={() => setRegionFilter(f)}>{f}</button>)}
           </div>
 
-          <div style={{ padding: '12px 16px', borderRadius: 'var(--radius-sm)', marginBottom: '20px', background: 'rgba(249,115,22,.06)', border: '1px solid rgba(249,115,22,.2)', fontSize: '13px', color: 'var(--muted)', display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <div style={{ padding: '12px 16px', borderRadius: 'var(--radius-sm)', marginBottom: '20px', background: withAlpha(PV.orange, 0.04), border: `1px solid ${withAlpha(PV.orange, 0.24)}`, fontSize: '13px', color: 'var(--muted)', display: 'flex', gap: '8px', alignItems: 'center' }}>
             <Navigation size={14} style={{ color: 'var(--accent)', flexShrink: 0 }} />
             O ponto de partida é a <strong style={{ color: 'var(--text)', margin: '0 3px' }}>sua localização atual</strong>. Clique em "Navegar" para abrir o Google Maps com a rota calculada.
           </div>

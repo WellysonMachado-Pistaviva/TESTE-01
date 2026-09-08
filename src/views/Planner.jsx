@@ -7,6 +7,7 @@ import { useWeather } from '../hooks/useWeather';
 import { TILES } from '../lib/mapTiles';
 import RideNav from './RideNav';
 import { supabase } from '../lib/supabaseClient';
+import PV, { withAlpha } from '../palette';
 
 // distância haversine (km)
 const distKmLL = (aLat, aLng, bLat, bLng) => {
@@ -24,11 +25,11 @@ const showErr = (msg) => {
 };
 
 const originIcon = L.divIcon({
-  html: `<div style="width:28px;height:28px;border-radius:50%;background:#22c55e;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(34,197,94,.6);border:2px solid #fff;">📍</div>`,
+  html: `<div style="width:28px;height:28px;border-radius:50%;background:${PV.success};display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px ${withAlpha(PV.success, 0.6)};border:2px solid ${PV.white};">📍</div>`,
   className: '', iconSize: [28, 28], iconAnchor: [14, 14],
 });
 const destIcon = L.divIcon({
-  html: `<div style="width:28px;height:28px;border-radius:50%;background:#ef4444;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(239,68,68,.6);border:2px solid #fff;">🏁</div>`,
+  html: `<div style="width:28px;height:28px;border-radius:50%;background:${PV.danger};display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px ${withAlpha(PV.danger, 0.6)};border:2px solid ${PV.white};">🏁</div>`,
   className: '', iconSize: [28, 28], iconAnchor: [14, 14],
 });
 
@@ -304,7 +305,7 @@ const Planner = () => {
         {/* ROUND TRIP */}
         <label className={`pg-toggle${isRoundtrip ? ' on' : ''}`}>
           <input type="checkbox" checked={isRoundtrip} onChange={e => setIsRoundtrip(e.target.checked)} hidden />
-          <span className="box">{isRoundtrip && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.2"><path d="m5 12 5 5 9-10" /></svg>}</span>
+          <span className="box">{isRoundtrip && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={PV.white} strokeWidth="3.2"><path d="m5 12 5 5 9-10" /></svg>}</span>
           <span className="tt"><b>Bate e Volta</b><span>Dobra a distância e o custo automaticamente</span></span>
         </label>
 
@@ -312,7 +313,7 @@ const Planner = () => {
         <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
           {[['rapida', '⚡ Mais rápida'], ['curva', '🏍️ Mais curva']].map(([k, l]) => (
             <button key={k} type="button" onClick={() => setRouteMode(k)}
-              style={{ flex: 1, padding: '10px', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--mono)', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.04em', cursor: 'pointer', border: `1.5px solid ${routeMode === k ? 'var(--accent)' : 'var(--border)'}`, background: routeMode === k ? 'var(--accent)' : 'transparent', color: routeMode === k ? '#fff' : 'var(--muted)' }}>{l}</button>
+              style={{ flex: 1, padding: '10px', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--mono)', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.04em', cursor: 'pointer', border: `1.5px solid ${routeMode === k ? 'var(--accent)' : 'var(--border)'}`, background: routeMode === k ? 'var(--accent)' : 'transparent', color: routeMode === k ? PV.white : 'var(--muted)' }}>{l}</button>
           ))}
         </div>
         {routeMode === 'curva' && <p style={{ fontSize: 11, color: 'var(--muted)', marginBottom: 10, marginTop: -4 }}>Rota que evita reta chata e prioriza estrada de curva (motor BRouter, grátis).</p>}
@@ -336,7 +337,7 @@ const Planner = () => {
 
           {/* FOTÓGRAFOS NA ROTA */}
           {routePhotographers.length > 0 && (
-            <div style={{ background:'rgba(255,98,0,.08)', borderBottom:'1px solid var(--border)', padding:'14px 16px' }}>
+            <div style={{ background:withAlpha(PV.orange, 0.08), borderBottom:'1px solid var(--border)', padding:'14px 16px' }}>
               <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:10, color:'var(--accent)', fontWeight:800, fontSize:13, letterSpacing:'.5px' }}>
                 <Camera size={16} /> {routePhotographers.length} fotógrafo{routePhotographers.length>1?'s':''} na sua rota
               </div>
@@ -365,27 +366,27 @@ const Planner = () => {
                 <Marker position={result.line[result.line.length-1]} icon={destIcon} />
                 <FitRoute line={result.line} />
               </MapContainer>
-              <div style={{ position:'absolute', top:'8px', left:'8px', zIndex:999, background:'rgba(0,0,0,.88)', border:'1px solid rgba(255,98,0,.4)', padding:'4px 10px', display:'flex', alignItems:'center', gap:'5px' }}>
+              <div style={{ position:'absolute', top:'8px', left:'8px', zIndex:999, background:withAlpha(PV.black, 0.85), border:`1px solid ${withAlpha(PV.orange, 0.4)}`, padding:'4px 10px', display:'flex', alignItems:'center', gap:'5px' }}>
                 <span style={{ fontSize:'12px' }}>🏍️</span>
                 <span style={{ fontFamily:'var(--display)', fontWeight:900, fontSize:'11px', letterSpacing:'1px' }}>PISTA<span style={{ color:'var(--accent)' }}>VIVA</span></span>
               </div>
-              <div style={{ position:'absolute', top:'8px', right:'8px', zIndex:999, background:'rgba(0,0,0,.7)', padding:'3px 8px', fontSize:'10px', color:'rgba(255,255,255,.5)', fontWeight:600 }}>{dateStr}</div>
+              <div style={{ position:'absolute', top:'8px', right:'8px', zIndex:999, background:withAlpha(PV.black, 0.72), padding:'3px 8px', fontSize:'10px', color:withAlpha(PV.white, 0.5), fontWeight:600 }}>{dateStr}</div>
             </div>
           )}
 
           {/* FAIXA ROTA */}
-          <div style={{ background:'var(--accent)', padding:'7px 14px', display:'flex', alignItems:'center', gap:'6px', fontSize:'12px', fontWeight:800, color:'#fff' }}>
+          <div style={{ background:'var(--accent)', padding:'7px 14px', display:'flex', alignItems:'center', gap:'6px', fontSize:'12px', fontWeight:800, color:PV.white }}>
             <span>📍</span>
             <span style={{ overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', flex:1 }}>{origin.name.split(',')[0]}</span>
             <span style={{ opacity:.6, flexShrink:0 }}>→</span>
             <span style={{ overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', flex:1, textAlign:'right' }}>{dest.name.split(',')[0]}</span>
-            {isRoundtrip && <span style={{ flexShrink:0, fontSize:'10px', background:'rgba(0,0,0,.25)', padding:'2px 6px' }}>↩</span>}
+            {isRoundtrip && <span style={{ flexShrink:0, fontSize:'10px', background:withAlpha(PV.black, 0.24), padding:'2px 6px' }}>↩</span>}
           </div>
 
           {/* KM + STATS — zona do print */}
           <div style={{ padding:'12px 14px 10px' }}>
             <div style={{ display:'flex', alignItems:'baseline', gap:'6px', marginBottom:'2px' }}>
-              <div style={{ fontFamily:'var(--headline)', fontSize:'68px', lineHeight:1, color:'#fff', letterSpacing:'-1px' }}>{result.distance}</div>
+              <div style={{ fontFamily:'var(--headline)', fontSize:'68px', lineHeight:1, color:PV.white, letterSpacing:'-1px' }}>{result.distance}</div>
               <div style={{ fontSize:'11px', fontWeight:800, color:'var(--muted)', letterSpacing:'3px', paddingBottom:'6px' }}>KM</div>
             </div>
             <div style={{ fontSize:'10px', fontWeight:700, color:'var(--muted)', letterSpacing:'3px', marginBottom:'12px' }}>
@@ -399,16 +400,16 @@ const Planner = () => {
                 { label:'COMBUSTÍVEL', value:`${result.liters}L` },
                 { label:'CUSTO EST.', value:`R$${result.cost.replace('.',',')}`, accent:true },
               ].map((s,i) => (
-                <div key={i} style={{ padding:'9px 7px', background:s.accent?'rgba(255,98,0,.1)':'rgba(255,255,255,.04)', border:`1px solid ${s.accent?'rgba(255,98,0,.3)':'rgba(255,255,255,.07)'}` }}>
+                <div key={i} style={{ padding:'9px 7px', background:s.accent?withAlpha(PV.orange, 0.12):withAlpha(PV.white, 0.04), border:`1px solid ${s.accent?withAlpha(PV.orange, 0.32):withAlpha(PV.white, 0.08)}` }}>
                   <div style={{ fontSize:'9px', color:s.accent?'var(--accent)':'var(--muted)', fontWeight:700, letterSpacing:'1px', marginBottom:'3px' }}>{s.label}</div>
-                  <div style={{ fontFamily:'var(--display)', fontSize:'14px', fontWeight:900, color:s.accent?'var(--accent)':'#fff', lineHeight:1 }}>{s.value}</div>
+                  <div style={{ fontFamily:'var(--display)', fontSize:'14px', fontWeight:900, color:s.accent?'var(--accent)':PV.white, lineHeight:1 }}>{s.value}</div>
                 </div>
               ))}
             </div>
 
             {/* Fórmula compacta */}
-            <div style={{ fontSize:'11px', color:'var(--muted)', lineHeight:1.6, padding:'8px 10px', background:'rgba(255,255,255,.03)', border:'1px solid rgba(255,255,255,.06)', marginBottom:'8px' }}>
-              📐 {result.distance}km ÷ {avgKmL}km/L = <strong style={{ color:'#fff' }}>{result.liters}L</strong> × R${fuelPrice} = <strong style={{ color:'var(--accent)' }}>R${result.cost.replace('.',',')}</strong>
+            <div style={{ fontSize:'11px', color:'var(--muted)', lineHeight:1.6, padding:'8px 10px', background:withAlpha(PV.white, 0.04), border:`1px solid ${withAlpha(PV.white, 0.04)}`, marginBottom:'8px' }}>
+              📐 {result.distance}km ÷ {avgKmL}km/L = <strong style={{ color:PV.white }}>{result.liters}L</strong> × R${fuelPrice} = <strong style={{ color:'var(--accent)' }}>R${result.cost.replace('.',',')}</strong>
             </div>
 
             {/* Clima compacto */}

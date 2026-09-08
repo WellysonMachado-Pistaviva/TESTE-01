@@ -4,6 +4,7 @@ import { DESAFIOS, REGRAS_GERAIS, COMO_VALIDAR, getDesafio, allDesafioSlugs } fr
 import { getEstrada } from '../../lib/estradas';
 import DesafioMapa from '../../components/DesafioMapa';
 import DesafioCheckin from '../../components/DesafioCheckin';
+import PV from '../../../src/palette';
 
 const BASE = 'https://www.pistavivamototurismo.com.br';
 export const revalidate = 3600;
@@ -112,7 +113,7 @@ export default async function DesafioPage({ params }) {
               <ol style={{ margin: 0, paddingLeft: 0, listStyle: 'none', display: 'grid', gap: 10 }}>
                 {d.checkpoints.map((c, i) => (
                   <li key={c.nome} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', border: '1px solid var(--snow-line)', borderRadius: 12, padding: '12px 14px' }}>
-                    <span style={{ display: 'grid', placeItems: 'center', width: 30, height: 30, borderRadius: '50%', background: !d.fecharAnel && i === d.checkpoints.length - 1 ? 'var(--ink)' : 'var(--clay)', color: '#fff', fontWeight: 800, fontSize: 13.5, flexShrink: 0 }}>
+                    <span style={{ display: 'grid', placeItems: 'center', width: 30, height: 30, borderRadius: '50%', background: !d.fecharAnel && i === d.checkpoints.length - 1 ? 'var(--ink)' : 'var(--clay)', color: PV.white, fontWeight: 800, fontSize: 13.5, flexShrink: 0 }}>
                       {!d.fecharAnel && i === d.checkpoints.length - 1 ? '🏁' : i + 1}
                     </span>
                     <div style={{ flex: 1 }}>

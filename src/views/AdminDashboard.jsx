@@ -20,6 +20,7 @@ import {
   getSegmentCompletionsAdmin, deleteSegmentCompletion,
   getAllExpeditionsAdmin, saveExpedition, deleteExpedition,
 } from '../services/storage';
+import PV, { withAlpha } from '../palette';
 
 // Campo de formulário da Expedição (hoisted — não recriar a cada render).
 const ExpeditionField = ({ label, field, type='text', placeholder='', form, setForm }) => (
@@ -46,7 +47,7 @@ const fmtDate = (iso) => iso ? new Date(iso).toLocaleDateString('pt-BR', { day:'
 const fmtTime = (s) => { if (!s) return '—'; const h=Math.floor(s/3600),m=Math.floor((s%3600)/60); return h>0?`${h}h ${m}min`:`${m}min`; };
 
 const Confirm = ({ msg, onOk, onCancel }) => (
-  <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,.75)', zIndex:9999, display:'flex', alignItems:'center', justifyContent:'center', padding:'20px' }}>
+  <div style={{ position:'fixed', inset:0, background:withAlpha(PV.black, 0.72), zIndex:9999, display:'flex', alignItems:'center', justifyContent:'center', padding:'20px' }}>
     <div style={{ background:'var(--bg2)', border:'1px solid var(--border)', borderRadius:'var(--radius)', padding:'28px 24px', maxWidth:'340px', width:'100%', textAlign:'center' }}>
       <AlertTriangle size={36} color="var(--warning)" style={{ margin:'0 auto 14px' }} />
       <p style={{ fontWeight:700, marginBottom:'20px', lineHeight:1.5 }}>{msg}</p>
@@ -101,7 +102,7 @@ const UsersTab = () => {
   return (
     <div>
       <div style={{ display:'flex', gap:'12px', marginBottom:'16px', flexWrap:'wrap' }}>
-        {[{l:'Total',v:users.length,c:'var(--accent)'},{l:'Admins',v:users.filter(u=>u.isAdmin).length,c:'#6366f1'},{l:'Bloqueados',v:users.filter(u=>u.isBlocked).length,c:'var(--danger)'}].map(s=>(
+        {[{l:'Total',v:users.length,c:'var(--accent)'},{l:'Admins',v:users.filter(u=>u.isAdmin).length,c:PV.info},{l:'Bloqueados',v:users.filter(u=>u.isBlocked).length,c:'var(--danger)'}].map(s=>(
           <div key={s.l} style={{ flex:1, minWidth:'80px', padding:'14px', background:'var(--bg3)', borderRadius:'var(--radius-sm)', border:'1px solid var(--border)', textAlign:'center' }}>
             <div style={{ fontSize:'26px', fontWeight:900, color:s.c }}>{s.v}</div>
             <div style={{ fontSize:'11px', color:'var(--muted)', fontWeight:700, letterSpacing:'1px' }}>{s.l.toUpperCase()}</div>
@@ -115,14 +116,14 @@ const UsersTab = () => {
       <button className="btn-ghost" onClick={reload} style={{ marginBottom:'12px', gap:'6px', fontSize:'13px' }}><RefreshCw size={14} /> Atualizar</button>
       <div style={{ display:'flex', flexDirection:'column', gap:'8px' }}>
         {filtered.map(u => (
-          <div key={u.id} style={{ background:'var(--bg3)', borderRadius:'var(--radius-sm)', border:`1px solid ${u.isBlocked?'rgba(239,68,68,.3)':'var(--border)'}`, padding:'14px 16px' }}>
+          <div key={u.id} style={{ background:'var(--bg3)', borderRadius:'var(--radius-sm)', border:`1px solid ${u.isBlocked?withAlpha(PV.danger, 0.32):'var(--border)'}`, padding:'14px 16px' }}>
             <div style={{ display:'flex', alignItems:'center', gap:'12px', marginBottom:'10px' }}>
-              <div style={{ width:'38px', height:'38px', borderRadius:'50%', background:u.isAdmin?'var(--accent)':'#6366f1', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'15px', fontWeight:900, color:'#fff' }}>{u.nome[0]}</div>
+              <div style={{ width:'38px', height:'38px', borderRadius:'50%', background:u.isAdmin?'var(--accent)':PV.info, display:'flex', alignItems:'center', justifyContent:'center', fontSize:'15px', fontWeight:900, color:PV.white }}>{u.nome[0]}</div>
               <div style={{ flex:1 }}>
                 <div style={{ display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap' }}>
                   <span style={{ fontWeight:700 }}>{u.nome}</span>
-                  {u.isAdmin && <span style={{ padding:'2px 7px', borderRadius:'999px', fontSize:'9px', fontWeight:800, background:'rgba(249,98,0,.12)', color:'var(--accent)', border:'1px solid rgba(249,98,0,.25)' }}>ADMIN</span>}
-                  {u.isBlocked && <span style={{ padding:'2px 7px', borderRadius:'999px', fontSize:'9px', fontWeight:800, background:'rgba(239,68,68,.1)', color:'var(--danger)', border:'1px solid rgba(239,68,68,.25)' }}>BLOQUEADO</span>}
+                  {u.isAdmin && <span style={{ padding:'2px 7px', borderRadius:'999px', fontSize:'9px', fontWeight:800, background:withAlpha(PV.orange, 0.12), color:'var(--accent)', border:`1px solid ${withAlpha(PV.orange, 0.24)}` }}>ADMIN</span>}
+                  {u.isBlocked && <span style={{ padding:'2px 7px', borderRadius:'999px', fontSize:'9px', fontWeight:800, background:withAlpha(PV.danger, 0.12), color:'var(--danger)', border:`1px solid ${withAlpha(PV.danger, 0.24)}` }}>BLOQUEADO</span>}
                 </div>
                 <div style={{ fontSize:'12px', color:'var(--muted)' }}>{u.cpfDisplay} · {u.estado}{u.cidade?` · ${u.cidade}`:''}</div>
               </div>
@@ -134,8 +135,8 @@ const UsersTab = () => {
                   ? { label:'Desbloquear', icon:<Unlock size={12}/>, color:'var(--success)', act:()=>action('unblock',u) }
                   : { label:'Bloquear', icon:<Lock size={12}/>, color:'var(--danger)', act:()=>action('block',u) },
                 u.isAdmin
-                  ? { label:'Rebaixar', icon:<ShieldOff size={12}/>, color:'#6366f1', act:()=>action('demote',u) }
-                  : { label:'Tornar Admin', icon:<Shield size={12}/>, color:'#6366f1', act:()=>action('promote',u) },
+                  ? { label:'Rebaixar', icon:<ShieldOff size={12}/>, color:PV.info, act:()=>action('demote',u) }
+                  : { label:'Tornar Admin', icon:<Shield size={12}/>, color:PV.info, act:()=>action('promote',u) },
                 { label:'Excluir', icon:<Trash2 size={12}/>, color:'var(--danger)', act:()=>action('delete',u), ml:true },
               ].map((b,i) => (
                 <button key={i} onClick={b.act} style={{ display:'flex', alignItems:'center', gap:'5px', padding:'6px 12px', borderRadius:'var(--radius-xs)', background:`${b.color}11`, border:`1px solid ${b.color}33`, color:b.color, fontSize:'12px', fontWeight:700, cursor:'pointer', marginLeft:b.ml?'auto':0 }}>
@@ -147,7 +148,7 @@ const UsersTab = () => {
         ))}
       </div>
       {resetTarget && (
-        <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,.75)', zIndex:9999, display:'flex', alignItems:'center', justifyContent:'center', padding:'20px' }}>
+        <div style={{ position:'fixed', inset:0, background:withAlpha(PV.black, 0.72), zIndex:9999, display:'flex', alignItems:'center', justifyContent:'center', padding:'20px' }}>
           <div style={{ background:'var(--bg2)', border:'1px solid var(--border)', borderRadius:'var(--radius)', padding:'24px', maxWidth:'340px', width:'100%' }}>
             <h3 style={{ marginBottom:'8px' }}>Redefinir Senha — {resetTarget.nome}</h3>
             <input type="password" placeholder="Nova senha (mín. 6 chars)" value={newPw} onChange={e=>setNewPw(e.target.value)} style={{ marginBottom:'12px' }} autoFocus />
@@ -198,7 +199,7 @@ const FeedAdminTab = () => {
     <div>
       <div style={{ display:'flex', background:'var(--bg3)', padding:'4px', borderRadius:'var(--radius-sm)', marginBottom:'16px' }}>
         {[['posts',`Posts (${posts.length})`],['comments',`Comentários (${comments.length})`]].map(([k,l])=>(
-          <button key={k} onClick={()=>{setView(k);setSearch('');}} style={{ flex:1, padding:'9px', borderRadius:'6px', border:'none', background:view===k?'var(--accent)':'transparent', color:view===k?'#fff':'var(--muted)', fontWeight:700, cursor:'pointer', fontFamily:'var(--font)' }}>{l}</button>
+          <button key={k} onClick={()=>{setView(k);setSearch('');}} style={{ flex:1, padding:'9px', borderRadius:'6px', border:'none', background:view===k?'var(--accent)':'transparent', color:view===k?PV.white:'var(--muted)', fontWeight:700, cursor:'pointer', fontFamily:'var(--font)' }}>{l}</button>
         ))}
       </div>
       <div style={{ position:'relative', marginBottom:'12px' }}>
@@ -217,10 +218,10 @@ const FeedAdminTab = () => {
                   <div style={{ fontSize:'12px', color:'var(--muted)' }}>{p.city} · {fmtDate(p.created_at)}</div>
                   <div style={{ fontSize:'12px', color:'var(--muted)', marginTop:'3px' }}>❤️ {p.likesCount} · 💬 {p.commentsCount}</div>
                 </div>
-                <button onClick={e=>{e.stopPropagation();delPost(p.id);}} style={{ background:'rgba(239,68,68,.1)', border:'1px solid rgba(239,68,68,.25)', borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 10px', cursor:'pointer' }}><Trash2 size={13}/></button>
+                <button onClick={e=>{e.stopPropagation();delPost(p.id);}} style={{ background:withAlpha(PV.danger, 0.12), border:`1px solid ${withAlpha(PV.danger, 0.24)}`, borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 10px', cursor:'pointer' }}><Trash2 size={13}/></button>
               </div>
               {expanded?.id === p.id && (
-                <div style={{ borderTop:'1px solid var(--border)', padding:'12px 14px', background:'rgba(0,0,0,.15)' }}>
+                <div style={{ borderTop:'1px solid var(--border)', padding:'12px 14px', background:withAlpha(PV.black, 0.16) }}>
                   {p.comment && <p style={{ fontSize:'13px', color:'var(--muted)', marginBottom:'10px' }}>{p.comment}</p>}
                   <div style={{ fontSize:'12px', fontWeight:700, color:'var(--muted)', marginBottom:'8px' }}>COMENTÁRIOS ({postComments.length})</div>
                   {postComments.length === 0 ? <p style={{ fontSize:'12px', color:'var(--muted)' }}>Nenhum comentário.</p> :
@@ -247,7 +248,7 @@ const FeedAdminTab = () => {
                 <div style={{ fontSize:'13px', fontWeight:700, color:'var(--accent)', marginBottom:'3px' }}>{c.author_name} <span style={{ color:'var(--muted)', fontWeight:400, fontSize:'11px' }}>· {fmtDate(c.created_at)}</span></div>
                 <div style={{ fontSize:'13px', color:'var(--muted)' }}>{c.content}</div>
               </div>
-              <button onClick={()=>delComment(c.id)} style={{ background:'rgba(239,68,68,.1)', border:'1px solid rgba(239,68,68,.25)', borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px', cursor:'pointer', flexShrink:0 }}><Trash2 size={13}/></button>
+              <button onClick={()=>delComment(c.id)} style={{ background:withAlpha(PV.danger, 0.12), border:`1px solid ${withAlpha(PV.danger, 0.24)}`, borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px', cursor:'pointer', flexShrink:0 }}><Trash2 size={13}/></button>
             </div>
           ))}
         </div>
@@ -261,7 +262,7 @@ const FeedAdminTab = () => {
 // ══════════════════════════════════════════════════════════
 // ABA TRECHOS — CRUD completo
 // ══════════════════════════════════════════════════════════
-const EMPTY_SEG = { name:'', description:'', region:'', distance_km:'', emoji:'🛣️', difficulty:'Intermediário', diff_color:'#f97316', dest_lat:'', dest_lng:'', entry_lat:'', entry_lng:'', entry_radius:'1', exit_lat:'', exit_lng:'', exit_radius:'1', tip:'', highlights:'', active:true };
+const EMPTY_SEG = { name:'', description:'', region:'', distance_km:'', emoji:'🛣️', difficulty:'Intermediário', diff_color:PV.orange, dest_lat:'', dest_lng:'', entry_lat:'', entry_lng:'', entry_radius:'1', exit_lat:'', exit_lng:'', exit_radius:'1', tip:'', highlights:'', active:true };
 
 const TrechosAdminTab = () => {
   const [segs, setSegs] = useState([]);
@@ -303,7 +304,7 @@ const TrechosAdminTab = () => {
         <div className="calc-field"><label>Emoji</label><input value={form.emoji||'🛣️'} onChange={e=>setForm(f=>({...f,emoji:e.target.value}))} style={{ fontSize:'20px' }} /></div>
         <div className="calc-field">
           <label>Dificuldade</label>
-          <select value={form.difficulty} onChange={e=>{ const colors={'Fácil':'#22c55e','Intermediário':'#f97316','Avançado':'#ef4444'}; setForm(f=>({...f,difficulty:e.target.value,diff_color:colors[e.target.value]})); }}>
+          <select value={form.difficulty} onChange={e=>{ const colors={'Fácil':PV.success,'Intermediário':PV.orange,'Avançado':PV.danger}; setForm(f=>({...f,difficulty:e.target.value,diff_color:colors[e.target.value]})); }}>
             {['Fácil','Intermediário','Avançado'].map(d=><option key={d}>{d}</option>)}
           </select>
         </div>
@@ -350,7 +351,7 @@ const TrechosAdminTab = () => {
       </div>
       <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
         {segs.map(s => (
-          <div key={s.id} style={{ background:'var(--bg3)', borderRadius:'var(--radius-sm)', border:`1px solid ${s.active?'var(--border)':'rgba(239,68,68,.3)'}`, padding:'14px 16px', display:'flex', alignItems:'center', gap:'12px' }}>
+          <div key={s.id} style={{ background:'var(--bg3)', borderRadius:'var(--radius-sm)', border:`1px solid ${s.active?'var(--border)':withAlpha(PV.danger, 0.32)}`, padding:'14px 16px', display:'flex', alignItems:'center', gap:'12px' }}>
             <span style={{ fontSize:'22px' }}>{s.emoji}</span>
             <div style={{ flex:1, minWidth:0 }}>
               <div style={{ fontWeight:800, fontSize:'14px' }}>{s.name}</div>
@@ -358,8 +359,8 @@ const TrechosAdminTab = () => {
               {!s.active && <div style={{ fontSize:'11px', color:'var(--danger)', fontWeight:700 }}>⚠ INATIVO</div>}
             </div>
             <div style={{ display:'flex', gap:'7px' }}>
-              <button onClick={()=>openEdit(s)} style={{ background:'rgba(249,98,0,.1)', border:'1px solid rgba(249,98,0,.25)', borderRadius:'var(--radius-xs)', color:'var(--accent)', padding:'6px 10px', cursor:'pointer' }}><Edit size={13}/></button>
-              <button onClick={()=>del(s.id,s.name)} style={{ background:'rgba(239,68,68,.1)', border:'1px solid rgba(239,68,68,.25)', borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 10px', cursor:'pointer' }}><Trash2 size={13}/></button>
+              <button onClick={()=>openEdit(s)} style={{ background:withAlpha(PV.orange, 0.12), border:`1px solid ${withAlpha(PV.orange, 0.24)}`, borderRadius:'var(--radius-xs)', color:'var(--accent)', padding:'6px 10px', cursor:'pointer' }}><Edit size={13}/></button>
+              <button onClick={()=>del(s.id,s.name)} style={{ background:withAlpha(PV.danger, 0.12), border:`1px solid ${withAlpha(PV.danger, 0.24)}`, borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 10px', cursor:'pointer' }}><Trash2 size={13}/></button>
             </div>
           </div>
         ))}
@@ -403,8 +404,8 @@ const MapAdminTab = () => {
               <div style={{ fontSize:'12px', color:'var(--muted)', marginTop:'2px' }}>{TYPE_LABELS[p.type]||p.type} · {p.lat?.toFixed(4)}, {p.lng?.toFixed(4)} · {fmtDate(p.created_at)}</div>
               {p.description && <div style={{ fontSize:'12px', color:'var(--muted)', marginTop:'3px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.description}</div>}
             </div>
-            <a href={`https://www.google.com/maps?q=${p.lat},${p.lng}`} target="_blank" rel="noreferrer" style={{ padding:'6px 8px', borderRadius:'var(--radius-xs)', background:'rgba(249,98,0,.1)', border:'1px solid rgba(249,98,0,.25)', color:'var(--accent)', flexShrink:0, display:'flex' }}><Navigation size={13}/></a>
-            <button onClick={()=>del(p.id)} style={{ background:'rgba(239,68,68,.1)', border:'1px solid rgba(239,68,68,.25)', borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 8px', cursor:'pointer', flexShrink:0 }}><Trash2 size={13}/></button>
+            <a href={`https://www.google.com/maps?q=${p.lat},${p.lng}`} target="_blank" rel="noreferrer" style={{ padding:'6px 8px', borderRadius:'var(--radius-xs)', background:withAlpha(PV.orange, 0.12), border:`1px solid ${withAlpha(PV.orange, 0.24)}`, color:'var(--accent)', flexShrink:0, display:'flex' }}><Navigation size={13}/></a>
+            <button onClick={()=>del(p.id)} style={{ background:withAlpha(PV.danger, 0.12), border:`1px solid ${withAlpha(PV.danger, 0.24)}`, borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 8px', cursor:'pointer', flexShrink:0 }}><Trash2 size={13}/></button>
           </div>
         ))}
       </div>
@@ -458,7 +459,7 @@ const RidesAdminTab = () => {
                 <span>📅 {fmtDate(r.created_at)}</span>
               </div>
             </div>
-            <button onClick={()=>del(r.id)} style={{ background:'rgba(239,68,68,.1)', border:'1px solid rgba(239,68,68,.25)', borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 8px', cursor:'pointer', flexShrink:0 }}><Trash2 size={13}/></button>
+            <button onClick={()=>del(r.id)} style={{ background:withAlpha(PV.danger, 0.12), border:`1px solid ${withAlpha(PV.danger, 0.24)}`, borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 8px', cursor:'pointer', flexShrink:0 }}><Trash2 size={13}/></button>
           </div>
         ))}
       </div>
@@ -511,7 +512,7 @@ const ParceirosAdminTab = () => {
               <div style={{ fontSize:'12px', color:'var(--muted)' }}>{p.type}</div>
               {p.link && <div style={{ fontSize:'11px', color:'var(--accent)' }}>{p.link.slice(0,50)}...</div>}
             </div>
-            <button onClick={async()=>{ await deletePartner(p.id); show('Removido.'); reload(); }} style={{ background:'rgba(239,68,68,.1)', border:'1px solid rgba(239,68,68,.25)', borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 10px', cursor:'pointer' }}><Trash2 size={13}/></button>
+            <button onClick={async()=>{ await deletePartner(p.id); show('Removido.'); reload(); }} style={{ background:withAlpha(PV.danger, 0.12), border:`1px solid ${withAlpha(PV.danger, 0.24)}`, borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 10px', cursor:'pointer' }}><Trash2 size={13}/></button>
           </div>
         ))}
       </div>
@@ -570,7 +571,7 @@ const SelosAdminTab = () => {
               <div style={{ fontWeight:800 }}>{s.name}</div>
               <div style={{ fontSize:'12px', color:'var(--muted)' }}>Raio: {s.radius}km · {s.lat}, {s.lng}</div>
             </div>
-            <button onClick={async()=>{ await deleteStamp(s.id); show('Removido.'); reload(); }} style={{ background:'rgba(239,68,68,.1)', border:'1px solid rgba(239,68,68,.25)', borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 10px', cursor:'pointer' }}><Trash2 size={13}/></button>
+            <button onClick={async()=>{ await deleteStamp(s.id); show('Removido.'); reload(); }} style={{ background:withAlpha(PV.danger, 0.12), border:`1px solid ${withAlpha(PV.danger, 0.24)}`, borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 10px', cursor:'pointer' }}><Trash2 size={13}/></button>
           </div>
         ))}
       </div>
@@ -582,7 +583,7 @@ const SelosAdminTab = () => {
 // ══════════════════════════════════════════════════════════
 // ABA EXPEDIÇÕES — CRUD com imagem via Imgur
 // ══════════════════════════════════════════════════════════
-const EMPTY_EXP = { operator_name:'', operator_badge:'PARCEIRO VERIFICADO', operator_color:'#ff6200', operator_instagram:'', operator_site:'', image_url:'', difficulty:'INTERMEDIÁRIO', diff_color:'#ff6200', title:'', region:'', description:'', stat1_label:'Distância', stat1_value:'', stat1_unit:'km', stat2_label:'Duração', stat2_value:'', stat2_unit:'dias', stat3_label:'Vagas', stat3_value:'', stat3_unit:'rest.', tags:'', active:true };
+const EMPTY_EXP = { operator_name:'', operator_badge:'PARCEIRO VERIFICADO', operator_color:PV.orange, operator_instagram:'', operator_site:'', image_url:'', difficulty:'INTERMEDIÁRIO', diff_color:PV.orange, title:'', region:'', description:'', stat1_label:'Distância', stat1_value:'', stat1_unit:'km', stat2_label:'Duração', stat2_value:'', stat2_unit:'dias', stat3_label:'Vagas', stat3_value:'', stat3_unit:'rest.', tags:'', active:true };
 
 const ExpedicoesAdminTab = () => {
   const [exps, setExps]     = useState([]);
@@ -639,7 +640,7 @@ const ExpedicoesAdminTab = () => {
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'8px', marginBottom:'10px' }}>
         <div className="calc-field" style={{ marginBottom:0 }}>
           <label>Dificuldade</label>
-          <select value={form.difficulty} onChange={e=>{ const c={'FÁCIL':'#22c55e','INTERMEDIÁRIO':'#ff6200','AVANÇADO':'#ef4444','EXPERT':'#ef4444'}; setForm(f=>({...f,difficulty:e.target.value,diff_color:c[e.target.value]})); }}>
+          <select value={form.difficulty} onChange={e=>{ const c={'FÁCIL':PV.success,'INTERMEDIÁRIO':PV.orange,'AVANÇADO':PV.danger,'EXPERT':PV.danger}; setForm(f=>({...f,difficulty:e.target.value,diff_color:c[e.target.value]})); }}>
             {['FÁCIL','INTERMEDIÁRIO','AVANÇADO','EXPERT'].map(d=><option key={d}>{d}</option>)}
           </select>
         </div>
@@ -686,8 +687,8 @@ const ExpedicoesAdminTab = () => {
               {!e.active && <div style={{ fontSize:'11px', color:'var(--danger)', fontWeight:700 }}>⚠ INATIVA</div>}
             </div>
             <div style={{ display:'flex', gap:'6px' }}>
-              <button onClick={()=>setForm(e)} style={{ background:'rgba(249,98,0,.1)', border:'1px solid rgba(249,98,0,.25)', borderRadius:'var(--radius-xs)', color:'var(--accent)', padding:'6px 10px', cursor:'pointer' }}><Edit size={13}/></button>
-              <button onClick={()=>del(e.id,e.title)} style={{ background:'rgba(239,68,68,.1)', border:'1px solid rgba(239,68,68,.25)', borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 10px', cursor:'pointer' }}><Trash2 size={13}/></button>
+              <button onClick={()=>setForm(e)} style={{ background:withAlpha(PV.orange, 0.12), border:`1px solid ${withAlpha(PV.orange, 0.24)}`, borderRadius:'var(--radius-xs)', color:'var(--accent)', padding:'6px 10px', cursor:'pointer' }}><Edit size={13}/></button>
+              <button onClick={()=>del(e.id,e.title)} style={{ background:withAlpha(PV.danger, 0.12), border:`1px solid ${withAlpha(PV.danger, 0.24)}`, borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 10px', cursor:'pointer' }}><Trash2 size={13}/></button>
             </div>
           </div>
         ))}
@@ -756,7 +757,7 @@ const TrechosCommentsTab = () => {
                   trecho ID: {c.route_id?.slice(0,8)}...
                 </div>
               </div>
-              <button onClick={() => del(c.id)} style={{ background:'rgba(239,68,68,.1)', border:'1px solid rgba(239,68,68,.25)', borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 8px', cursor:'pointer', flexShrink:0 }}>
+              <button onClick={() => del(c.id)} style={{ background:withAlpha(PV.danger, 0.12), border:`1px solid ${withAlpha(PV.danger, 0.24)}`, borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 8px', cursor:'pointer', flexShrink:0 }}>
                 <Trash2 size={13}/>
               </button>
             </div>
@@ -807,7 +808,7 @@ const RankingAdminTab = () => {
 
   return (
     <div>
-      <div style={{ padding:'12px 14px', borderRadius:'var(--radius-sm)', background:'rgba(239,68,68,.06)', border:'1px solid rgba(239,68,68,.2)', marginBottom:'16px', fontSize:'13px', color:'var(--muted)', lineHeight:1.6 }}>
+      <div style={{ padding:'12px 14px', borderRadius:'var(--radius-sm)', background:withAlpha(PV.danger, 0.04), border:`1px solid ${withAlpha(PV.danger, 0.24)}`, marginBottom:'16px', fontSize:'13px', color:'var(--muted)', lineHeight:1.6 }}>
         <strong style={{ color:'var(--danger)' }}>⚠️ Área sensível:</strong> Remova apenas tempos fraudulentos ou claramente inválidos (ex: 0 segundos, impossíveis fisicamente). Esta ação é irreversível.
       </div>
 
@@ -837,7 +838,7 @@ const RankingAdminTab = () => {
           </div>
           <div style={{ display:'flex', flexDirection:'column', gap:'6px' }}>
             {times.map((c, i) => (
-              <div key={c.id} style={{ display:'flex', alignItems:'center', gap:'10px', padding:'10px 14px', background:'var(--bg3)', borderRadius:'var(--radius-sm)', border:`1px solid ${i===0?'rgba(249,98,0,.25)':'var(--border)'}` }}>
+              <div key={c.id} style={{ display:'flex', alignItems:'center', gap:'10px', padding:'10px 14px', background:'var(--bg3)', borderRadius:'var(--radius-sm)', border:`1px solid ${i===0?withAlpha(PV.orange, 0.24):'var(--border)'}` }}>
                 <div style={{ width:'26px', textAlign:'center', fontWeight:900, fontSize: i < 3 ? '16px' : '13px', color:'var(--muted)', flexShrink:0 }}>
                   {i < 3 ? medals[i] : `${i+1}º`}
                 </div>
@@ -856,7 +857,7 @@ const RankingAdminTab = () => {
                 <button
                   onClick={() => del(c.id, c.userName, c.timeSecs)}
                   title="Remover tempo fraudulento"
-                  style={{ background:'rgba(239,68,68,.1)', border:'1px solid rgba(239,68,68,.25)', borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 8px', cursor:'pointer', flexShrink:0 }}
+                  style={{ background:withAlpha(PV.danger, 0.12), border:`1px solid ${withAlpha(PV.danger, 0.24)}`, borderRadius:'var(--radius-xs)', color:'var(--danger)', padding:'6px 8px', cursor:'pointer', flexShrink:0 }}
                 >
                   <Trash2 size={13}/>
                 </button>

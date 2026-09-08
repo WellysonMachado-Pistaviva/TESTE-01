@@ -4,6 +4,7 @@ import { supabase } from '../../src/lib/supabaseClient';
 import { uploadPostImage } from '../../src/services/storage';
 import { useAuth, showToast } from './AuthProvider';
 import CertificadoDesafio from './CertificadoDesafio';
+import PV, { withAlpha } from '../../src/palette';
 
 // Gamificação do desafio: bate foto em cada checkpoint (com comentário opcional),
 // barra de progresso enche e o certificado SÓ libera com todos os pontos batidos.
@@ -90,10 +91,10 @@ export default function DesafioCheckin({ desafio, checkpoints }) {
   return (
     <div id="checkin">
       {/* ── Progresso ── */}
-      <div style={{ border: '1px solid var(--snow-line)', borderRadius: 16, padding: 'clamp(16px, 4vw, 24px)', background: 'linear-gradient(180deg, rgba(255,90,0,.05), transparent)' }}>
+      <div style={{ border: '1px solid var(--snow-line)', borderRadius: 16, padding: 'clamp(16px, 4vw, 24px)', background: `linear-gradient(180deg, ${withAlpha(PV.orange, 0.04)}, transparent)` }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
           <h2 style={{ fontFamily: 'var(--display)', margin: 0 }}>🏁 Seu desafio</h2>
-          <span style={{ fontFamily: 'var(--mono)', fontWeight: 800, fontSize: 14, color: completo ? '#2e7d32' : 'var(--clay)' }}>
+          <span style={{ fontFamily: 'var(--mono)', fontWeight: 800, fontSize: 14, color: completo ? PV.success : 'var(--clay)' }}>
             {meus === null ? '…' : `${feitos.size}/${total} checkpoints`}
           </span>
         </div>
@@ -103,7 +104,7 @@ export default function DesafioCheckin({ desafio, checkpoints }) {
 
         {/* barra de progresso */}
         <div style={{ height: 12, borderRadius: 100, background: 'var(--snow-line)', overflow: 'hidden', marginBottom: 18 }} role="progressbar" aria-valuenow={feitos.size} aria-valuemin={0} aria-valuemax={total} aria-label="Progresso do desafio">
-          <div style={{ height: '100%', width: `${pct}%`, borderRadius: 100, background: completo ? '#2e7d32' : 'linear-gradient(90deg, #ff5a00, #ff7a1a)', transition: 'width .5s ease' }} />
+          <div style={{ height: '100%', width: `${pct}%`, borderRadius: 100, background: completo ? PV.success : `linear-gradient(90deg, ${PV.orange}, ${PV.orangeSoft})`, transition: 'width .5s ease' }} />
         </div>
 
         {/* checkpoints */}
@@ -112,9 +113,9 @@ export default function DesafioCheckin({ desafio, checkpoints }) {
             const ok = feitos.has(i);
             const foto = (meus || []).find((x) => x.checkpoint === i)?.foto_url;
             return (
-              <li key={i} style={{ border: `1.5px solid ${ok ? 'rgba(46,125,50,.45)' : 'var(--snow-line)'}`, borderRadius: 12, padding: '12px 14px', background: ok ? 'rgba(46,125,50,.06)' : 'transparent' }}>
+              <li key={i} style={{ border: `1.5px solid ${ok ? withAlpha(PV.success, 0.4) : 'var(--snow-line)'}`, borderRadius: 12, padding: '12px 14px', background: ok ? withAlpha(PV.success, 0.04) : 'transparent' }}>
                 <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                  <span style={{ display: 'grid', placeItems: 'center', width: 32, height: 32, borderRadius: '50%', background: ok ? '#2e7d32' : 'var(--clay)', color: '#fff', fontWeight: 800, fontSize: 14, flexShrink: 0 }}>
+                  <span style={{ display: 'grid', placeItems: 'center', width: 32, height: 32, borderRadius: '50%', background: ok ? PV.success : 'var(--clay)', color: PV.white, fontWeight: 800, fontSize: 14, flexShrink: 0 }}>
                     {ok ? '✓' : i + 1}
                   </span>
                   {foto && <img src={foto} alt="" style={{ width: 40, height: 40, borderRadius: 8, objectFit: 'cover', flexShrink: 0 }} />}
@@ -138,7 +139,7 @@ export default function DesafioCheckin({ desafio, checkpoints }) {
                       onChange={(e) => setComentario(e.target.value)}
                       placeholder="Como foi esse trecho? (opcional)"
                       maxLength={280}
-                      style={{ width: '100%', minHeight: 64, padding: '12px 14px', fontSize: 16, borderRadius: 12, border: '1px solid var(--snow-line)', background: '#fff', color: 'var(--ink)', resize: 'vertical', fontFamily: 'inherit' }}
+                      style={{ width: '100%', minHeight: 64, padding: '12px 14px', fontSize: 16, borderRadius: 12, border: '1px solid var(--snow-line)', background: PV.white, color: 'var(--ink)', resize: 'vertical', fontFamily: 'inherit' }}
                     />
                     <label className="ig-btn ig-btn--primary" style={{ cursor: 'pointer', textAlign: 'center', padding: '14px 18px', fontSize: 16 }}>
                       {enviando ? 'Enviando…' : 'Bater a foto e carimbar'}
@@ -154,7 +155,7 @@ export default function DesafioCheckin({ desafio, checkpoints }) {
       </div>
 
       {/* ── Certificado: trancado até completar ── */}
-      <div id="certificado" style={{ marginTop: 16, border: '1px solid var(--snow-line)', borderRadius: 16, padding: 'clamp(16px, 4vw, 24px)', background: completo ? 'linear-gradient(180deg, rgba(46,125,50,.07), transparent)' : 'transparent' }}>
+      <div id="certificado" style={{ marginTop: 16, border: '1px solid var(--snow-line)', borderRadius: 16, padding: 'clamp(16px, 4vw, 24px)', background: completo ? `linear-gradient(180deg, ${withAlpha(PV.success, 0.08)}, transparent)` : 'transparent' }}>
         {completo ? (
           <>
             <h2 style={{ fontFamily: 'var(--display)', marginBottom: 6 }}>🏆 Desafio completo — seu certificado</h2>

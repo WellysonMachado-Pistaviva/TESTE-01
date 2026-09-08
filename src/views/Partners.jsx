@@ -1,3 +1,4 @@
+import PV, { withAlpha } from '../palette';
 import { useState, useEffect } from 'react';
 import { Store, Shield, Wrench, Coffee, Fuel, Hotel, ExternalLink, Phone } from 'lucide-react';
 import { getPartners } from '../services/storage';
@@ -8,7 +9,7 @@ const CATEGORY_ICONS = {
   'Seguro': { icon: <Shield size={22} />, color: 'hsl(239,84%,67%)', bg: 'hsla(239,84%,67%,.1)' },
   'Combustível': { icon: <Fuel size={22} />, color: 'hsl(45,96%,53%)', bg: 'hsla(45,96%,53%,.1)' },
   'Hospedagem': { icon: <Hotel size={22} />, color: 'hsl(200,80%,55%)', bg: 'hsla(200,80%,55%,.1)' },
-  'Outro': { icon: <Store size={22} />, color: 'var(--muted)', bg: 'rgba(255,255,255,.05)' },
+  'Outro': { icon: <Store size={22} />, color: 'var(--muted)', bg: withAlpha(PV.white, 0.04) },
 };
 
 const detectCategory = (type) => {
@@ -128,7 +129,7 @@ const Partners = () => {
         <div style={{
           width: '56px', height: '56px', borderRadius: '16px', margin: '0 auto 16px',
           background: 'var(--accent-subtle)', display: 'flex', alignItems: 'center',
-          justifyContent: 'center', color: 'var(--accent)', border: '1px solid rgba(249,115,22,.2)',
+          justifyContent: 'center', color: 'var(--accent)', border: `1px solid ${withAlpha(PV.orange, 0.24)}`,
         }}>
           <Store size={26} />
         </div>

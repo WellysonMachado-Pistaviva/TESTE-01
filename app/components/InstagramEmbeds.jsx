@@ -1,5 +1,6 @@
 'use client';
 import { useEffect } from 'react';
+import PV from '../../src/palette';
 
 // Embeds oficiais do Instagram (posts e reels/vídeos). urls = lista de permalinks.
 export default function InstagramEmbeds({ urls = [] }) {
@@ -22,7 +23,7 @@ export default function InstagramEmbeds({ urls = [] }) {
           className="instagram-media"
           data-instgrm-permalink={url}
           data-instgrm-version="14"
-          style={{ background: '#fff', border: 0, borderRadius: 12, margin: 0, padding: 0, width: '100%', minWidth: 0 }}
+          style={{ background: PV.white, border: 0, borderRadius: 12, margin: 0, padding: 0, width: '100%', minWidth: 0 }}
         />
       ))}
     </div>

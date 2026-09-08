@@ -1,0 +1,185 @@
+/* =========================================================
+   PISTAVIVA — tokens canônicos
+   Fonte única de verdade para cor, geometria, ritmo e tipo.
+   Carregado ANTES de qualquer folha: index.css, globals.css e
+   design-system.css consomem estes valores, nunca literais.
+   ========================================================= */
+
+:root{
+  /* ---- Marca ------------------------------------------------ */
+  --pv-orange:#ff5a00;          /* ação primária, links, destaque */
+  --pv-orange-strong:#e84e00;   /* hover/pressed do primário      */
+  --pv-orange-deep:#ac3c00;     /* laranja legível sobre claro    */
+  --pv-orange-soft:#ff7a1a;     /* realce sobre escuro            */
+  --pv-orange-light:#ff8a4b;    /* realce claro sobre escuro       */
+  --pv-orange-tint:#ffad7e;     /* texto de apoio sobre escuro    */
+  --pv-orange-pale:#ffd5be;     /* superfície/borda muito clara   */
+
+  /* ---- Rampa escura ----------------------------------------- */
+  --pv-black-0:#0a0a0b;         /* poço, acima do preto puro      */
+  --pv-black:#0c0c0d;           /* fundo padrão                   */
+  --pv-black-2:#16161a;         /* superfície elevada             */
+  --pv-black-3:#1f1f24;         /* superfície 2 / cartão escuro   */
+  --pv-black-4:#26262c;         /* superfície 3 / campo           */
+  --pv-black-5:#38383e;         /* borda sólida sobre escuro      */
+
+  /* ---- Rampa clara ------------------------------------------ */
+  --pv-white:#ffffff;
+  --pv-offwhite:#f4f3ef;        /* papel padrão                   */
+  --pv-offwhite-2:#eae7df;      /* papel alternado / faixa        */
+  --pv-line-light:#deded9;      /* divisória sobre claro          */
+  --pv-line-light-2:#d4d0c8;    /* divisória forte sobre claro    */
+
+  /* ---- Texto ------------------------------------------------ */
+  --pv-text-dark:#171719;
+  --pv-text-light:#f5f5f3;
+  --pv-muted-dark:#62616a;      /* apoio sobre claro              */
+  --pv-muted-mid:#8a8a90;       /* apoio neutro                   */
+  --pv-muted-light:#bfc0c3;     /* apoio sobre escuro             */
+
+  /* ---- Linhas translúcidas ---------------------------------- */
+  --pv-line-dark:rgba(255,255,255,.12);
+  --pv-line-dark-2:rgba(255,255,255,.24);
+  --pv-line-dark-3:rgba(255,255,255,.5);
+  --pv-orange-subtle:rgba(255,90,0,.08);
+  --pv-orange-glow:rgba(255,90,0,.24);
+
+  /* ---- Neutros quentes (superfícies de papel) ---------------- */
+  --pv-warm-300:#a9a49c;
+  --pv-warm-500:#8f8a83;
+  --pv-warm-700:#6f6b65;
+  --pv-warm-900:#4e4b46;
+
+  /* ---- Verde editorial (comunidade, experiências) ----------- */
+  --pv-forest:#282d27;
+  --pv-forest-deep:#121612;
+
+  /* ---- Amarelo de afiliado ---------------------------------- */
+  --pv-yellow:#ffe600;
+  --pv-yellow-strong:#f4dc00;
+
+  /* ---- Tintas sobre status ---------------------------------- */
+  --pv-success-deep:#00875a;    /* texto verde sobre claro       */
+  --pv-success-ink:#04210f;     /* texto sobre fundo de sucesso  */
+  --pv-warning-ink:#1a1205;     /* texto sobre fundo de aviso    */
+  --pv-slate:#5b6b78;           /* medidor de ocupação           */
+  --pv-info:#9db4ff;            /* link em pré-visualização SEO  */
+
+  /* ---- Marcas externas — não são tokens de marca Pistaviva --- */
+  --pv-brand-youtube:#ff0000;
+  --pv-brand-estrada-x:#33dd3a;
+  --pv-brand-ig-1:#f09433;
+  --pv-brand-ig-2:#e6683c;
+  --pv-brand-ig-3:#dc2743;
+  --pv-brand-ig-4:#cc2366;
+  --pv-brand-ig-5:#bc1888;
+  --pv-brand-ig-6:#833ab4;
+  --pv-brand-ig-7:#c13584;
+  --pv-brand-ig-8:#e1306c;
+  --pv-brand-ig-9:#fd1d1d;
+  --pv-brand-google-blue:#4285f4;
+  --pv-brand-google-green:#34a853;
+  --pv-brand-google-red:#ea4335;
+  --pv-brand-google-yellow:#fbbc04;
+
+  /* ---- Status (nunca substituir por laranja) ---------------- */
+  --pv-success:#22c55e;
+  --pv-danger:#ef4444;
+  --pv-warning:#f59e0b;
+  --pv-whatsapp:#25d366;
+
+  /* ---- Geometria — seis degraus, e só seis ------------------ */
+  --pv-radius-xs:2px;
+  --pv-radius-sm:4px;
+  --pv-radius:6px;
+  --pv-radius-lg:12px;
+  --pv-radius-xl:18px;
+  --pv-radius-pill:999px;
+
+  /* ---- Espaço — escala 4/8 ---------------------------------- */
+  --pv-space-0:4px;
+  --pv-space-1:8px;
+  --pv-space-2:16px;
+  --pv-space-3:24px;
+  --pv-space-4:32px;
+  --pv-space-5:48px;
+  --pv-space-6:72px;
+
+  /* ---- Ritmo vertical de seção — quatro degraus ------------- */
+  --sec-y-xs:clamp(34px,5vw,60px);   /* faixa fina                */
+  --sec-y-sm:clamp(48px,7vw,88px);   /* CTA, relacionados         */
+  --sec-y:clamp(64px,9vw,118px);     /* seção de conteúdo         */
+  --sec-y-lg:clamp(76px,10vw,130px); /* abertura/fechamento       */
+
+  /* ---- Largura ---------------------------------------------- */
+  --maxw:1280px;
+  --maxw-wide:1320px;
+  --maxw-narrow:760px;
+  --gut:clamp(18px,5vw,72px);
+
+  /* ---- Movimento -------------------------------------------- */
+  --pv-motion:180ms ease;
+  --transition:all .2s ease;
+
+  /* ---- Tipografia — três papéis -----------------------------
+     display: títulos de campanha · font: corpo e UI · mono: dados
+     Variáveis --font-* vêm do next/font em app/layout.jsx.       */
+  --display:var(--font-display), "Arial Narrow", sans-serif;
+  --font:var(--font-sans), "Arial Narrow", sans-serif;
+  --mono:var(--font-mono), var(--font-sans), "Arial Narrow", sans-serif;
+  --serif:var(--font-serif), var(--font-sans), "Arial Narrow", sans-serif;
+
+  /* ---- Sombra — o sistema é chapado ------------------------- */
+  --shadow-sm:none;
+  --shadow-md:none;
+  --shadow-lg:none;
+
+  /* =========================================================
+     Aliases semânticos. Camadas antigas (index.css, globals.css)
+     usam estes nomes; todos apontam para os tokens acima.
+     ========================================================= */
+  --accent:var(--pv-orange);
+  --accent-2:var(--pv-orange-soft);
+  --accent-light:var(--pv-orange-soft);
+  --accent-hover:var(--pv-orange-strong);
+  --accent-subtle:var(--pv-orange-subtle);
+  --accent-glow:var(--pv-orange-glow);
+  --clay:var(--pv-orange);
+  --clay-soft:var(--pv-orange-soft);
+  --moss:var(--pv-orange);
+  --moss-deep:var(--pv-black-2);
+
+  --ink:var(--pv-black);
+  --ink-2:var(--pv-black-2);
+  --ink-3:var(--pv-black-3);
+  --ink-soft:var(--pv-muted-dark);
+  --bg:var(--pv-black);
+  --bg2:var(--pv-black-2);
+  --bg3:var(--pv-black-3);
+  --bg4:var(--pv-black-4);
+
+  --paper:var(--pv-white);
+  --paper-2:var(--pv-offwhite);
+  --paper-dim:var(--pv-muted-light);
+  --paper-mut:#adaeb5;
+  --snow:var(--pv-white);
+  --snow-2:var(--pv-offwhite);
+  --snow-line:var(--pv-line-light);
+
+  --text:var(--pv-text-light);
+  --muted:var(--pv-muted-light);
+
+  --line:var(--pv-line-dark);
+  --border:var(--pv-black-5);
+  --border-hover:#3a3a42;
+
+  --radius:var(--pv-radius);
+  --radius-sm:var(--pv-radius);
+  --radius-xs:var(--pv-radius-sm);
+
+  --success:var(--pv-success);
+  --danger:var(--pv-danger);
+  --warning:var(--pv-warning);
+  --wa:var(--pv-whatsapp);
+  --x-green:var(--pv-brand-estrada-x);
+}

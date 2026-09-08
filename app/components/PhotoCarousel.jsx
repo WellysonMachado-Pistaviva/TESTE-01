@@ -1,9 +1,10 @@
 'use client';
 import EmblaCarousel from './EmblaCarousel';
+import PV from '../../src/palette';
 
 // Galeria de fotos em carrossel (rotas, paradas, posts com várias fotos).
 // 1 foto -> mostra a imagem direto (sem controles). 2+ -> carrossel com loop + dots.
-export default function PhotoCarousel({ images = [], height = 220, alt = '', radius = 12, fit = 'cover', bg = '#0d0d0f' }) {
+export default function PhotoCarousel({ images = [], height = 220, alt = '', radius = 12, fit = 'cover', bg = PV.black }) {
   const list = (images || []).filter(Boolean);
   if (list.length === 0) return null;
 

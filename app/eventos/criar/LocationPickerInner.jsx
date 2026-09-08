@@ -4,10 +4,11 @@ import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-lea
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { TILES } from '../../../src/lib/mapTiles';
+import PV, { withAlpha } from '../../../src/palette';
 
 const pin = L.divIcon({
   className: 'evr-pin',
-  html: '<span style="display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#ff5a00;color:#fff;font-size:15px;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.35)">🏁</span>',
+  html: `<span style="display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:${PV.orange};color:${PV.white};font-size:15px;border:2.5px solid ${PV.white};box-shadow:0 2px 8px ${withAlpha(PV.black, 0.32)}">🏁</span>`,
   iconSize: [30, 30], iconAnchor: [15, 15],
 });
 const BR = [-15.78, -47.92];
@@ -44,9 +45,9 @@ export default function LocationPickerInner({ lat = null, lng = null, onChange, 
       <div style={{ display: 'flex', gap: 8, marginBottom: 8, flexWrap: 'wrap', alignItems: 'center' }}>
         <button type="button" className="btn btn--ghost btn--sm" onClick={buscar} disabled={busy}>{busy ? 'Buscando…' : 'Buscar pelo endereço'}</button>
         {has && <button type="button" className="btn btn--ghost btn--sm" onClick={() => onChange(null, null)}>Limpar pino</button>}
-        <span style={{ fontSize: 12.5, color: 'var(--mut-2, #999)' }}>{has ? `${lat.toFixed(5)}, ${lng.toFixed(5)}` : 'Clique no mapa pra marcar o ponto exato'}</span>
+        <span style={{ fontSize: 12.5, color: 'var(--mut-2)' }}>{has ? `${lat.toFixed(5)}, ${lng.toFixed(5)}` : 'Clique no mapa pra marcar o ponto exato'}</span>
       </div>
-      <div style={{ borderRadius: 10, overflow: 'hidden', border: '1px solid var(--line-2, #ddd)' }}>
+      <div style={{ borderRadius: 10, overflow: 'hidden', border: '1px solid var(--line-2)' }}>
         <MapContainer center={has ? [lat, lng] : BR} zoom={has ? 13 : 4} style={{ height: 280, width: '100%' }} scrollWheelZoom={false} attributionControl={false}>
           <TileLayer url={TILES.topo.url} attribution={TILES.topo.attribution} />
           <ClickSet onChange={onChange} />

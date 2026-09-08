@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { X, Download, Share2 } from 'lucide-react';
+import PV, { withAlpha } from '../palette';
 
 const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user, onClose }) => {
   const storyRef = useRef(null);
@@ -34,7 +35,7 @@ const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user,
     const { default: html2canvas } = await import('html2canvas');
     const raw = await html2canvas(storyRef.current, {
       scale: 2,
-      backgroundColor: '#090911',
+      backgroundColor: PV.black,
       useCORS: true,
       width: 540,
       height: 960,
@@ -115,20 +116,20 @@ const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user,
   return (
     <div style={{
       position: 'fixed', inset: 0, zIndex: 9999,
-      background: 'rgba(0,0,0,.93)', backdropFilter: 'blur(16px)',
+      background: withAlpha(PV.black, 1), backdropFilter: 'blur(16px)',
       display: 'flex', flexDirection: 'column', alignItems: 'center',
       justifyContent: 'flex-start', paddingTop: '18px', overflowY: 'auto',
     }}>
       <button onClick={onClose} style={{
         position: 'fixed', top: '14px', right: '14px',
-        background: 'rgba(255,255,255,.1)', border: '1px solid rgba(255,255,255,.15)',
+        background: withAlpha(PV.white, 0.12), border: `1px solid ${withAlpha(PV.white, 0.16)}`,
         borderRadius: '50%', width: '42px', height: '42px',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        color: '#fff', cursor: 'pointer', zIndex: 10,
+        color: PV.white, cursor: 'pointer', zIndex: 10,
       }}><X size={20} /></button>
 
       <p style={{
-        color: '#444', fontSize: '11px', letterSpacing: '2px',
+        color: PV.mutedDark, fontSize: '11px', letterSpacing: '2px',
         fontWeight: 700, marginBottom: '12px', textTransform: 'uppercase',
       }}>Prévia · Story para Instagram</p>
 
@@ -138,32 +139,32 @@ const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user,
           ref={storyRef}
           style={{
             width: '540px', height: '960px',
-            background: '#090911',
+            background: PV.black,
             overflow: 'hidden', position: 'relative',
             fontFamily: 'var(--font)',
-            color: '#ffffff',
+            color: PV.white,
           }}
         >
           {/* BG dot texture */}
           <svg style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }} width="540" height="960">
             {Array.from({ length: 26 }, (_, i) =>
               Array.from({ length: 48 }, (_, j) => (
-                <circle key={`${i}-${j}`} cx={9 + i * 21} cy={9 + j * 21} r={1} fill="rgba(255,255,255,.04)" />
+                <circle key={`${i}-${j}`} cx={9 + i * 21} cy={9 + j * 21} r={1} fill={withAlpha(PV.white, 0.04)} />
               ))
             )}
           </svg>
 
           {/* Corner accents */}
-          <div style={{ position: 'absolute', top: 0, right: 0, width: '220px', height: '3px', background: 'linear-gradient(90deg, transparent, #f97316)' }} />
-          <div style={{ position: 'absolute', top: 0, right: 0, width: '3px', height: '220px', background: 'linear-gradient(180deg, #f97316, transparent)' }} />
-          <div style={{ position: 'absolute', bottom: 0, left: 0, width: '180px', height: '3px', background: 'linear-gradient(90deg, #f97316, transparent)' }} />
-          <div style={{ position: 'absolute', bottom: 0, left: 0, width: '3px', height: '180px', background: 'linear-gradient(0deg, #f97316, transparent)' }} />
+          <div style={{ position: 'absolute', top: 0, right: 0, width: '220px', height: '3px', background: `linear-gradient(90deg, transparent, ${PV.orange})` }} />
+          <div style={{ position: 'absolute', top: 0, right: 0, width: '3px', height: '220px', background: `linear-gradient(180deg, ${PV.orange}, transparent)` }} />
+          <div style={{ position: 'absolute', bottom: 0, left: 0, width: '180px', height: '3px', background: `linear-gradient(90deg, ${PV.orange}, transparent)` }} />
+          <div style={{ position: 'absolute', bottom: 0, left: 0, width: '3px', height: '180px', background: `linear-gradient(0deg, ${PV.orange}, transparent)` }} />
 
           {/* Ambient glow */}
           <div style={{
             position: 'absolute', top: '-80px', right: '-80px',
             width: '300px', height: '300px', borderRadius: '50%',
-            background: 'radial-gradient(ellipse, rgba(249,115,22,0.13) 0%, transparent 70%)',
+            background: `radial-gradient(ellipse, ${withAlpha(PV.orange, 0.12)} 0%, transparent 70%)`,
             pointerEvents: 'none',
           }} />
 
@@ -172,10 +173,10 @@ const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user,
             <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
               <span style={{ fontSize: '17px', lineHeight: 1 }}>🏍️</span>
               <span style={{ fontSize: '18px', fontWeight: 900, letterSpacing: '3px' }}>
-                PISTA<span style={{ color: '#f97316' }}>VIVA</span>
+                PISTA<span style={{ color: PV.orange }}>VIVA</span>
               </span>
             </div>
-            <span style={{ fontSize: '10px', color: '#3a3a4a', fontWeight: 700, letterSpacing: '1.5px' }}>{dateStr}</span>
+            <span style={{ fontSize: '10px', color: PV.black5, fontWeight: 700, letterSpacing: '1.5px' }}>{dateStr}</span>
           </div>
 
           {/* ── HERO: KM NUMBER ── */}
@@ -183,8 +184,8 @@ const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user,
             <div style={{
               display: 'inline-flex', alignItems: 'center', gap: '6px',
               padding: '4px 14px', borderRadius: '999px', marginBottom: '12px',
-              background: 'rgba(249,115,22,0.12)', border: '1px solid rgba(249,115,22,0.28)',
-              fontSize: '10px', fontWeight: 800, letterSpacing: '2px', color: '#f97316',
+              background: withAlpha(PV.orange, 0.12), border: `1px solid ${withAlpha(PV.orange, 0.32)}`,
+              fontSize: '10px', fontWeight: 800, letterSpacing: '2px', color: PV.orange,
             }}>
               🏁&nbsp;MINHA JORNADA{isRoundtrip ? ' · IDA + VOLTA' : ''}
             </div>
@@ -193,18 +194,18 @@ const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user,
             <div style={{
               position: 'absolute', top: '28px', left: '50%', transform: 'translateX(-50%)',
               width: '340px', height: '130px',
-              background: 'radial-gradient(ellipse, rgba(249,115,22,0.2) 0%, transparent 70%)',
+              background: `radial-gradient(ellipse, ${withAlpha(PV.orange, 0.24)} 0%, transparent 70%)`,
               pointerEvents: 'none',
             }} />
 
             <div style={{
               fontSize: '108px', fontWeight: 900, letterSpacing: '-6px',
-              lineHeight: 0.9, color: '#ffffff', position: 'relative',
+              lineHeight: 0.9, color: PV.white, position: 'relative',
             }}>
               {result.distance}
             </div>
             <div style={{
-              fontSize: '12px', fontWeight: 800, color: '#f97316',
+              fontSize: '12px', fontWeight: 800, color: PV.orange,
               letterSpacing: '5px', marginTop: '8px',
             }}>
               KM DE PURA ESTRADA
@@ -214,40 +215,40 @@ const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user,
           {/* ── ROUTE MAP ── */}
           <div style={{
             margin: '14px 30px 0', borderRadius: '14px', overflow: 'hidden',
-            background: '#0c0c18', border: '1px solid rgba(249,115,22,0.12)',
+            background: PV.black, border: `1px solid ${withAlpha(PV.orange, 0.12)}`,
           }}>
             <svg width={MW} height={MH} viewBox={`0 0 ${MW} ${MH}`} style={{ display: 'block' }}>
-              <rect width={MW} height={MH} fill="#0c0c18" />
+              <rect width={MW} height={MH} fill={PV.black} />
               {Array.from({ length: 24 }, (_, i) =>
                 Array.from({ length: 14 }, (_, j) => (
-                  <circle key={`g${i}-${j}`} cx={8 + i * 20} cy={8 + j * 20} r={1} fill="rgba(255,255,255,0.04)" />
+                  <circle key={`g${i}-${j}`} cx={8 + i * 20} cy={8 + j * 20} r={1} fill={withAlpha(PV.white, 0.04)} />
                 ))
               )}
               <radialGradient id="mg" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#f97316" stopOpacity="0.07" />
-                <stop offset="100%" stopColor="#f97316" stopOpacity="0" />
+                <stop offset="0%" stopColor={PV.orange} stopOpacity="0.07" />
+                <stop offset="100%" stopColor={PV.orange} stopOpacity="0" />
               </radialGradient>
               <rect width={MW} height={MH} fill="url(#mg)" />
 
               {svgPoints && <>
-                <polyline points={svgPoints} fill="none" stroke="#f97316" strokeWidth="16" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.07" />
-                <polyline points={svgPoints} fill="none" stroke="#f97316" strokeWidth="8"  strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.18" />
-                <polyline points={svgPoints} fill="none" stroke="#f97316" strokeWidth="3"  strokeLinecap="round" strokeLinejoin="round" />
-                <polyline points={svgPoints} fill="none" stroke="#ffffff" strokeWidth="1"  strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.3" />
+                <polyline points={svgPoints} fill="none" stroke={PV.orange} strokeWidth="16" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.07" />
+                <polyline points={svgPoints} fill="none" stroke={PV.orange} strokeWidth="8"  strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.18" />
+                <polyline points={svgPoints} fill="none" stroke={PV.orange} strokeWidth="3"  strokeLinecap="round" strokeLinejoin="round" />
+                <polyline points={svgPoints} fill="none" stroke={PV.white} strokeWidth="1"  strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.3" />
               </>}
               {!svgPoints && (
-                <text x={MW / 2} y={MH / 2 + 5} textAnchor="middle" fill="rgba(255,255,255,.2)"
+                <text x={MW / 2} y={MH / 2 + 5} textAnchor="middle" fill={withAlpha(PV.white, 0.24)}
                   fontSize="12" fontFamily="var(--font)" fontWeight="600">Rota não disponível</text>
               )}
               {startPt && <>
-                <circle cx={startPt.x} cy={startPt.y} r="18" fill="#22c55e" fillOpacity="0.12" />
-                <circle cx={startPt.x} cy={startPt.y} r="9"  fill="#22c55e" stroke="#0c0c18" strokeWidth="2" />
-                <circle cx={startPt.x} cy={startPt.y} r="3.5" fill="#fff" />
+                <circle cx={startPt.x} cy={startPt.y} r="18" fill={PV.success} fillOpacity="0.12" />
+                <circle cx={startPt.x} cy={startPt.y} r="9"  fill={PV.success} stroke={PV.black} strokeWidth="2" />
+                <circle cx={startPt.x} cy={startPt.y} r="3.5" fill={PV.white} />
               </>}
               {endPt && <>
-                <circle cx={endPt.x} cy={endPt.y} r="18" fill="#ef4444" fillOpacity="0.12" />
-                <circle cx={endPt.x} cy={endPt.y} r="9"  fill="#ef4444" stroke="#0c0c18" strokeWidth="2" />
-                <circle cx={endPt.x} cy={endPt.y} r="3.5" fill="#fff" />
+                <circle cx={endPt.x} cy={endPt.y} r="18" fill={PV.danger} fillOpacity="0.12" />
+                <circle cx={endPt.x} cy={endPt.y} r="9"  fill={PV.danger} stroke={PV.black} strokeWidth="2" />
+                <circle cx={endPt.x} cy={endPt.y} r="3.5" fill={PV.white} />
               </>}
             </svg>
           </div>
@@ -255,17 +256,17 @@ const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user,
           {/* ── ORIGIN → DEST ── */}
           <div style={{
             margin: '10px 30px 0', padding: '11px 16px', borderRadius: '12px',
-            background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)',
+            background: withAlpha(PV.white, 0.04), border: `1px solid ${withAlpha(PV.white, 0.04)}`,
             display: 'flex', alignItems: 'center', gap: '10px',
           }}>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: '9px', color: '#22c55e', fontWeight: 800, letterSpacing: '2px', marginBottom: '2px' }}>PARTIDA</div>
-              <div style={{ fontSize: '14px', fontWeight: 800, color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{origin.name}</div>
+              <div style={{ fontSize: '9px', color: PV.success, fontWeight: 800, letterSpacing: '2px', marginBottom: '2px' }}>PARTIDA</div>
+              <div style={{ fontSize: '14px', fontWeight: 800, color: PV.white, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{origin.name}</div>
             </div>
-            <div style={{ flexShrink: 0, fontSize: '16px', color: '#f97316', fontWeight: 900, padding: '0 4px' }}>→</div>
+            <div style={{ flexShrink: 0, fontSize: '16px', color: PV.orange, fontWeight: 900, padding: '0 4px' }}>→</div>
             <div style={{ flex: 1, minWidth: 0, textAlign: 'right' }}>
-              <div style={{ fontSize: '9px', color: '#ef4444', fontWeight: 800, letterSpacing: '2px', marginBottom: '2px' }}>CHEGADA</div>
-              <div style={{ fontSize: '14px', fontWeight: 800, color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{dest.name}</div>
+              <div style={{ fontSize: '9px', color: PV.danger, fontWeight: 800, letterSpacing: '2px', marginBottom: '2px' }}>CHEGADA</div>
+              <div style={{ fontSize: '14px', fontWeight: 800, color: PV.white, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{dest.name}</div>
             </div>
           </div>
 
@@ -273,7 +274,7 @@ const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user,
           <div style={{
             margin: '14px 30px',
             height: '1px',
-            background: 'linear-gradient(90deg, transparent, rgba(249,115,22,0.7), transparent)',
+            background: `linear-gradient(90deg, transparent, ${withAlpha(PV.orange, 0.72)}, transparent)`,
           }} />
 
           {/* ── STATS 2×2 ── */}
@@ -282,21 +283,21 @@ const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user,
               <div key={i} style={{
                 padding: '14px 14px 12px', borderRadius: '14px',
                 background: s.highlight
-                  ? 'linear-gradient(135deg, rgba(249,115,22,0.1), rgba(249,115,22,0.04))'
-                  : 'rgba(255,255,255,0.04)',
+                  ? `linear-gradient(135deg, ${withAlpha(PV.orange, 0.12)}, ${withAlpha(PV.orange, 0.04)})`
+                  : withAlpha(PV.white, 0.04),
                 border: s.highlight
-                  ? '1px solid rgba(249,115,22,0.22)'
-                  : '1px solid rgba(255,255,255,0.06)',
+                  ? `1px solid ${withAlpha(PV.orange, 0.24)}`
+                  : `1px solid ${withAlpha(PV.white, 0.04)}`,
               }}>
                 <div style={{ fontSize: '18px', marginBottom: '5px', lineHeight: 1 }}>{s.emoji}</div>
                 <div style={{
                   fontSize: s.highlight ? '14px' : '17px',
                   fontWeight: 900, lineHeight: 1.2,
-                  color: s.highlight ? '#f97316' : '#fff',
+                  color: s.highlight ? PV.orange : PV.white,
                   overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                 }}>{s.value}</div>
                 <div style={{
-                  fontSize: '9px', color: '#444', fontWeight: 700,
+                  fontSize: '9px', color: PV.mutedDark, fontWeight: 700,
                   letterSpacing: '1.5px', marginTop: '5px',
                 }}>{s.label}</div>
               </div>
@@ -306,22 +307,22 @@ const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user,
           {/* ── RIDER CARD ── */}
           <div style={{
             margin: '14px 30px 0', padding: '12px 16px', borderRadius: '14px',
-            background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)',
+            background: withAlpha(PV.white, 0.04), border: `1px solid ${withAlpha(PV.white, 0.08)}`,
             display: 'flex', alignItems: 'center', gap: '12px',
           }}>
             <div style={{
               width: '38px', height: '38px', borderRadius: '50%', flexShrink: 0,
-              background: 'linear-gradient(135deg, #f97316, #c2410c)',
+              background: `linear-gradient(135deg, ${PV.orange}, ${PV.orangeStrong})`,
               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px',
             }}>🏍️</div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontWeight: 800, fontSize: '14px', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{pilotName}</div>
-              <div style={{ fontSize: '10px', color: '#555', fontWeight: 700, letterSpacing: '1px', marginTop: '2px' }}>MOTOTURISTA · PISTA VIVA</div>
+              <div style={{ fontWeight: 800, fontSize: '14px', color: PV.white, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{pilotName}</div>
+              <div style={{ fontSize: '10px', color: PV.mutedDark, fontWeight: 700, letterSpacing: '1px', marginTop: '2px' }}>MOTOTURISTA · PISTA VIVA</div>
             </div>
             <div style={{
               padding: '5px 10px', borderRadius: '8px', flexShrink: 0,
-              background: 'rgba(249,115,22,0.14)', border: '1px solid rgba(249,115,22,0.28)',
-              fontSize: '10px', fontWeight: 800, color: '#f97316', letterSpacing: '1px',
+              background: withAlpha(PV.orange, 0.16), border: `1px solid ${withAlpha(PV.orange, 0.32)}`,
+              fontSize: '10px', fontWeight: 800, color: PV.orange, letterSpacing: '1px',
             }}>✓ ROTA</div>
           </div>
 
@@ -330,11 +331,11 @@ const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user,
             position: 'absolute', bottom: '22px', left: 0, right: 0,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
           }}>
-            <div style={{ height: '1px', width: '50px', background: 'rgba(255,255,255,.06)' }} />
-            <span style={{ fontSize: '10px', color: '#2e2e3e', letterSpacing: '2px', fontWeight: 700 }}>
+            <div style={{ height: '1px', width: '50px', background: withAlpha(PV.white, 0.04) }} />
+            <span style={{ fontSize: '10px', color: PV.black4, letterSpacing: '2px', fontWeight: 700 }}>
               pistaviva.vercel.app
             </span>
-            <div style={{ height: '1px', width: '50px', background: 'rgba(255,255,255,.06)' }} />
+            <div style={{ height: '1px', width: '50px', background: withAlpha(PV.white, 0.04) }} />
           </div>
         </div>
       </div>
@@ -361,7 +362,7 @@ const RouteStory = ({ result, origin, dest, isRoundtrip, avgKmL, motoName, user,
         </button>
       </div>
 
-      <p style={{ color: '#2a2a3a', fontSize: '11px', marginTop: '10px', letterSpacing: '1px' }}>
+      <p style={{ color: PV.black4, fontSize: '11px', marginTop: '10px', letterSpacing: '1px' }}>
         1080 × 1920 px · formato Stories
       </p>
     </div>

@@ -4,14 +4,15 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { TILES } from '../../../src/lib/mapTiles';
+import PV, { withAlpha } from '../../../src/palette';
 
 const pin = (emoji, bg) => L.divIcon({
   className: 'evr-pin',
-  html: `<span style="display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:${bg};color:#fff;font-size:15px;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.35)">${emoji}</span>`,
+  html: `<span style="display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:${bg};color:${PV.white};font-size:15px;border:2.5px solid ${PV.white};box-shadow:0 2px 8px ${withAlpha(PV.black, 0.32)}">${emoji}</span>`,
   iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -14],
 });
-const userIcon = pin('📍', '#2563eb');
-const eventIcon = pin('🏁', '#ff5a00');
+const userIcon = pin('📍', PV.info);
+const eventIcon = pin('🏁', PV.orange);
 
 const haversine = ([la1, lo1], [la2, lo2]) => {
   const R = 6371, r = Math.PI / 180;
@@ -76,11 +77,11 @@ export default function EventRouteMapInner({ dest, destName = 'Evento', lat = nu
 
   if (phase !== 'done') {
     return (
-      <div style={{ border: '1px solid var(--snow-line)', borderRadius: 14, padding: 20, textAlign: 'center', background: 'var(--bg2, #faf8f5)' }}>
+      <div style={{ border: '1px solid var(--snow-line)', borderRadius: 14, padding: 20, textAlign: 'center', background: 'var(--bg2)' }}>
         {phase === 'loading'
           ? <p style={{ margin: 0, color: 'var(--ink-soft)', fontSize: 14.5 }}>{msg || 'Traçando a rota…'}</p>
           : <>
-              <p style={{ color: 'var(--danger, #e11)', fontSize: 14, margin: '0 0 12px' }}>{msg}</p>
+              <p style={{ color: 'var(--danger)', fontSize: 14, margin: '0 0 12px' }}>{msg}</p>
               <button className="btn btn--primary btn--sm" onClick={traçar}>Tentar de novo</button>
             </>}
       </div>
@@ -94,12 +95,12 @@ export default function EventRouteMapInner({ dest, destName = 'Evento', lat = nu
       <div style={{ position: 'relative', borderRadius: 14, overflow: 'hidden', border: '1px solid var(--snow-line)' }}>
         <MapContainer bounds={bounds} style={{ height: 'min(58vh, 420px)', width: '100%' }} scrollWheelZoom={false} attributionControl={false}>
           <TileLayer url={TILES.topo.url} attribution={TILES.topo.attribution} />
-          <Polyline positions={r.line} pathOptions={{ color: '#0e1311', weight: 7, opacity: 0.45 }} />
-          <Polyline positions={r.line} pathOptions={{ color: '#ff5a00', weight: 4, opacity: 0.95, dashArray: real ? null : '8 8' }} />
+          <Polyline positions={r.line} pathOptions={{ color: PV.black, weight: 7, opacity: 0.45 }} />
+          <Polyline positions={r.line} pathOptions={{ color: PV.orange, weight: 4, opacity: 0.95, dashArray: real ? null : '8 8' }} />
           <Marker position={r.user} icon={userIcon}><Popup>Você está aqui</Popup></Marker>
           <Marker position={r.event} icon={eventIcon}><Popup><b>{destName}</b></Popup></Marker>
         </MapContainer>
-        <div style={{ position: 'absolute', top: 10, right: 10, zIndex: 500, background: '#0e1311', color: '#fff', fontSize: 12.5, fontWeight: 700, padding: '6px 11px', borderRadius: 100, boxShadow: '0 2px 8px rgba(0,0,0,.3)' }}>
+        <div style={{ position: 'absolute', top: 10, right: 10, zIndex: 500, background: PV.black, color: PV.white, fontSize: 12.5, fontWeight: 700, padding: '6px 11px', borderRadius: 100, boxShadow: `0 2px 8px ${withAlpha(PV.black, 0.32)}` }}>
           ≈ {km} km {real ? '' : '(linha reta)'}
         </div>
       </div>
@@ -111,7 +112,7 @@ export default function EventRouteMapInner({ dest, destName = 'Evento', lat = nu
         ].map(s => (
           <div key={s.k} style={{ border: '1px solid var(--snow-line)', borderRadius: 12, padding: '12px 14px', textAlign: 'center' }}>
             <div style={{ fontFamily: 'var(--display)', fontSize: 22, lineHeight: 1.1 }}>{s.v}</div>
-            <div style={{ fontSize: 12, color: 'var(--paper-mut, #999)', marginTop: 3 }}>{s.k}</div>
+            <div style={{ fontSize: 12, color: 'var(--paper-mut)', marginTop: 3 }}>{s.k}</div>
           </div>
         ))}
       </div>

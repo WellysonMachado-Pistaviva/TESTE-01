@@ -10,6 +10,7 @@ import { getComboioMessages, saveComboioMessage } from '../services/storage';
 import { notifyComboioMessage, notifyNewMember } from '../services/notify';
 import { supabase } from '../lib/supabaseClient';
 import { useWakeLock } from '../hooks/useWakeLock';
+import PV, { withAlpha } from '../palette';
 
 const cbToast = (msg, type = 'error') => { const el = document.getElementById('app-toast'); if (el) { el.textContent = msg; el.className = `toast ${type}`; el.style.display = 'block'; setTimeout(() => { el.style.display = 'none'; }, 3500); } };
 const distKmCB = (aLat, aLng, bLat, bLng) => {
@@ -20,22 +21,22 @@ const distKmCB = (aLat, aLng, bLat, bLng) => {
 };
 
 const createComboioMemberIcon = () => L.divIcon({
-  html: `<div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#2563eb);display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 8px rgba(59,130,246,.6);border:2px solid #fff;">👤</div>`,
+  html: `<div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,${PV.info},${PV.info});display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 8px ${withAlpha(PV.info, 0.6)};border:2px solid ${PV.white};">👤</div>`,
   className: '', iconSize: [32, 32], iconAnchor: [16, 16], popupAnchor: [0, -16],
 });
 const createSelfComboioIcon = () => L.divIcon({
-  html: `<div style="position:relative;width:46px;height:46px;display:flex;align-items:center;justify-content:center;"><div style="position:absolute;width:46px;height:46px;border-radius:50%;background:rgba(249,115,22,0.3);animation:pulse-sos 2s infinite;"></div><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#f97316,#ea580c);display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 2px 10px rgba(249,115,22,.8);border:2px solid #fff;z-index:1;">🏍️</div></div>`,
+  html: `<div style="position:relative;width:46px;height:46px;display:flex;align-items:center;justify-content:center;"><div style="position:absolute;width:46px;height:46px;border-radius:50%;background:${withAlpha(PV.orange, 0.32)};animation:pulse-sos 2s infinite;"></div><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,${PV.orange},${PV.orangeStrong});display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 2px 10px ${withAlpha(PV.orange, 0.85)};border:2px solid ${PV.white};z-index:1;">🏍️</div></div>`,
   className: '', iconSize: [46, 46], iconAnchor: [23, 23], popupAnchor: [0, -23],
 });
 const createOfflineComboioIcon = () => L.divIcon({
-  html: `<div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#4b5563,#374151);display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 2px 6px rgba(0,0,0,.4);border:2px solid #6b7280;opacity:0.75;">👤</div>`,
+  html: `<div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,${PV.mutedDark},${PV.mutedDark});display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 2px 6px ${withAlpha(PV.black, 0.4)};border:2px solid ${PV.mapTrack};opacity:0.75;">👤</div>`,
   className: '', iconSize: [32, 32], iconAnchor: [16, 16], popupAnchor: [0, -16],
 });
 const comboioIcon    = createComboioMemberIcon();
 const selfComboioIcon = createSelfComboioIcon();
 const offlineComboioIcon = createOfflineComboioIcon();
 const routeStopIcon = (n) => L.divIcon({
-  html: `<div style="width:24px;height:24px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#f97316;border:2px solid #fff;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.5)"><span style="transform:rotate(45deg);font-size:11px;font-weight:800;color:#fff">${n}</span></div>`,
+  html: `<div style="width:24px;height:24px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:${PV.orange};border:2px solid ${PV.white};display:grid;place-items:center;box-shadow:0 2px 6px ${withAlpha(PV.black, 0.5)}"><span style="transform:rotate(45deg);font-size:11px;font-weight:800;color:${PV.white}">${n}</span></div>`,
   className: '', iconSize: [24, 24], iconAnchor: [12, 24],
 });
 
@@ -487,8 +488,8 @@ const Comboio = ({ user, openAuthModal }) => {
 
           {/* Indicador de segurança GPS — modo segundo plano */}
           {(wake.wakeLock || wake.audio) && (
-            <div style={{ display:'flex', alignItems:'center', gap:'8px', padding:'8px 14px', borderRadius:'var(--radius-sm)', background:'rgba(34,197,94,.08)', border:'1px solid rgba(34,197,94,.2)', marginBottom:'8px', fontSize:'12px', fontWeight:700, color:'#22c55e' }}>
-              <div style={{ width:'7px', height:'7px', borderRadius:'50%', background:'#22c55e', animation:'pulse-sos 2s infinite' }} />
+            <div style={{ display:'flex', alignItems:'center', gap:'8px', padding:'8px 14px', borderRadius:'var(--radius-sm)', background:withAlpha(PV.success, 0.08), border:`1px solid ${withAlpha(PV.success, 0.24)}`, marginBottom:'8px', fontSize:'12px', fontWeight:700, color:PV.success }}>
+              <div style={{ width:'7px', height:'7px', borderRadius:'50%', background:PV.success, animation:'pulse-sos 2s infinite' }} />
               🔒 GPS ativo em segundo plano · transmissão ao grupo
               {!wake.wakeLock && wake.audio && <span style={{ opacity:.7, fontWeight:500 }}>(modo áudio)</span>}
             </div>
@@ -503,8 +504,8 @@ const Comboio = ({ user, openAuthModal }) => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               {/* Membros online */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 700 }}>
-                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e', animation: 'pulse-sos 2s infinite' }} />
-                <span style={{ color: '#22c55e' }}>{Object.values(lastKnownSnapshot).filter(p => p.online).length}</span>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: PV.success, animation: 'pulse-sos 2s infinite' }} />
+                <span style={{ color: PV.success }}>{Object.values(lastKnownSnapshot).filter(p => p.online).length}</span>
                 <span style={{ color: 'var(--muted)' }}>online</span>
               </div>
               <button className="btn-outline" onClick={shareCode} style={{ padding: '8px' }} aria-label="Compartilhar"><Share2 size={16} /></button>
@@ -521,29 +522,29 @@ const Comboio = ({ user, openAuthModal }) => {
             const distLeader = (myPos?.lat != null && leaderPos?.lat != null) ? distKmCB(myPos.lat, myPos.lng, leaderPos.lat, leaderPos.lng) : null;
             const behind = distLeader != null && distLeader > 0.6;
             const tile = { flex: 1, background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px', textAlign: 'center' };
-            const big = { fontFamily: 'var(--display)', fontWeight: 900, fontSize: 26, lineHeight: 1, color: '#fff' };
+            const big = { fontFamily: 'var(--display)', fontWeight: 900, fontSize: 26, lineHeight: 1, color: PV.white };
             const lab = { fontFamily: 'var(--mono)', fontSize: 9, textTransform: 'uppercase', letterSpacing: '.1em', color: 'var(--paper-mut)', marginTop: 5 };
             return (
               <>
                 <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
-                  <div style={tile}><div style={{ ...big, color: 'var(--accent-2,#ff7a1a)' }}>{Math.round(speed)}</div><div style={lab}><Gauge size={10} style={{ verticalAlign: -1 }} /> km/h</div></div>
+                  <div style={tile}><div style={{ ...big, color: 'var(--accent-2)' }}>{Math.round(speed)}</div><div style={lab}><Gauge size={10} style={{ verticalAlign: -1 }} /> km/h</div></div>
                   <div style={tile}><div style={big}>{Object.values(snap).filter(p => p.online).length}</div><div style={lab}>Pilotos online</div></div>
                   <div style={tile}><div style={{ ...big, fontSize: isLeader ? 20 : 26 }}>{isLeader ? '🏁' : (distLeader != null ? distLeader.toFixed(distLeader < 10 ? 1 : 0) : '—')}</div><div style={lab}>{isLeader ? 'Você é o líder' : 'km do líder'}</div></div>
                 </div>
                 {behind && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', borderRadius: 10, marginBottom: 10, background: 'rgba(180,83,9,.18)', border: '1px solid rgba(255,122,26,.4)', color: '#ff7a1a', fontWeight: 700, fontSize: 13 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', borderRadius: 10, marginBottom: 10, background: withAlpha(PV.warning, 0.16), border: `1px solid ${withAlpha(PV.orangeSoft, 0.4)}`, color: PV.orangeSoft, fontWeight: 700, fontSize: 13 }}>
                     <AlertTriangle size={16} /> Você ficou pra trás · {distLeader.toFixed(1)} km do líder
                   </div>
                 )}
                 {isLeader && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', borderRadius: 10, marginBottom: 10, background: 'rgba(34,197,94,.1)', border: '1px solid rgba(34,197,94,.3)', color: '#22c55e', fontWeight: 700, fontSize: 13 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', borderRadius: 10, marginBottom: 10, background: withAlpha(PV.success, 0.12), border: `1px solid ${withAlpha(PV.success, 0.32)}`, color: PV.success, fontWeight: 700, fontSize: 13 }}>
                     <Flag size={16} /> Você dita o ritmo do comboio.
                   </div>
                 )}
                 {/* SOS — discreto, segura 3s */}
                 <button onPointerDown={sosStart} onPointerUp={sosCancel} onPointerLeave={sosCancel}
-                  style={{ position: 'relative', overflow: 'hidden', width: '100%', marginBottom: 12, padding: '11px', borderRadius: 10, border: '1px solid var(--danger)', background: 'rgba(239,68,68,.08)', color: 'var(--danger)', fontFamily: 'var(--mono)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '.06em', fontSize: 12, cursor: 'pointer' }}>
-                  <span style={{ position: 'absolute', inset: 0, width: `${sosHold}%`, background: 'rgba(239,68,68,.35)', transition: 'width .06s linear' }} />
+                  style={{ position: 'relative', overflow: 'hidden', width: '100%', marginBottom: 12, padding: '11px', borderRadius: 10, border: '1px solid var(--danger)', background: withAlpha(PV.danger, 0.08), color: 'var(--danger)', fontFamily: 'var(--mono)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '.06em', fontSize: 12, cursor: 'pointer' }}>
+                  <span style={{ position: 'absolute', inset: 0, width: `${sosHold}%`, background: withAlpha(PV.danger, 0.32), transition: 'width .06s linear' }} />
                   <span style={{ position: 'relative' }}>🆘 SOS / Quebra — segure 3s</span>
                 </button>
               </>
@@ -562,8 +563,8 @@ const Comboio = ({ user, openAuthModal }) => {
                   const isMe = p.userId === user.id;
                   const isLead = p.userId === leaderId;
                   return (
-                    <div key={p.userId} title={p.online ? 'Online' : 'Offline'} style={{ display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0, padding: '5px 10px', borderRadius: 999, fontSize: 12, fontWeight: 700, background: 'var(--bg2)', border: `1px solid ${isMe ? 'var(--accent)' : 'var(--border)'}`, color: p.online ? '#fff' : 'var(--muted)' }}>
-                      <span style={{ width: 7, height: 7, borderRadius: '50%', background: p.online ? '#22c55e' : '#6b7280', flexShrink: 0 }} />
+                    <div key={p.userId} title={p.online ? 'Online' : 'Offline'} style={{ display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0, padding: '5px 10px', borderRadius: 999, fontSize: 12, fontWeight: 700, background: 'var(--bg2)', border: `1px solid ${isMe ? 'var(--accent)' : 'var(--border)'}`, color: p.online ? PV.white : 'var(--muted)' }}>
+                      <span style={{ width: 7, height: 7, borderRadius: '50%', background: p.online ? PV.success : PV.mapTrack, flexShrink: 0 }} />
                       {isLead && <Flag size={11} color="var(--accent)" />}
                       <span style={{ whiteSpace: 'nowrap' }}>{isMe ? 'Você' : (p.name || 'Piloto')}</span>
                     </div>
@@ -576,19 +577,19 @@ const Comboio = ({ user, openAuthModal }) => {
           {/* TABS */}
           <div style={{ display: 'flex', background: 'var(--bg2)', padding: '4px', borderRadius: 'var(--radius)', marginBottom: '12px' }}>
             <button 
-              style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', background: activeTab === 'chat' ? 'var(--bg3)' : 'transparent', color: activeTab === 'chat' ? '#fff' : 'var(--muted)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+              style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', background: activeTab === 'chat' ? 'var(--bg3)' : 'transparent', color: activeTab === 'chat' ? PV.white : 'var(--muted)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
               onClick={() => setActiveTab('chat')}
             >
               <MessageSquare size={16} /> RÁDIO COMBOIO
             </button>
             <button 
-              style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', background: activeTab === 'map' ? 'var(--bg3)' : 'transparent', color: activeTab === 'map' ? '#fff' : 'var(--muted)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+              style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', background: activeTab === 'map' ? 'var(--bg3)' : 'transparent', color: activeTab === 'map' ? PV.white : 'var(--muted)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
               onClick={() => setActiveTab('map')}
             >
               <MapIcon size={16} /> MAPA ({members.length})
             </button>
             <button
-              style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', background: activeTab === 'rota' ? 'var(--bg3)' : 'transparent', color: activeTab === 'rota' ? '#fff' : 'var(--muted)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+              style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', background: activeTab === 'rota' ? 'var(--bg3)' : 'transparent', color: activeTab === 'rota' ? PV.white : 'var(--muted)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
               onClick={() => setActiveTab('rota')}
             >
               <Pin size={16} /> ROTA{routeStops.length ? ` (${routeStops.length})` : ''}
@@ -600,14 +601,14 @@ const Comboio = ({ user, openAuthModal }) => {
             <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, overflow: 'hidden', background: 'var(--bg)', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
               
               {/* Pinned Message */}
-              <div style={{ background: 'rgba(139,92,246,0.1)', borderBottom: '1px solid rgba(139,92,246,0.2)' }}>
+              <div style={{ background: withAlpha(PV.info, 0.12), borderBottom: `1px solid ${withAlpha(PV.info, 0.24)}` }}>
                 <div style={{ padding: '10px 14px', display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                  <Pin size={15} color="#8b5cf6" style={{ marginTop: '2px', flexShrink: 0 }} />
+                  <Pin size={15} color={PV.info} style={{ marginTop: '2px', flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
                     {pinnedMsg ? (
                       <>
-                        <div style={{ fontSize: '11px', fontWeight: 700, color: '#8b5cf6', marginBottom: '2px' }}>📌 {pinnedMsg.author}</div>
-                        <div style={{ fontSize: '14px', color: '#fff', lineHeight: 1.4 }}>{pinnedMsg.text}</div>
+                        <div style={{ fontSize: '11px', fontWeight: 700, color: PV.info, marginBottom: '2px' }}>📌 {pinnedMsg.author}</div>
+                        <div style={{ fontSize: '14px', color: PV.white, lineHeight: 1.4 }}>{pinnedMsg.text}</div>
                       </>
                     ) : (
                       <div style={{ fontSize: '13px', color: 'var(--muted)' }}>Sem aviso fixado</div>
@@ -615,7 +616,7 @@ const Comboio = ({ user, openAuthModal }) => {
                   </div>
                   <button
                     onClick={() => setShowPinInput(v => !v)}
-                    style={{ background: 'transparent', border: 'none', color: '#8b5cf6', fontSize: '11px', fontWeight: 700, cursor: 'pointer', flexShrink: 0, padding: '2px 6px' }}
+                    style={{ background: 'transparent', border: 'none', color: PV.info, fontSize: '11px', fontWeight: 700, cursor: 'pointer', flexShrink: 0, padding: '2px 6px' }}
                   >
                     {showPinInput ? 'CANCELAR' : pinnedMsg ? 'EDITAR' : 'FIXAR'}
                   </button>
@@ -629,12 +630,12 @@ const Comboio = ({ user, openAuthModal }) => {
                       onChange={e => setPinInput(e.target.value)}
                       onKeyDown={e => e.key === 'Enter' && handlePinMessage()}
                       autoFocus
-                      style={{ flex: 1, fontSize: '13px', padding: '8px 12px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(139,92,246,0.4)', borderRadius: '8px', color: '#fff' }}
+                      style={{ flex: 1, fontSize: '13px', padding: '8px 12px', background: withAlpha(PV.white, 0.04), border: `1px solid ${withAlpha(PV.info, 0.4)}`, borderRadius: '8px', color: PV.white }}
                     />
                     <button
                       onClick={handlePinMessage}
                       disabled={!pinInput.trim()}
-                      style={{ padding: '8px 14px', background: '#8b5cf6', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '12px', fontWeight: 700, cursor: 'pointer' }}
+                      style={{ padding: '8px 14px', background: PV.info, border: 'none', borderRadius: '8px', color: PV.white, fontSize: '12px', fontWeight: 700, cursor: 'pointer' }}
                     >
                       FIXAR
                     </button>
@@ -645,7 +646,7 @@ const Comboio = ({ user, openAuthModal }) => {
               {/* Messages Area */}
               <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', overflowX: 'hidden', WebkitOverflowScrolling: 'touch', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {connecting && (
-                  <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'8px', padding:'10px', background:'rgba(249,98,0,.06)', borderBottom:'1px solid rgba(249,98,0,.15)', fontSize:'12px', color:'var(--accent)', fontWeight:700 }}>
+                  <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'8px', padding:'10px', background:withAlpha(PV.orange, 0.04), borderBottom:`1px solid ${withAlpha(PV.orange, 0.16)}`, fontSize:'12px', color:'var(--accent)', fontWeight:700 }}>
                     <span className="loading-spinner" style={{ width:'14px', height:'14px', borderTopColor:'var(--accent)' }} />
                     Conectando ao canal...
                   </div>
@@ -669,7 +670,7 @@ const Comboio = ({ user, openAuthModal }) => {
                   </span>
                       <div style={{ 
                         background: isMe ? 'var(--accent)' : 'var(--bg3)', 
-                        color: '#fff', 
+                        color: PV.white, 
                         padding: '10px 14px', 
                         borderRadius: '16px',
                         borderBottomRightRadius: isMe ? '4px' : '16px',
@@ -710,9 +711,9 @@ const Comboio = ({ user, openAuthModal }) => {
                   value={chatInput}
                   onChange={e => handleTyping(e.target.value)}
                   placeholder="Mensagem pro Comboio..."
-                  style={{ flex: 1, background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '0', padding: '10px 16px', color: '#fff', outline: 'none' }}
+                  style={{ flex: 1, background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '0', padding: '10px 16px', color: PV.white, outline: 'none' }}
                 />
-                <button type="submit" disabled={!chatInput.trim()} style={{ background: chatInput.trim() ? 'var(--accent)' : 'var(--bg3)', border: 'none', width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', cursor: chatInput.trim() ? 'pointer' : 'default', transition: '0.2s', flexShrink: 0 }}>
+                <button type="submit" disabled={!chatInput.trim()} style={{ background: chatInput.trim() ? 'var(--accent)' : 'var(--bg3)', border: 'none', width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: PV.white, cursor: chatInput.trim() ? 'pointer' : 'default', transition: '0.2s', flexShrink: 0 }}>
                   <Send size={18} />
                 </button>
               </form>
@@ -732,10 +733,10 @@ const Comboio = ({ user, openAuthModal }) => {
                   padding: '8px 12px', background: 'var(--bg2)',
                   borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)',
                 }}>
-                  <span style={{ color: '#f97316' }}>🏍️ Você</span>
-                  <span style={{ color: '#3b82f6' }}>● Online: {onlineCount}</span>
+                  <span style={{ color: PV.orange }}>🏍️ Você</span>
+                  <span style={{ color: PV.info }}>● Online: {onlineCount}</span>
                   {offlineCount > 0 && (
-                    <span style={{ color: '#6b7280' }}>● Offline: {offlineCount}</span>
+                    <span style={{ color: PV.mapTrack }}>● Offline: {offlineCount}</span>
                   )}
                   {pins.length === 0 && (
                     <span style={{ color: 'var(--muted)' }}>Aguardando localização dos pilotos…</span>
@@ -749,7 +750,7 @@ const Comboio = ({ user, openAuthModal }) => {
 
                     {/* Rota do comboio (paradas do líder) */}
                     {routeStops.length > 1 && (
-                      <Polyline positions={routeStops.map(s => [s.lat, s.lng])} color="#f97316" weight={3} opacity={0.7} dashArray="6 8" />
+                      <Polyline positions={routeStops.map(s => [s.lat, s.lng])} color={PV.orange} weight={3} opacity={0.7} dashArray="6 8" />
                     )}
                     {routeStops.map((s, i) => (
                       <Marker key={`stop-${i}`} position={[s.lat, s.lng]} icon={routeStopIcon(i + 1)}>
@@ -775,9 +776,9 @@ const Comboio = ({ user, openAuthModal }) => {
                                 {isMe ? '🏍️ Você' : p.name}
                               </strong>
                               {p.online ? (
-                                <span style={{ fontSize: '11px', color: '#22c55e', fontWeight: 700 }}>● Online</span>
+                                <span style={{ fontSize: '11px', color: PV.success, fontWeight: 700 }}>● Online</span>
                               ) : (
-                                <span style={{ fontSize: '11px', color: '#6b7280', fontWeight: 700 }}>📡 Offline · {timeAgo}</span>
+                                <span style={{ fontSize: '11px', color: PV.mapTrack, fontWeight: 700 }}>📡 Offline · {timeAgo}</span>
                               )}
                             </div>
                           </Popup>
@@ -798,7 +799,7 @@ const Comboio = ({ user, openAuthModal }) => {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {/* COMO FUNCIONA */}
-          <div className="glass" style={{ padding: '20px 24px', borderRadius: 'var(--radius)', border: '1px solid var(--border)', background: 'rgba(249,115,22,0.05)' }}>
+          <div className="glass" style={{ padding: '20px 24px', borderRadius: 'var(--radius)', border: '1px solid var(--border)', background: withAlpha(PV.orange, 0.04) }}>
             <h3 style={{ fontWeight: 800, fontSize: '15px', marginBottom: '12px', letterSpacing: '.5px' }}>🏍️ COMO FUNCIONA O COMBOIO</h3>
             <ol style={{ margin: 0, paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '13.5px', color: 'var(--muted)', lineHeight: 1.5 }}>
               <li><b style={{ color: 'var(--text)' }}>Crie um comboio</b> e compartilhe o código com a galera (ou entre no código de um amigo).</li>
@@ -811,7 +812,7 @@ const Comboio = ({ user, openAuthModal }) => {
 
           <div className="glass" style={{ padding: '24px', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-              <div style={{ padding: '10px', background: 'rgba(249,115,22,0.1)', borderRadius: '50%' }}><Plus size={24} color="var(--accent)" /></div>
+              <div style={{ padding: '10px', background: withAlpha(PV.orange, 0.12), borderRadius: '50%' }}><Plus size={24} color="var(--accent)" /></div>
               <div>
                 <h3 style={{ fontWeight: '800', fontSize: '16px' }}>Criar um Comboio</h3>
                 <p className="text-muted" style={{ fontSize: '12px' }}>Inicie um novo grupo e seja o puxador.</p>
@@ -826,7 +827,7 @@ const Comboio = ({ user, openAuthModal }) => {
 
           <div className="glass" style={{ padding: '24px', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-              <div style={{ padding: '10px', background: 'rgba(139,92,246,0.1)', borderRadius: '50%' }}><KeyRound size={24} color="#8b5cf6" /></div>
+              <div style={{ padding: '10px', background: withAlpha(PV.info, 0.12), borderRadius: '50%' }}><KeyRound size={24} color={PV.info} /></div>
               <div>
                 <h3 style={{ fontWeight: '800', fontSize: '16px' }}>Entrar em um Comboio</h3>
                 <p className="text-muted" style={{ fontSize: '12px' }}>Digite o código que seu amigo compartilhou.</p>
@@ -844,7 +845,7 @@ const Comboio = ({ user, openAuthModal }) => {
             <button 
               className="btn-outline" 
               onClick={joinComboio} 
-              style={{ width: '100%', borderColor: '#8b5cf6', color: '#8b5cf6' }}
+              style={{ width: '100%', borderColor: PV.info, color: PV.info }}
               disabled={!joinCode || joinCode.length < 3}
             >
               ENTRAR NO COMBOIO

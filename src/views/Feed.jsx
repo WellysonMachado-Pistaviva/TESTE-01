@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { MessageSquare, Heart, Camera, Send, Share2, X, Image as ImageIcon } from 'lucide-react';
 import { getPosts, addPost, likePost, addComment, uploadPostImage, reportContent } from '../services/storage';
 import PhotoCarousel from '../../app/components/PhotoCarousel';
+import PV, { withAlpha } from '../palette';
 
 const showErr = (msg) => {
   const el = document.getElementById('app-toast');
@@ -198,13 +199,13 @@ const Feed = ({ deviceId = 'anon', identity, promptIdentity }) => {
                   <div key={i} style={{ position: 'relative', aspectRatio: '1/1', borderRadius: 'var(--radius-sm)', overflow: 'hidden', border: '1px solid var(--border)' }}>
                     <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     <button type="button" onClick={() => setNewPost(p => ({ ...p, images: p.images.filter((_, k) => k !== i) }))}
-                      style={{ position: 'absolute', top: 4, right: 4, width: 22, height: 22, borderRadius: '50%', border: 'none', background: 'rgba(0,0,0,.7)', color: '#fff', cursor: 'pointer', display: 'grid', placeItems: 'center' }} aria-label="Remover foto"><X size={13} /></button>
-                    {i === 0 && <span style={{ position: 'absolute', bottom: 4, left: 4, fontSize: 9, fontWeight: 800, background: 'var(--accent)', color: '#fff', padding: '2px 6px', borderRadius: 4 }}>CAPA</span>}
+                      style={{ position: 'absolute', top: 4, right: 4, width: 22, height: 22, borderRadius: '50%', border: 'none', background: withAlpha(PV.black, 0.72), color: PV.white, cursor: 'pointer', display: 'grid', placeItems: 'center' }} aria-label="Remover foto"><X size={13} /></button>
+                    {i === 0 && <span style={{ position: 'absolute', bottom: 4, left: 4, fontSize: 9, fontWeight: 800, background: 'var(--accent)', color: PV.white, padding: '2px 6px', borderRadius: 4 }}>CAPA</span>}
                   </div>
                 ))}
                 {newPost.images.length < 5 && (
                   <div onClick={() => document.getElementById('file-upload').click()}
-                    style={{ aspectRatio: '1/1', border: '2px dashed var(--border)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6, background: 'rgba(255,255,255,.02)' }}>
+                    style={{ aspectRatio: '1/1', border: '2px dashed var(--border)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6, background: withAlpha(PV.white, 0) }}>
                     <ImageIcon size={28} color="var(--accent)" />
                     <p style={{ fontSize: '11px', color: 'var(--muted)' }}>Adicionar</p>
                   </div>
@@ -265,7 +266,7 @@ const Feed = ({ deviceId = 'anon', identity, promptIdentity }) => {
                     fontFamily: 'var(--mono)', textTransform: 'uppercase', letterSpacing: '.06em',
                     border: `1.5px solid ${newPost.category === k ? 'var(--accent)' : 'var(--border)'}`,
                     background: newPost.category === k ? 'var(--accent)' : 'transparent',
-                    color: newPost.category === k ? '#fff' : 'var(--paper-dim)',
+                    color: newPost.category === k ? PV.white : 'var(--paper-dim)',
                     cursor: 'pointer', transition: '.15s'
                   }}>{v}</button>
                 ))}

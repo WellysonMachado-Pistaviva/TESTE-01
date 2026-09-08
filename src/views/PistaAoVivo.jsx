@@ -1,12 +1,13 @@
+import PV, { withAlpha } from '../palette';
 import { useState, useEffect, useCallback } from 'react';
 import { AlertTriangle, CheckCircle, CloudRain, Wind, Droplets, RefreshCw, Send, MapPin } from 'lucide-react';
 import { useCurrentLocationWeather, useWeather } from '../hooks/useWeather';
 import { getReports, addReport } from '../services/storage';
 
 const STATUS = {
-  green:  { label: 'LIMPA',   color: 'var(--success)', bg: 'rgba(34,197,94,.08)',  icon: <CheckCircle size={16} />,   emoji: '✅' },
-  yellow: { label: 'ALERTA',  color: 'var(--warning)', bg: 'rgba(234,179,8,.08)',  icon: <AlertTriangle size={16} />, emoji: '⚠️' },
-  red:    { label: 'FECHADA', color: 'var(--danger)',  bg: 'rgba(239,68,68,.08)',  icon: <CloudRain size={16} />,     emoji: '🚫' },
+  green:  { label: 'LIMPA',   color: 'var(--success)', bg: withAlpha(PV.success, 0.08),  icon: <CheckCircle size={16} />,   emoji: '✅' },
+  yellow: { label: 'ALERTA',  color: 'var(--warning)', bg: withAlpha(PV.warning, 0.08),  icon: <AlertTriangle size={16} />, emoji: '⚠️' },
+  red:    { label: 'FECHADA', color: 'var(--danger)',  bg: withAlpha(PV.danger, 0.08),  icon: <CloudRain size={16} />,     emoji: '🚫' },
 };
 
 const WeatherCard = ({ weather, loading, label, sublabel }) => (

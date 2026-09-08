@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import PV from '../../src/palette';
 
 // Botões de download do app Estrada X com detecção de plataforma:
 // iOS destaca a App Store, Android destaca o Google Play, desktop mostra as duas iguais.
@@ -16,7 +17,7 @@ const AppleBtn = ({ primary }) => (
 const GoogleBtn = ({ primary }) => (
   <a className={`exd-btn${primary ? ' exd-btn--on' : ''}`} href={ANDROID_URL} target="_blank" rel="noopener noreferrer"
     onClick={() => { try { window.gtag?.('event', 'estradax_download', { store: 'google_play' }); } catch { /* ignore */ } }}>
-    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#34A853" d="M3.6 22.3 14.8 11.1l3 3-12.6 7.2c-.6.4-1.4.4-1.6.0z"/><path fill="#EA4335" d="M3.6 1.7c-.1.1-.1.3-.1.6v19.4c0 .3 0 .5.1.6L15 11.1 3.6 1.7z" opacity=".0"/><path fill="#4285F4" d="M3.5 1.9C3.5 1.5 3.9 1.3 4.4 1.6l12.4 7.1-3 3L3.5 1.9z"/><path fill="#FBBC04" d="M17.8 8.7 21 10.5c.9.5.9 1.9 0 2.4l-3.2 1.8-3.2-3 3.2-3z"/></svg>
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill={PV.brandGoogleGreen} d="M3.6 22.3 14.8 11.1l3 3-12.6 7.2c-.6.4-1.4.4-1.6.0z"/><path fill={PV.brandGoogleRed} d="M3.6 1.7c-.1.1-.1.3-.1.6v19.4c0 .3 0 .5.1.6L15 11.1 3.6 1.7z" opacity=".0"/><path fill={PV.brandGoogleBlue} d="M3.5 1.9C3.5 1.5 3.9 1.3 4.4 1.6l12.4 7.1-3 3L3.5 1.9z"/><path fill={PV.brandGoogleYellow} d="M17.8 8.7 21 10.5c.9.5.9 1.9 0 2.4l-3.2 1.8-3.2-3 3.2-3z"/></svg>
     <span className="exd-btn__txt"><small>Baixar no</small><b>Google Play</b></span>
   </a>
 );

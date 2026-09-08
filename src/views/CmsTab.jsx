@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Save, Plus, Trash2, Edit, Image as ImageIcon, MapPin } from 'lucide-react';
 import { getSiteConfig, saveSiteConfig, getPresetRoutes, savePresetRoutes } from '../services/storage';
+import PV from '../palette';
 
 const F = ({ label, hint, children }) => (
   <div className="calc-field" style={{ marginBottom: '16px' }}>
@@ -16,7 +17,7 @@ export const CmsTab = ({ toast }) => {
   const [routes, setRoutes] = useState([]);
   
   // Route Form State
-  const EMPTY_ROUTE = { name: '', region: '', dest: '', distance: '', duration: '', difficulty: 'Fácil', diffColor: '#22c55e', highlights: '', tip: '', emoji: '🏍️', tags: '' };
+  const EMPTY_ROUTE = { name: '', region: '', dest: '', distance: '', duration: '', difficulty: 'Fácil', diffColor: PV.success, highlights: '', tip: '', emoji: '🏍️', tags: '' };
   const [routeForm, setRouteForm] = useState(null);
   const [editRouteId, setEditRouteId] = useState(null);
 
@@ -57,7 +58,7 @@ export const CmsTab = ({ toast }) => {
       ...routeForm,
       highlights: routeForm.highlights.split('\n').map(h => h.trim()).filter(Boolean),
       tags: routeForm.tags.split(',').map(t => t.trim()).filter(Boolean),
-      diffColor: routeForm.difficulty === 'Fácil' ? '#22c55e' : routeForm.difficulty === 'Intermediário' ? '#f97316' : '#ef4444'
+      diffColor: routeForm.difficulty === 'Fácil' ? PV.success : routeForm.difficulty === 'Intermediário' ? PV.orange : PV.danger
     };
 
     let updated;
@@ -95,13 +96,13 @@ export const CmsTab = ({ toast }) => {
       <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
         <button 
           onClick={() => setActiveSection('home')}
-          style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: activeSection === 'home' ? 'var(--accent)' : 'var(--bg4)', color: '#fff', fontWeight: 'bold', cursor: 'pointer' }}
+          style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: activeSection === 'home' ? 'var(--accent)' : 'var(--bg4)', color: PV.white, fontWeight: 'bold', cursor: 'pointer' }}
         >
           <ImageIcon size={14} style={{ display: 'inline', marginRight: '6px' }} /> Página Inicial
         </button>
         <button 
           onClick={() => setActiveSection('routes')}
-          style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: activeSection === 'routes' ? 'var(--accent)' : 'var(--bg4)', color: '#fff', fontWeight: 'bold', cursor: 'pointer' }}
+          style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: activeSection === 'routes' ? 'var(--accent)' : 'var(--bg4)', color: PV.white, fontWeight: 'bold', cursor: 'pointer' }}
         >
           <MapPin size={14} style={{ display: 'inline', marginRight: '6px' }} /> Roteiros Oficiais ({routes.length})
         </button>

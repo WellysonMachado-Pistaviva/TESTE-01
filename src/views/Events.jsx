@@ -4,6 +4,7 @@ import { Calendar, MapPin, Clock, X, CheckCircle, Bike, Plus, Flame, Ticket, Ext
 import { getEvents, getEventRsvps, setEventRsvp } from '../services/storage';
 import PhotoCarousel from '../../app/components/PhotoCarousel';
 import { getEventRsvpBase } from '../../app/lib/eventRsvpBases.mjs';
+import PV, { withAlpha } from '../palette';
 
 const MONTH_MAP = { jan: 0, fev: 1, mar: 2, abr: 3, mai: 4, jun: 5, jul: 6, ago: 7, set: 8, out: 9, nov: 10, dez: 11 };
 const parseEventDate = (str) => {
@@ -36,9 +37,9 @@ const dateStub = (str) => {
 };
 
 const STATUS_CONFIG = {
-  open: { label: 'INSCRIÇÕES ABERTAS', bg: 'rgba(34,197,94,0.1)', color: 'var(--success)' },
-  soon: { label: 'EM BREVE', bg: 'rgba(249,115,22,0.1)', color: 'var(--accent)' },
-  full: { label: 'VAGAS ESGOTADAS', bg: 'rgba(239,68,68,0.1)', color: 'var(--danger)' },
+  open: { label: 'INSCRIÇÕES ABERTAS', bg: withAlpha(PV.success, 0.12), color: 'var(--success)' },
+  soon: { label: 'EM BREVE', bg: withAlpha(PV.orange, 0.12), color: 'var(--accent)' },
+  full: { label: 'VAGAS ESGOTADAS', bg: withAlpha(PV.danger, 0.12), color: 'var(--danger)' },
 };
 
 const parseTags = (tags) => {
@@ -222,13 +223,13 @@ const Events = ({ user, openAuthModal }) => {
             <div className="ig-evsheet" onClick={e => e.stopPropagation()} style={{ background: 'var(--bg2)', borderRadius: 'var(--radius) var(--radius) 0 0', border: '1px solid var(--border)', borderBottom: 'none', width: '100%', maxWidth: '640px', margin: '0 auto', maxHeight: '90vh', overflowY: 'auto', animation: 'slideUp .32s cubic-bezier(.34,1.36,.64,1)', paddingBottom: 'env(safe-area-inset-bottom)' }}>
               {ev.images && ev.images.length > 1
                 ? <PhotoCarousel images={ev.images} height={220} alt={ev.title} radius={0} fit="contain" />
-                : ev.imageUrl && <img src={ev.imageUrl} alt={ev.title} style={{ width: '100%', height: 220, objectFit: 'contain', objectPosition: 'center', background: '#0d0d0f' }} />}
+                : ev.imageUrl && <img src={ev.imageUrl} alt={ev.title} style={{ width: '100%', height: 220, objectFit: 'contain', objectPosition: 'center', background: PV.black }} />}
               <button className="ig-evsheet-x" onClick={() => setSelectedEvent(null)}><X size={16} /></button>
               <div className="ig-evsheet-body">
                 <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', flexWrap: 'wrap' }}>
-                  <span style={{ padding: '5px 12px', borderRadius: 2, fontSize: '10px', fontWeight: 700, letterSpacing: '.1em', fontFamily: 'var(--mono)', textTransform: 'uppercase', background: status.color, color: '#fff' }}>{status.label}</span>
+                  <span style={{ padding: '5px 12px', borderRadius: 2, fontSize: '10px', fontWeight: 700, letterSpacing: '.1em', fontFamily: 'var(--mono)', textTransform: 'uppercase', background: status.color, color: PV.white }}>{status.label}</span>
                   <span style={{ padding: '5px 12px', borderRadius: 2, fontSize: '10px', fontWeight: 700, letterSpacing: '.1em', fontFamily: 'var(--mono)', textTransform: 'uppercase', background: 'transparent', color: 'var(--accent-2)', border: '1px solid var(--border)' }}>{ev.category?.toUpperCase()}</span>
-                  <span style={{ padding: '5px 12px', borderRadius: 2, fontSize: '10px', fontWeight: 700, letterSpacing: '.1em', fontFamily: 'var(--mono)', textTransform: 'uppercase', background: 'rgba(34,197,94,0.12)', color: 'var(--success)' }}>{priceLabel(ev.price)}</span>
+                  <span style={{ padding: '5px 12px', borderRadius: 2, fontSize: '10px', fontWeight: 700, letterSpacing: '.1em', fontFamily: 'var(--mono)', textTransform: 'uppercase', background: withAlpha(PV.success, 0.12), color: 'var(--success)' }}>{priceLabel(ev.price)}</span>
                 </div>
                 <h2 style={{ fontFamily: 'var(--display)', fontSize: '34px', fontWeight: 800, textTransform: 'uppercase', lineHeight: .98, letterSpacing: '-.01em', marginBottom: '22px' }}>{ev.title}</h2>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '20px' }}>
@@ -247,7 +248,7 @@ const Events = ({ user, openAuthModal }) => {
                 {ev.description && <p style={{ fontSize: '15px', lineHeight: '1.7', color: 'var(--muted)', marginBottom: '20px' }}>{ev.description}</p>}
                 {tags.length > 0 && (
                   <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '24px' }}>
-                    {tags.map(tag => <span key={tag} style={{ padding: '5px 11px', borderRadius: 2, fontSize: '11px', fontWeight: 700, fontFamily: 'var(--mono)', textTransform: 'uppercase', letterSpacing: '.06em', background: 'rgba(255,90,0,.1)', color: 'var(--accent)' }}>{tag}</span>)}
+                    {tags.map(tag => <span key={tag} style={{ padding: '5px 11px', borderRadius: 2, fontSize: '11px', fontWeight: 700, fontFamily: 'var(--mono)', textTransform: 'uppercase', letterSpacing: '.06em', background: withAlpha(PV.orange, 0.12), color: 'var(--accent)' }}>{tag}</span>)}
                   </div>
                 )}
 

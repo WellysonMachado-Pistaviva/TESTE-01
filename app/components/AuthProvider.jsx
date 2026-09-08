@@ -1,4 +1,5 @@
 'use client';
+import PV, { withAlpha } from '../../src/palette';
 import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '../../src/lib/supabaseClient';
 
@@ -201,7 +202,7 @@ export default function AuthProvider({ children }) {
                 onChange={e => setAdminForm({ ...adminForm, email: e.target.value })} />
               {forgot ? (
                 <>
-                  {adminErr && <p style={{ color: 'var(--danger)', fontSize: 13, textAlign: 'center', background: 'rgba(239,68,68,.08)', padding: 10, borderRadius: 8 }}>{adminErr}</p>}
+                  {adminErr && <p style={{ color: 'var(--danger)', fontSize: 13, textAlign: 'center', background: withAlpha(PV.danger, 0.08), padding: 10, borderRadius: 8 }}>{adminErr}</p>}
                   <button className="btn-primary" onClick={doForgot} disabled={adminBusy}>{adminBusy ? <span className="loading-spinner" /> : 'ENVIAR LINK'}</button>
                   <p style={{ textAlign: 'center', fontSize: 13, marginTop: 8 }}>
                     <button type="button" onClick={() => { setForgot(false); setAdminErr(''); }} style={{ background: 'none', border: 'none', color: 'var(--accent)', cursor: 'pointer', fontFamily: 'inherit', fontSize: 13, textDecoration: 'underline' }}>Voltar</button>
@@ -212,7 +213,7 @@ export default function AuthProvider({ children }) {
                   <input style={inp} type="password" placeholder="Senha" value={adminForm.senha}
                     onChange={e => setAdminForm({ ...adminForm, senha: e.target.value })}
                     onKeyDown={e => e.key === 'Enter' && doAdminLogin()} />
-                  {adminErr && <p style={{ color: 'var(--danger)', fontSize: 13, textAlign: 'center', background: 'rgba(239,68,68,.08)', padding: 10, borderRadius: 8 }}>{adminErr}</p>}
+                  {adminErr && <p style={{ color: 'var(--danger)', fontSize: 13, textAlign: 'center', background: withAlpha(PV.danger, 0.08), padding: 10, borderRadius: 8 }}>{adminErr}</p>}
                   <button className="btn-primary" onClick={doAdminLogin} disabled={adminBusy}>{adminBusy ? <span className="loading-spinner" /> : 'ENTRAR'}</button>
                   <p style={{ textAlign: 'center', fontSize: 13, marginTop: 8, marginBottom: 0 }}>
                     <button type="button" onClick={() => { setForgot(true); setAdminErr(''); }} style={{ background: 'none', border: 'none', color: 'var(--accent)', cursor: 'pointer', fontFamily: 'inherit', fontSize: 13, textDecoration: 'underline' }}>Esqueci minha senha</button>

@@ -6,6 +6,7 @@ import { uploadPostImage } from '../../src/services/storage';
 import { useAuth, showToast } from '../components/AuthProvider';
 import Stepper, { Step } from '../components/Stepper';
 import { slugify } from '../lib/spotMeta';
+import PV, { withAlpha } from '../../src/palette';
 
 const EMPTY = { nome: '', cidade: '', uf: '', local: '', instagram: '', site_url: '', whatsapp: '', descricao: '', lat: null, lng: null, cover_url: '', images: [], horario_dias: [], horario_inicio: '', horario_fim: '' };
 const DIAS = [['Dom', 0], ['Seg', 1], ['Ter', 2], ['Qua', 3], ['Qui', 4], ['Sex', 5], ['Sáb', 6]];
@@ -136,8 +137,8 @@ export default function NewPhotographerForm() {
               <div key={i} style={{ position: 'relative' }}>
                 <img src={src} alt="" style={{ height: 56, width: 56, objectFit: 'cover', borderRadius: 8, border: '1px solid var(--border)' }} />
                 <button type="button" onClick={() => setF(s => ({ ...s, images: s.images.filter((_, k) => k !== i), cover_url: '' }))}
-                  style={{ position: 'absolute', top: -6, right: -6, width: 20, height: 20, borderRadius: '50%', border: 'none', background: 'rgba(0,0,0,.75)', color: '#fff', cursor: 'pointer' }} aria-label="Remover">×</button>
-                {i === 0 && <span style={{ position: 'absolute', bottom: 2, left: 2, fontSize: 8, fontWeight: 800, background: 'var(--accent,#ff5a00)', color: '#fff', padding: '1px 5px', borderRadius: 3 }}>CAPA</span>}
+                  style={{ position: 'absolute', top: -6, right: -6, width: 20, height: 20, borderRadius: '50%', border: 'none', background: withAlpha(PV.black, 0.72), color: PV.white, cursor: 'pointer' }} aria-label="Remover">×</button>
+                {i === 0 && <span style={{ position: 'absolute', bottom: 2, left: 2, fontSize: 8, fontWeight: 800, background: 'var(--accent)', color: PV.white, padding: '1px 5px', borderRadius: 3 }}>CAPA</span>}
               </div>
             ))}
             {(f.images?.length || 0) < 6 && (
@@ -155,7 +156,7 @@ export default function NewPhotographerForm() {
               const on = f.horario_dias.includes(n);
               return (
                 <button key={n} type="button" onClick={() => setF(s => ({ ...s, horario_dias: on ? s.horario_dias.filter(d => d !== n) : [...s.horario_dias, n] }))}
-                  style={{ padding: '7px 11px', borderRadius: 100, fontFamily: 'var(--mono)', fontSize: 12, fontWeight: 700, cursor: 'pointer', border: `1.5px solid ${on ? 'var(--accent)' : 'var(--border)'}`, background: on ? 'var(--accent)' : 'transparent', color: on ? '#fff' : 'var(--paper-dim)' }}>{lbl}</button>
+                  style={{ padding: '7px 11px', borderRadius: 100, fontFamily: 'var(--mono)', fontSize: 12, fontWeight: 700, cursor: 'pointer', border: `1.5px solid ${on ? 'var(--accent)' : 'var(--border)'}`, background: on ? 'var(--accent)' : 'transparent', color: on ? PV.white : 'var(--paper-dim)' }}>{lbl}</button>
               );
             })}
           </div>

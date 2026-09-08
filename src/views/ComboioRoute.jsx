@@ -4,9 +4,10 @@ import L from 'leaflet';
 import { Search, MapPin, Trash2, Save } from 'lucide-react';
 import { TILES } from '../lib/mapTiles';
 import { supabase } from '../lib/supabaseClient';
+import PV, { withAlpha } from '../palette';
 
 const stopIcon = (n) => L.divIcon({
-  html: `<div style="display:flex;flex-direction:column;align-items:center"><div style="width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#f97316;border:2px solid #fff;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.5)"><span style="transform:rotate(45deg);font-size:12px;font-weight:800;color:#fff">${n}</span></div></div>`,
+  html: `<div style="display:flex;flex-direction:column;align-items:center"><div style="width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:${PV.orange};border:2px solid ${PV.white};display:grid;place-items:center;box-shadow:0 2px 6px ${withAlpha(PV.black, 0.5)}"><span style="transform:rotate(45deg);font-size:12px;font-weight:800;color:${PV.white}">${n}</span></div></div>`,
   className: '', iconSize: [26, 26], iconAnchor: [13, 26],
 });
 
@@ -85,7 +86,7 @@ export default function ComboioRoute({ comboioCode, isLeader }) {
             )}
           </div>
           <button type="button" onClick={() => setPinMode(m => !m)}
-            style={{ alignSelf: 'flex-start', padding: '9px 14px', borderRadius: 8, fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 12, cursor: 'pointer', border: `1.5px solid ${pinMode ? 'var(--accent)' : 'var(--border)'}`, background: pinMode ? 'var(--accent)' : 'transparent', color: pinMode ? '#fff' : 'var(--muted)' }}>
+            style={{ alignSelf: 'flex-start', padding: '9px 14px', borderRadius: 8, fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 12, cursor: 'pointer', border: `1.5px solid ${pinMode ? 'var(--accent)' : 'var(--border)'}`, background: pinMode ? 'var(--accent)' : 'transparent', color: pinMode ? PV.white : 'var(--muted)' }}>
             <MapPin size={13} style={{ verticalAlign: -2 }} /> {pinMode ? 'Toque no mapa pra marcar o ponto' : 'Adicionar pin manual'}
           </button>
         </div>
@@ -94,7 +95,7 @@ export default function ComboioRoute({ comboioCode, isLeader }) {
       <div style={{ height: 260, borderRadius: 'var(--radius)', overflow: 'hidden', border: '1px solid var(--border)', flexShrink: 0 }}>
         <MapContainer center={center} zoom={stops.length ? 11 : 5} style={{ height: '100%', width: '100%' }}>
           <TileLayer attribution={TILES.topo.attribution} url={TILES.topo.url} />
-          {line.length > 1 && <Polyline positions={line} color="#f97316" weight={4} opacity={0.9} />}
+          {line.length > 1 && <Polyline positions={line} color={PV.orange} weight={4} opacity={0.9} />}
           {stops.map((s, i) => <Marker key={i} position={[s.lat, s.lng]} icon={stopIcon(i + 1, s.tipo)} />)}
           <ClickAdd active={isLeader && pinMode} onAdd={addManual} />
           <FitStops stops={stops} />
@@ -106,7 +107,7 @@ export default function ComboioRoute({ comboioCode, isLeader }) {
         {stops.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13, textAlign: 'center', padding: '12px 0' }}>{isLeader ? 'Adicione paradas pela busca ou pin manual.' : 'O líder ainda não montou a rota.'}</p>}
         {stops.map((s, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 10, padding: '9px 12px' }}>
-            <span style={{ width: 22, height: 22, borderRadius: '50%', background: 'var(--accent)', color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 12, flexShrink: 0 }}>{i + 1}</span>
+            <span style={{ width: 22, height: 22, borderRadius: '50%', background: 'var(--accent)', color: PV.white, display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 12, flexShrink: 0 }}>{i + 1}</span>
             <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.nome}</div></div>
             {isLeader && <>
               <button onClick={() => move(i, -1)} disabled={i === 0} style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: 14 }}>▲</button>

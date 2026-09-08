@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { joinGlobalRadarChannel, setGlobalRadarCallbacks } from '../services/realtime';
+import PV from '../palette';
 
 // AutoCenter helper
 const AutoCenterMap = ({ riders }) => {
@@ -106,7 +107,7 @@ export const RadarTab = ({ user }) => {
       <p style={{ fontSize: '13px', color: 'var(--muted)', marginBottom: '16px' }}>
         Visualização em tempo real de todos os motociclistas com aplicativo aberto.
         Total online: <strong style={{ color: 'var(--accent)' }}>{allEntries.filter(r => r.online).length}</strong> ·
-        Com GPS ativo: <strong style={{ color: '#22c55e' }}>{riders.length}</strong>
+        Com GPS ativo: <strong style={{ color: PV.success }}>{riders.length}</strong>
       </p>
 
       <div style={{
