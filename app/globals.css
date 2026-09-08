@@ -3941,11 +3941,6 @@ body.evb-takeover #app{ flex:1; display:flex; flex-direction:column; max-width:n
 
 /* Galeria */
 .ms-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:var(--pv-space-3); flex-wrap:wrap; margin-bottom:40px; }
-.ms-galeria{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
-.ms-galeria__item{ margin:0; height:220px; overflow:hidden; }
-.ms-galeria__item img{ width:100%; height:100%; object-fit:cover; transition:transform .5s, filter .3s; }
-.ms-galeria__item:hover img{ transform:scale(1.04); filter:brightness(1.06); }
-@media (max-width:900px){ .ms-galeria{ grid-template-columns:repeat(2,1fr); } .ms-galeria__item{ grid-column:span 1 !important; height:170px; } }
 
 /* Itajubá */
 .ms-local{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,5vw,64px); align-items:center; }
