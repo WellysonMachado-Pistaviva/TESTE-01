@@ -4373,3 +4373,171 @@ body.evb-takeover #app{ flex:1; display:flex; flex-direction:column; max-width:n
   border-bottom:1px solid rgba(255,90,0,.4); padding-bottom:2px;
 }
 .ms-parque__link a:hover{ border-bottom-color:var(--accent); }
+
+/* ── Fita de fotos (PhotoRibbon) ──────────────────────────────────
+   Deriva contínua, no espírito do carrossel da referência: a esteira
+   nunca para em um slide, ela só corre. Sem biblioteca: a lista vem
+   duplicada do componente e a animação anda exatamente 50%, então a
+   emenda cai num ponto idêntico e o laço não aparece.               */
+
+.pv-fita {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pv-space-2);
+}
+
+/* Dentro de uma seção com calha, a fita precisa sair dela: a esteira tem que
+   entrar e sair da tela, não terminar numa margem. Negativa a calha em vez de
+   usar 100vw, que ignora a barra de rolagem e estoura onde ela ocupa espaço
+   (Windows, Linux, macOS sem barra sobreposta). */
+.pv-fita--sangra { margin-inline: calc(-1 * var(--gut)); }
+
+.pv-fita__janela {
+  overflow: hidden;
+  /* Esmaece as pontas para a fita não terminar num corte seco. */
+  -webkit-mask-image: linear-gradient(90deg, transparent, var(--pv-black-0) 6%, var(--pv-black-0) 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, var(--pv-black-0) 6%, var(--pv-black-0) 94%, transparent);
+}
+
+.pv-fita__trilho {
+  display: flex;
+  width: max-content;
+  gap: var(--pv-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: pv-fita-anda var(--fita-dur, 60s) linear infinite;
+  will-change: transform;
+}
+
+.pv-fita__trilho--reverso { animation-direction: reverse; }
+
+/* Pausa no ponteiro é conveniência; o botão é o controle de verdade. */
+.pv-fita__janela:hover .pv-fita__trilho { animation-play-state: paused; }
+.pv-fita__trilho[data-pausada='sim'] { animation-play-state: paused; }
+
+.pv-fita__item {
+  flex: 0 0 auto;
+  width: clamp(240px, 26vw, 380px);
+  height: clamp(180px, 20vw, 260px);
+  overflow: hidden;
+  background: var(--pv-black-2);
+}
+
+.pv-fita__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(.92);
+  transition: transform .6s ease, filter .3s ease;
+}
+
+.pv-fita__janela:hover .pv-fita__item img { filter: saturate(1); }
+.pv-fita__item:hover img { transform: scale(1.04); }
+
+.pv-fita__pausa {
+  align-self: flex-end;
+  /* Sempre à distância da calha: sangrando, volta para dentro dela;
+     em largura cheia, não encosta na borda da tela. */
+  margin-right: var(--gut);
+
+  min-width: 88px;
+  min-height: 44px;
+  padding: var(--pv-space-1) var(--pv-space-2);
+  border: 1px solid var(--pv-line-dark);
+  border-radius: var(--pv-radius-sm);
+  background: transparent;
+  color: var(--pv-muted-light);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .2s ease, border-color .2s ease;
+}
+
+.pv-fita__pausa:hover,
+.pv-fita__pausa:focus-visible {
+  color: var(--pv-orange);
+  border-color: var(--pv-orange);
+}
+
+@keyframes pv-fita-anda {
+  to { transform: translateX(calc(-50% - (var(--pv-space-1) / 2))); }
+}
+
+@media (max-width:768px) {
+  .pv-fita__item { width: clamp(200px, 62vw, 280px); }
+}
+
+/* Movimento reduzido: a fita para de correr e vira uma faixa rolável. */
+@media (prefers-reduced-motion:reduce) {
+  .pv-fita__janela { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  .pv-fita__trilho { animation: none; }
+  .pv-fita__item img { transition: none; }
+  .pv-fita__pausa { display: none; }
+}
+
+/* ── Índice de conteúdo (ContentIndex) ─────────────────────────────
+   Números vêm de contagem real das coleções, não de alegação. Por isso
+   a peça se comporta como navegação: cada bloco é um link inteiro.     */
+
+.pv-indice { padding: var(--sec-y-sm) 0; background: var(--pv-black-2); border-top: 1px solid var(--pv-line-dark); }
+
+.pv-indice__title {
+  font-family: var(--display);
+  font-size: clamp(26px, 3.4vw, 40px);
+  line-height: 1.05;
+  color: var(--pv-text-light);
+  margin: 0 0 var(--pv-space-5);
+  max-width: 18ch;
+}
+
+.pv-indice__grade {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--pv-line-dark);
+  border: 1px solid var(--pv-line-dark);
+}
+
+.pv-indice__item { background: var(--pv-black-2); }
+
+.pv-indice__link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pv-space-0);
+  min-height: 44px;
+  padding: var(--pv-space-3);
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--pv-motion), color var(--pv-motion);
+}
+
+.pv-indice__link:hover,
+.pv-indice__link:focus-visible { background: var(--pv-black-3); }
+
+.pv-indice__num {
+  font-family: var(--display);
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1;
+  color: var(--pv-orange);
+}
+
+.pv-indice__rotulo {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--pv-text-light);
+}
+
+.pv-indice__nota { font-size: 13px; line-height: 1.4; color: var(--pv-muted-light); }
+
+@media (max-width:900px) { .pv-indice__grade { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width:480px) { .pv-indice__grade { grid-template-columns: 1fr; } }

@@ -7,6 +7,8 @@ import './home-experience.css';
 import HomeNextRide from './components/HomeNextRide';
 import EventsRail from './components/EventsRail';
 import CommunityRail from './components/CommunityRail';
+import PhotoRibbon from './components/PhotoRibbon';
+import ContentIndex from './components/ContentIndex';
 import EditorialSplit from './components/EditorialSplit';
 import ProductShowcase from './components/ProductShowcase';
 import AffiliateGear from './components/AffiliateGear';
@@ -44,7 +46,14 @@ export default async function Home() {
   const featured = await getFeaturedPosts(1);
   const banners = await getBanners();
   const destinos = await getDestinos();
-  const community = await getCommunityRailItems(12);
+  // 24 em vez de 12: o rail leva os 12 primeiros com nome e cidade, a fita
+  // leva o resto como textura. Assim a mesma foto não aparece duas vezes.
+  const communityAll = await getCommunityRailItems(24);
+  const community = communityAll.slice(0, 12);
+  const communityRibbon = communityAll.slice(12).map((p) => ({
+    src: p.image,
+    alt: `${p.title}${p.city ? ' — ' + p.city : ''}`,
+  }));
   const eventos = await getEventsForSeo({ limit: 12 });
   const goingCounts = await getGoingCounts(eventos.map((event) => event.id));
   const agendaEventos = eventos.slice(1);
@@ -80,6 +89,8 @@ export default async function Home() {
           </div>
         </section>
       )}
+
+      <ContentIndex />
 
       <HomeExperiences />
       <CommunityRail items={community} />
@@ -132,6 +143,15 @@ export default async function Home() {
 
       <ProductShowcase />
       <AffiliateGear />
+
+      {communityRibbon.length > 2 && (
+        <PhotoRibbon
+          items={communityRibbon}
+          duration={88}
+          reverse
+          label="Fotos enviadas pela comunidade Pistaviva"
+        />
+      )}
 
       <section className="ig-band">
         <div className="wrap">

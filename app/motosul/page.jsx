@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import './motosul.css';
 import PlacesCarousel from './PlacesCarousel';
-import PhotoRibbon from './PhotoRibbon';
+import PhotoRibbon from '../components/PhotoRibbon';
 
 const BASE = 'https://www.pistavivamototurismo.com.br';
 const IG_EVENTO = 'https://instagram.com/motosulfestival';
@@ -846,7 +846,7 @@ export default function MotosulPage() {
             <a className="ms-link" href={IG_EVENTO} target="_blank" rel="noopener noreferrer">Mais fotos no Instagram →</a>
           </div>
         </div>
-        <PhotoRibbon items={GALERIA} duration={72} label="Fotos das edições anteriores do Motosul Festival" />
+        <PhotoRibbon items={GALERIA} duration={72} bleed label="Fotos das edições anteriores do Motosul Festival" />
       </section>
 
       <section className="ms-sec ms-sec--light" id="duvidas" aria-labelledby="ms-faq-title">

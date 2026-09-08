@@ -15,6 +15,7 @@ export default function PhotoRibbon({
   items = [],
   duration = 60,
   reverse = false,
+  bleed = false,
   label = 'Fotos das edições anteriores',
 }) {
   const [paused, setPaused] = useState(false);
@@ -25,22 +26,22 @@ export default function PhotoRibbon({
   const doubled = [...items, ...items];
 
   return (
-    <div className="ms-fita">
+    <div className={`pv-fita${bleed ? ' pv-fita--sangra' : ''}`}>
       <div
-        className="ms-fita__janela"
+        className="pv-fita__janela"
         role="group"
         aria-roledescription="fita de fotos"
         aria-label={label}
       >
         <ul
           id={id}
-          className={`ms-fita__trilho${reverse ? ' ms-fita__trilho--reverso' : ''}`}
+          className={`pv-fita__trilho${reverse ? ' pv-fita__trilho--reverso' : ''}`}
           style={{ '--fita-dur': `${duration}s` }}
           data-pausada={paused ? 'sim' : 'nao'}
         >
           {doubled.map((item, i) => (
             <li
-              className="ms-fita__item"
+              className="pv-fita__item"
               key={`${item.src}-${i}`}
               /* A segunda volta é cópia visual: fica fora da árvore acessível
                  para o leitor de tela não anunciar cada foto duas vezes. */
@@ -49,8 +50,10 @@ export default function PhotoRibbon({
               <img
                 src={item.src}
                 alt={i >= items.length ? '' : item.alt}
-                width={item.width}
-                height={item.height}
+                /* width/height são opcionais: a caixa do item já fixa a
+                   proporção, então a ausência não gera salto de layout. */
+                width={item.width || undefined}
+                height={item.height || undefined}
                 loading="lazy"
                 decoding="async"
                 draggable="false"
@@ -64,7 +67,7 @@ export default function PhotoRibbon({
           Pausa no hover não serve para quem navega por teclado. */}
       <button
         type="button"
-        className="ms-fita__pausa"
+        className="pv-fita__pausa"
         onClick={() => setPaused((v) => !v)}
         aria-pressed={paused}
         aria-controls={id}
