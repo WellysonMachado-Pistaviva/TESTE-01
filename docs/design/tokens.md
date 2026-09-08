@@ -3,7 +3,7 @@
 Fonte única: [`app/tokens.css`](../../app/tokens.css). Nenhuma outra folha declara token.
 Ordem de carga em [`app/site.css`](../../app/site.css): `tokens.css` → `src/index.css` → leaflet → `globals.css` → `design-system.css`.
 
-Verificação: `npm run audit:design`. Quatro folhas seguem fora da checagem por dívida declarada — a lista está em [`sistema-visual.md`](sistema-visual.md#dívida-declarada).
+Verificação: `npm run audit:design`. Cobre todas as folhas do repositório e todo `.jsx`; folha nova entra sozinha.
 
 ## Cor
 
@@ -44,6 +44,14 @@ Quentes (sobre papel): `--pv-warm-300` `#a9a49c` · `--pv-warm-500` `#8f8a83` ·
 ### Especiais
 
 `--pv-forest` `#282d27` e `--pv-forest-deep` `#121612` (comunidade e experiências) · `--pv-yellow` / `--pv-yellow-strong` (CTA de afiliado) · `--pv-slate` (medidor de ocupação) · `--pv-info` (link em pré-visualização SEO).
+
+### Escala categórica
+
+Matiz distinto por leitura geográfica, para o mapa e a legenda do Parque. Nunca substituída por laranja nem por cor de status.
+
+`--pv-cat-blue` · `--pv-cat-cyan` · `--pv-cat-green` · `--pv-cat-lime` · `--pv-cat-purple` · `--pv-cat-gold` · `--pv-cat-red`
+
+Camadas do mapa desenhado: `--pv-map-water`, `--pv-map-water-light`, `--pv-map-green`, `--pv-map-green-light`, `--pv-map-green-pale`, `--pv-map-track`.
 
 ### Marcas externas
 

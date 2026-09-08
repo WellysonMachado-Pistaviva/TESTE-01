@@ -30,12 +30,7 @@ const walk = (dir, exts, out = []) => {
 // Folhas ainda não normalizadas. Saem da checagem mas são relatadas a cada
 // execução, para que a dívida fique visível em vez de silenciosa.
 // Remova o arquivo desta lista quando ele passar a seguir os tokens.
-const PENDING = [
-  'app/parque-da-cidade/parque.css',
-  'app/admin/admin-ignis.css',
-  'app/components/Stepper.css',
-  'src/App.css',
-];
+const PENDING = [];
 
 const ALL_SHEETS = [...walk('app', ['.css']), ...walk('src', ['.css'])]
   .filter((f) => f !== TOKENS && !f.endsWith('app/site.css'));
@@ -50,10 +45,14 @@ const lineOf = (src, index) => src.slice(0, index).split('\n').length;
 const tokenSrc = readFileSync(TOKENS, 'utf8');
 const declared = new Set([...tokenSrc.matchAll(/^\s*(--[a-z0-9-]+)\s*:/gm)].map((m) => m[1]));
 
-// Variáveis de escopo declaradas em qualquer folha do repositório.
+// Variáveis de escopo declaradas em qualquer folha do repositório, mais as
+// que o JSX injeta por style={{ '--x': ... }} — legítimas, valor vem do dado.
 const scoped = new Set();
 for (const f of ALL_SHEETS) {
   for (const m of readFileSync(f, 'utf8').matchAll(/(--[a-z0-9-]+)\s*:/g)) scoped.add(m[1]);
+}
+for (const f of [...walk('app', ['.jsx', '.tsx']), ...walk('src', ['.jsx', '.tsx'])]) {
+  for (const m of readFileSync(f, 'utf8').matchAll(/['"](--[a-z0-9-]+)['"]\s*:/g)) scoped.add(m[1]);
 }
 
 for (const file of SHEETS) {
@@ -152,7 +151,6 @@ for (const m of paletteSrc.matchAll(/^\s*([A-Za-z][A-Za-z0-9]*)\s*:\s*'(#[0-9a-f
   paletteColors.set(m[1], m[2].toLowerCase());
 }
 for (const [name, hex] of paletteColors) {
-  if (name.startsWith('map')) continue; // legenda geográfica, só em JS
   if (!tokenColors.has(name)) {
     add(PALETTE, 1, 'paleta-sem-token', `PV.${name} não tem --pv-${name.replace(/([A-Z0-9])/g, '-$1').toLowerCase()} em ${TOKENS}`);
   } else if (tokenColors.get(name) !== hex && tokenColors.get(name).replace(/^#(.)\1(.)\2(.)\3$/, '#$1$2$3') !== hex) {

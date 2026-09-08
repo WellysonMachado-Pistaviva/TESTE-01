@@ -64,7 +64,16 @@ export const PV = {
   brandGoogleRed: '#ea4335',
   brandGoogleYellow: '#fbbc04',
 
-  // legenda de mapa — distinta da paleta de marca, por leitura geográfica
+  // escala categórica — mapa e legenda, distinta da paleta de marca
+  catBlue: '#0064b4',
+  catCyan: '#33afcc',
+  catGreen: '#03c100',
+  catLime: '#78c800',
+  catPurple: '#6d3bff',
+  catGold: '#c99700',
+  catRed: '#e0091b',
+
+  // camadas do mapa desenhado
   mapWater: '#0064b4',
   mapWaterLight: '#4fc3e8',
   mapGreen: '#6f9a5e',

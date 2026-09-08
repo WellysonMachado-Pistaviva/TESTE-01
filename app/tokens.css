@@ -65,6 +65,25 @@
   --pv-slate:#5b6b78;           /* medidor de ocupação           */
   --pv-info:#9db4ff;            /* link em pré-visualização SEO  */
 
+  /* ---- Escala categórica — mapa e legenda do Parque ----------
+     Matizes distintos por leitura geográfica, não por marca.
+     Nunca substituir por laranja nem por cor de status.        */
+  --pv-cat-blue:#0064b4;
+  --pv-cat-cyan:#33afcc;
+  --pv-cat-green:#03c100;
+  --pv-cat-lime:#78c800;
+  --pv-cat-purple:#6d3bff;
+  --pv-cat-gold:#c99700;
+  --pv-cat-red:#e0091b;
+
+  /* ---- Camadas do mapa desenhado ---------------------------- */
+  --pv-map-water:#0064b4;
+  --pv-map-water-light:#4fc3e8;
+  --pv-map-green:#6f9a5e;
+  --pv-map-green-light:#9fd6b4;
+  --pv-map-green-pale:#d9eede;
+  --pv-map-track:#6b7280;
+
   /* ---- Marcas externas — não são tokens de marca Pistaviva --- */
   --pv-brand-youtube:#ff0000;
   --pv-brand-estrada-x:#33dd3a;

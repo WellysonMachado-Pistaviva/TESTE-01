@@ -18,6 +18,7 @@ Direção: fotografia de viagem, títulos de campanha, preto e laranja, superfí
 | Componentes | [`app/globals.css`](../../app/globals.css) | páginas e componentes |
 | Sistema | [`app/design-system.css`](../../app/design-system.css) | camada final: intro, botão, formulário, card, rodapé |
 | Home | [`app/home-experience.css`](../../app/home-experience.css) | blocos exclusivos da home |
+| Páginas | `app/motosul/motosul.css`, `app/parque-da-cidade/parque.css`, `app/parque-da-cidade/parque-editorial.css`, `app/admin/admin-ignis.css` | folhas de página, carregadas pela própria rota |
 
 Ordem de carga em [`app/site.css`](../../app/site.css): tokens → index → leaflet → globals → design-system.
 Nenhuma folha além de `tokens.css` declara token. Não importar `src/App.css` no layout Next: contém a antiga coluna de SPA e reaplica margens incompatíveis.
@@ -44,18 +45,7 @@ npm run check           # lint + auditoria + testes
 
 A auditoria ([`scripts/audit-design.mjs`](../../scripts/audit-design.mjs)) falha quando uma folha ou um `.jsx` rompe qualquer regra acima, e quando `src/palette.js` diverge de `app/tokens.css`. Ela descobre as folhas sozinha: arquivo `.css` novo entra na checagem sem precisar ser registrado.
 
-### Dívida declarada
-
-Quatro folhas ainda não foram normalizadas e estão na lista `PENDING` do script. Saem da checagem, mas são relatadas em toda execução:
-
-| Folha | Linhas | Situação |
-| --- | --- | --- |
-| `app/parque-da-cidade/parque.css` | 2303 | paleta azul-esverdeada própria da página, com legenda geográfica a preservar |
-| `app/admin/admin-ignis.css` | 184 | painel administrativo |
-| `app/components/Stepper.css` | 21 | — |
-| `src/App.css` | 67 | resto da SPA antiga, não carregado no layout Next |
-
-Ao normalizar uma delas, remova o arquivo de `PENDING`.
+Cobertura: as 10 folhas do repositório e todo `.jsx`. A lista `PENDING` do script está vazia — não há dívida declarada.
 
 ## Estado desta revisão
 
@@ -71,6 +61,7 @@ Consolidação a partir de três gerações de tokens empilhadas (Harley em `ind
 | 21 valores de raio | 6 |
 | 64 valores de espaço (escada de 2px) | 29, todos múltiplos de 4 |
 | 7 apelidos de fonte para 3 famílias | 3 |
+| 4 folhas fora de qualquer checagem | 0 |
 | sem verificação automática | `npm run audit:design` |
 
 Verificado: build de produção, `eslint .` sem erro, 28 testes existentes passando, `git diff --check` limpo.
