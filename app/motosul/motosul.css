@@ -1,0 +1,114 @@
+/* Motosul 2027: immersive photography, clear edition information and travel tools. */
+.ms-2027 .ms-sec { padding-block: clamp(48px, 6vw, 88px); }
+.ms-2027 .ms-display { font-size: clamp(36px, 5vw, 68px); line-height: 1; }
+.ms-2027 .ms-display--sm { font-size: clamp(32px, 4vw, 52px); }
+.ms-2027 .ms-lead { margin-top: 24px; margin-bottom: 24px; }
+.ms-2027 .ms-rule { width: 64px; margin-top: 24px; }
+.ms-2027 .ms-hero { min-height: min(900px, 95svh); }
+.ms-2027 .ms-hero__in { padding-top: 64px; }
+.ms-2027 .ms-hero__brand { justify-content: space-between; align-items: center; }
+.ms-2027 .ms-hero__brand img { width: 156px; }
+.ms-2027 .ms-hero__poster { margin-top: 64px; grid-template-columns: minmax(0, 1fr) 220px; }
+.ms-2027 .ms-hero__big { font-size: clamp(76px, 10vw, 144px); line-height: .85; letter-spacing: -.035em; }
+.ms-2027 .ms-hero__edition { display: inline-block; margin-left: 16px; font-size: .36em; color: var(--accent); letter-spacing: -.02em; }
+.ms-2027 .ms-hero__tagline { font-family: var(--font); font-size: clamp(20px, 2vw, 28px); letter-spacing: 0; text-transform: none; }
+.ms-2027 .ms-hero__dek { max-width: 44ch; font-size: 16px; margin-top: 12px; }
+.ms-2027 .ms-hero__ticket { display: flex; flex-direction: column; min-height: 230px; background: var(--pv-offwhite); border: 0; border-top: 4px solid var(--accent); box-shadow: none; }
+.ms-2027 .ms-hero__ticket strong { color: var(--ink); line-height: .9; }
+.ms-2027 .ms-hero__ticket span, .ms-2027 .ms-hero__ticket small { color: var(--pv-muted-dark); }
+.ms-2027 .ms-anchors__links { flex: 1; justify-content: space-between; }
+.ms-2027 .ms-anchors a { display: inline-flex; align-items: center; min-height: 44px; }
+.ms-2027 .ms-anchors__cta { padding-inline: 16px; }
+.ms-2027 .ms-btn, .ms-2027 .ms-anchors__cta, .ms-2027 .ms-mobile-cta a { color: var(--ink); }
+.ms-2027 .ms-btn--ghost { color: var(--ms-fg); }
+.ms-2027 a:focus-visible, .ms-2027 summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+.ms-edition__grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, .7fr); gap: clamp(32px, 6vw, 88px); align-items: center; }
+.ms-edition__facts { display: grid; grid-template-columns: 1fr 1fr; margin: 32px 0 0; }
+.ms-edition__facts > div { border-top: 1px solid var(--ms-line); padding: 20px 16px 20px 0; }
+.ms-edition__facts dt { color: var(--ms-dim); font-family: var(--mono); font-size: 13px; }
+.ms-edition__facts dd { margin: 8px 0 0; font-size: 21px; font-weight: 600; }
+.ms-edition__facts small { display: block; margin-top: 4px; font-size: 14px; font-weight: 400; color: var(--ms-dim); }
+.ms-edition__news { padding: 24px; border-left: 2px solid var(--accent); background: var(--ms-card); }
+.ms-edition__news p { color: var(--ms-dim); line-height: 1.6; margin: 8px 0 16px; }
+.ms-edition__poster { margin: 0; transform: rotate(2deg); }
+.ms-edition__poster img { display: block; width: 100%; height: auto; }
+.ms-edition__poster figcaption, .ms-venue figcaption { color: var(--ms-dim); font-size: 13px; margin-top: 12px; }
+.ms-2027 .ms-plan { padding-block: 56px; background: var(--pv-offwhite); color: var(--ink); --ms-fg: var(--ink); --ms-dim: var(--pv-muted-dark); --ms-line: var(--pv-warm-300); }
+.ms.ms-2027 .ms-plan .ms-btn { color: var(--ink); background: var(--accent); border-color: var(--accent); }
+.ms-2027 .ms-plan .ms-btn:hover { color: var(--ink); }
+.ms-2027 .ms-plan__head > p { color: var(--pv-muted-dark); }
+.ms-2027 #hoteis { padding-top: 40px; }
+.ms-2027 .ms-hoteis { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; }
+.ms-2027 .ms-hoteis li { gap: 16px; }
+.ms-2027 .ms-hoteis a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; }
+.ms-2027 .ms-pulse { padding-block: 64px; }
+.ms-2027 .ms-exps--opening { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.ms-2027 .ms-exps--opening .ms-exp { grid-column: span 2; min-height: 280px; }
+.ms-2027 .ms-exps--opening .ms-exp:nth-child(-n+2) { grid-column: span 3; min-height: 400px; }
+.ms-2027 .ms-exps--opening .ms-exp img { width: 100%; height: 100%; object-fit: cover; }
+.ms-venue__grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: center; }
+.ms-venue figure { margin: 0; }
+.ms-venue img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.ms-2027 .ms-mant__grid { margin-top: 32px; }
+.ms-2027 .ms-mant__ph { aspect-ratio: 4 / 3; }
+.ms-2027 .ms-faq { display: block; }
+.ms-2027 .ms-faq__item { border: 0; border-bottom: 1px solid var(--ms-line); padding: 0; background: transparent; }
+.ms-2027 .ms-faq__item summary { padding: var(--pv-space-3) var(--pv-space-1); font-size: 18px; font-weight: 600; cursor: pointer; }
+.ms-2027 .ms-faq__item p { max-width: 75ch; padding: 0 8px 24px; margin: 0; }
+.ms-results__stats { display: grid; grid-template-columns: repeat(3, 1fr); margin: 32px 0 0; border-block: 1px solid var(--ms-line); }
+.ms-results__stats > div { display: flex; flex-direction: column-reverse; padding: 24px 16px 24px 0; }
+.ms-results__stats dt { font-size: 14px; color: var(--ms-dim); }
+.ms-results__stats dd { margin: 0; font-family: var(--display); font-size: clamp(36px, 4vw, 64px); font-weight: 800; }
+.ms-results__details { margin-top: 24px; border: 1px solid var(--ms-line); }
+.ms-results__details > summary { padding: 24px; font-size: 18px; cursor: pointer; }
+.ms-results__details > summary span { display: block; margin-top: 8px; font-size: 14px; color: var(--ms-dim); }
+.ms-2027 .ms-results__details .ms-sec { padding: 32px 24px; }
+.ms-2027 .ms-results__details .ms-display { font-size: 36px; }
+.ms-2027 .ms-cta { padding-block: 64px; }
+.ms-2027 .ms-cta .ms-shield--hero { width: 160px; }
+.ms-2027 .ms-mobile-cta a { min-height: 48px; }
+@media (max-width: 900px) {
+  .ms-edition__grid { grid-template-columns: minmax(0, 1fr) minmax(0, .65fr); gap: 32px; }
+  .ms-2027 .ms-hoteis { grid-template-columns: 1fr; }
+  .ms-venue__grid { grid-template-columns: 1fr; gap: 32px; }
+  .ms-2027 .ms-anchors__links { justify-content: flex-start; }
+  .ms-2027 .ms-anchors .ms-anchors__cta { display: none; }
+}
+@media (max-width: 640px) {
+  .ms-2027 .ms-hero { min-height: 0; }
+  .ms-2027 .ms-hero__in { padding-top: 32px; }
+  .ms-2027 .ms-hero__brand img { width: 116px; }
+  .ms-2027 .ms-hero__brand span { max-width: 160px; font-size: 10px; }
+  .ms-2027 .ms-hero__poster { grid-template-columns: 1fr; margin-top: 44px; gap: 28px; }
+  .ms-2027 .ms-hero__big { font-size: clamp(64px, 17vw, 100px); }
+  .ms-2027 .ms-hero__ticket { min-height: 0; padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+  .ms-2027 .ms-hero__ticket strong { grid-column: 1; grid-row: 2; text-align: left; font-size: 38px; }
+  .ms-2027 .ms-hero__ticket small { grid-column: 2; grid-row: 2; align-self: end; }
+  .ms-2027 .ms-hero__foot { font-size: 11px; letter-spacing: .08em; }
+  .ms-2027 .ms-hero__actions { display: grid; grid-template-columns: 1fr; }
+  .ms-edition__grid { grid-template-columns: 1fr; }
+  .ms-edition__poster { max-width: 280px; margin: 8px auto; transform: none; }
+  .ms-edition__facts dd { font-size: 18px; }
+  .ms-edition__facts small { font-size: 13px; }
+  .ms-edition__news { padding: 20px; }
+  .ms-2027 .ms-exps--opening { grid-template-columns: 1fr; }
+  .ms-2027 .ms-exps--opening .ms-exp, .ms-2027 .ms-exps--opening .ms-exp:nth-child(-n+2) { grid-column: auto; min-height: 280px; }
+  .ms-results__stats { grid-template-columns: 1fr; }
+  .ms-results__stats > div { border-bottom: 1px solid var(--ms-line); padding-block: 16px; }
+  .ms-2027 .ms-results__details .ms-sec { padding-inline: 16px; }
+  .ms-2027 .ms-hoteis li { align-items: flex-start; flex-direction: column; gap: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ms-2027 *, .ms-2027 *::before, .ms-2027 *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+@media (max-width: 768px) {
+  .ms-2027 { padding-bottom: 140px; }
+  .ms-2027 .ms-anchors { top: 56px; }
+  .ms-2027 .ms-mobile-cta { bottom: calc(64px + env(safe-area-inset-bottom)); z-index: 44; padding-bottom: 12px; }
+}
+
+.ms-2027 .ms-contato a { overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  .ms-2027 .ms-place-carousel__viewport { margin-inline: 0; padding-inline: 0; }
+}

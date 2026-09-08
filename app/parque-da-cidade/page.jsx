@@ -23,7 +23,6 @@ import Experiencias from './Experiencias';
 import Agenda from './Agenda';
 import PlanejeVisita from './PlanejeVisita';
 import CineProgramacao, { CineProgramacaoLoading } from './CineProgramacao';
-import InstagramEmbeds from '../components/InstagramEmbeds';
 import { getRelatedPosts } from '../lib/blog';
 import {
   AGENDA,
@@ -38,7 +37,6 @@ import {
   DUVIDAS,
   ESTRUTURA,
   EVENTOS,
-  EXPERIENCIAS,
   AIRBNB_BASE,
   GASTRONOMIA,
   HOSPEDAGEM,
@@ -54,8 +52,6 @@ import {
   INCLUSO,
   FOTOS,
   INSTAGRAM_PERFIL,
-  INSTAGRAM_POSTS,
-  NUMEROS,
   PARQUE_COORD,
   PARQUE_ENDERECO,
   PARQUE_POSICIONAMENTO,
@@ -67,6 +63,7 @@ import {
   TURISMO_TELEFONE_HREF,
 } from './dados';
 import './parque.css';
+import './parque-editorial.css';
 
 const BASE = 'https://www.pistavivamototurismo.com.br';
 
@@ -130,23 +127,11 @@ export const metadata = {
 };
 
 const CAPITULOS = [
-  { href: '#destaque', label: 'Destaque' },
-  { href: '#experiencias', label: 'Experiências' },
-  { href: '#parque', label: 'O parque' },
-  { href: '#mapa', label: 'Atrações & mapa' },
-  { href: '#dia', label: 'Um dia aqui' },
-  { href: '#cinea', label: 'Cine A' },
-  { href: '#gastronomia', label: 'Onde comer' },
-  { href: '#horarios', label: 'Horários' },
-  { href: '#eventos', label: 'Eventos' },
-  { href: '#incluso', label: 'O que é pago' },
-  { href: '#servicos', label: 'Serviços' },
-  { href: '#clima', label: 'Clima & época' },
   { href: '#visita', label: 'Planeje a visita' },
-  { href: '#hoteis', label: 'Hotéis' },
-  { href: '#dormir', label: 'Casa inteira' },
-  { href: '#pedal', label: 'Trilhas & bike' },
-  { href: '#historia', label: 'História' },
+  { href: '#mapa', label: 'Mapa e atrações' },
+  { href: '#gastronomia', label: 'Onde comer' },
+  { href: '#eventos', label: 'Agenda' },
+  { href: '#hoteis', label: 'Onde ficar' },
   { href: '#duvidas', label: 'Dúvidas' },
 ];
 
@@ -176,7 +161,7 @@ export default async function ParqueDaCidadePage() {
         description:
           'Guia editorial do Parque da Cidade de Itajubá com atrações, mapa, gastronomia, roteiros e hotéis.',
         inLanguage: 'pt-BR',
-        dateModified: '2026-08-31',
+        dateModified: '2026-09-08',
         isPartOf: { '@id': `${BASE}/#site` },
         about: { '@id': `${BASE}/parque-da-cidade#parque` },
         breadcrumb: { '@id': `${BASE}/parque-da-cidade#breadcrumb` },
@@ -309,20 +294,11 @@ export default async function ParqueDaCidadePage() {
   };
 
   return (
-    <div className="pq">
+    <div className="pq pq-editorial">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      {/* ── FAIXA DE TOPO (modelo Hopi Hari: informação prática antes de tudo) ── */}
-      <div className="pq-promo">
-        <p>
-          <MapPin aria-hidden="true" size={14} />
-          {PARQUE_ENDERECO} · estacionamento gratuito
-        </p>
-        <a href={PARQUE_MAPS} target="_blank" rel="noopener noreferrer">Abrir no mapa</a>
-      </div>
-
       {/* ── PORTAL (modelo Tomorrowland: hero cinematográfico + contagem) ── */}
-      <header className="pq-hero">
+      <header className="pq-hero" id="topo">
         <picture className="pq-hero__bg">
           <source media="(max-width: 640px)" srcSet="/motosul/parque-mobile.jpg" />
           <img
@@ -342,40 +318,27 @@ export default async function ParqueDaCidadePage() {
 
           <h1 className="pq-hero__titulo">
             <span>Parque</span>
-            <span className="pq-hero__ornamento" aria-hidden="true">
-              <i />
-              <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2 L24 16 L38 20 L24 24 L20 38 L16 24 L2 20 L16 16 Z" /></svg>
-              <i />
-            </span>
             <span>da Cidade</span>
             <span className="pq-hero__cidade">Itajubá · MG</span>
           </h1>
 
-          <p className="pq-hero__claim">Mais que um parque: um destino de experiências.</p>
+          <p className="pq-hero__claim">O dia é seu. O encontro é aqui.</p>
 
-          <p className="pq-hero__dek">
-            Um lago no meio, a Mantiqueira em volta e um cisne de fibra passando devagar. No fim de
-            semana o pedalinho é de graça, a pista enche de tênis batendo no asfalto e a praça
-            acende ao anoitecer. É o quintal de Itajubá — e o endereço onde a cidade recebe o
-            Brasil inteiro.
-          </p>
+          <p className="pq-hero__dek">Um lago, sabores de Minas e a Mantiqueira ao redor. Escolha seu ritmo e descubra o Parque da Cidade de Itajubá.</p>
 
           <div className="pq-hero__acoes">
-            <a className="pq-btn pq-btn--gold" href="#mapa">Abrir a planta do parque</a>
-            <a className="pq-btn" href="#visita">Planejar minha visita</a>
+            <a className="pq-btn pq-btn--gold" href="#visita">Planejar minha visita ↗</a>
+            <a className="pq-btn" href="#mapa">Explorar o mapa</a>
           </div>
 
-          <Contagem />
+          <div className="pq-hero__location">
+            <span>Seu ponto de partida</span>
+            <strong>Itajubá · MG</strong>
+            <a href={PARQUE_MAPS} target="_blank" rel="noopener noreferrer">Como chegar ↗</a>
+          </div>
         </div>
 
-        <ul className="pq-numeros">
-          {NUMEROS.map((n) => (
-            <li key={n.l}>
-              <strong>{n.v}</strong>
-              <span>{n.l}</span>
-            </li>
-          ))}
-        </ul>
+
       </header>
 
       <nav className="pq-nav" aria-label="Seções da página">
@@ -384,41 +347,221 @@ export default async function ParqueDaCidadePage() {
         </div>
       </nav>
 
-      <section className="pq-resposta" aria-labelledby="pq-resposta-titulo">
-        <div className="pq-wrap">
-          <p className="pq-cap"><span>Resposta rápida</span></p>
-          <h2 id="pq-resposta-titulo">O que fazer em Itajubá?</h2>
-          <p>
-            Comece pelo Parque da Cidade: dê a volta no lago, use o pedalinho gratuito no fim de
-            semana, conheça o kartódromo, a parede de escalada e o Cine A, depois escolha uma das
-            operações de comida. Para transformar o passeio em viagem pelo Sul de Minas, durma em
-            Itajubá e siga por Maria da Fé, Cristina ou Delfim Moreira.
-          </p>
-          <div className="pq-resposta__links">
-            <a href="#mapa">Ver 18 atrações</a>
-            <a href="#gastronomia">Onde comer</a>
-            <a href="#hoteis">Onde ficar</a>
-            <Link href="/motosul#roteiros">Roteiros pela Mantiqueira</Link>
+      <section className="pq-arrival" aria-labelledby="pq-arrival-title">
+        <div className="pq-wrap pq-wrap--larga">
+          <div className="pq-arrival__head">
+            <div><p className="pq-eyebrow">Antes de sair</p><h2 className="pq-display" id="pq-arrival-title">Tudo para chegar bem.</h2></div>
+            <p>Um passeio rápido ou o dia inteiro. Comece pelas informações que fazem diferença na sua visita.</p>
           </div>
-          <small>Guia editorial conferido em 26 de agosto de 2026.</small>
+          <dl className="pq-arrival__facts">
+            <div><dt>Endereço</dt><dd>{PARQUE_ENDERECO}</dd><dd><a href={PARQUE_MAPS} target="_blank" rel="noopener noreferrer">Abrir rota ↗</a></dd></div>
+            <div><dt>Horários</dt><dd>Cada operação tem o seu.</dd><dd><a href="#horarios">Consultar horários ↓</a></dd></div>
+            <div><dt>Custos</dt><dd>Área verde e estacionamento gratuitos. Atrações com cobrança própria.</dd><dd><a href="#incluso">Ver o que é pago ↓</a></dd></div>
+            <div><dt>Vai ficar mais?</dt><dd>Faça de Itajubá sua base na Mantiqueira.</dd><dd><a href="#hoteis">Encontrar hospedagem ↓</a></dd></div>
+          </dl>
+          <p className="pq-arrival__note">Guia editorial · informações levantadas em 26/08/2026. Consulte a operação para confirmar horários e condições.</p>
         </div>
       </section>
 
-      {/* ── DESTAQUE ÂNCORA (modelo Capivari: uma atração puxa a página) ── */}
+      <section className="pq-sec" id="visita">
+        <div className="pq-wrap pq-wrap--larga">
+          <p className="pq-cap"><span>Planeje a visita</span></p>
+          <h2 className="pq-display">Escolha o dia.<br />Encontre seu ritmo.</h2>
+          <span className="pq-rule" aria-hidden="true" />
+          <p className="pq-lead">
+            O parque muda de cara conforme o dia. Escolha o seu e receba o roteiro que combina.
+          </p>
+
+          <PlanejeVisita />
+
+          <div className="pq-endereco">
+            <div>
+              <h3>Endereço</h3>
+              <p>{PARQUE_ENDERECO}</p>
+            </div>
+            <a className="pq-btn pq-btn--gold" href={PARQUE_MAPS} target="_blank" rel="noopener noreferrer">
+              Abrir rota no Google Maps
+            </a>
+          </div>
+
+          <div className="pq-chegar">
+            {DIRECOES.map((d) => (
+              <div key={d.de}>
+                <h3>{d.de}</h3>
+                <p>{d.txt}</p>
+              </div>
+            ))}
+            <div>
+              <h3>Rotas de moto</h3>
+              <p>
+                O mapa de chegada com as quatro entradas clássicas da região está na página do
+                Motosul — serve para qualquer visita ao parque.
+              </p>
+              <Link className="pq-link" href="/motosul#planeje">Ver o mapa de rotas</Link>
+            </div>
+          </div>
+
+          <div className="pq-fonte-oficial">
+            <div>
+              <strong>Informação oficial de turismo</strong>
+              <span>Secretaria Municipal de Cultura e Turismo · acesso regional pelo Circuito Caminhos da Mantiqueira</span>
+            </div>
+            <a href={TURISMO_TELEFONE_HREF}><Phone aria-hidden="true" size={16} />{TURISMO_TELEFONE}</a>
+            <div className="pq-fonte-oficial__links">
+              <a href={PARQUE_OFICIAL} target="_blank" rel="noopener noreferrer">
+                Prefeitura <ExternalLink aria-hidden="true" size={15} />
+              </a>
+              <a href={CIRCUITO_MANTIQUEIRA_ITAJUBA} target="_blank" rel="noopener noreferrer">
+                Caminhos da Mantiqueira <ExternalLink aria-hidden="true" size={15} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="pq-sec pq-practical" id="informacoes" aria-labelledby="pq-practical-title">
+        <div className="pq-wrap pq-wrap--larga">
+          <p className="pq-eyebrow">Informações práticas</p>
+          <h2 className="pq-display" id="pq-practical-title">Confira antes de ir.</h2>
+          <details className="pq-disclosure" id="detalhes-horarios">
+            <summary>Horários das operações<span>Veja dias de funcionamento e canais de contato.</span></summary>
+            <section className="pq-sec pq-sec--escura" id="horarios">
+              <div className="pq-wrap pq-wrap--larga">
+                <p className="pq-cap"><span>Horários</span></p>
+                <h2 className="pq-display">Quem abre quando.</h2>
+                <span className="pq-rule" aria-hidden="true" />
+                <p className="pq-lead">
+                  O parque não tem um horário único: cada operação define o seu. Estes foram divulgados
+                  pelos próprios estabelecimentos nos stories do Instagram oficial do parque.
+                </p>
+
+                <ul className="pq-horarios">
+                  {HORARIOS.map((o) => (
+                    <li key={o.n}>
+                      <span className="pq-horarios__tipo">{o.tipo}</span>
+                      <h3>{o.n}</h3>
+                      <dl>
+                        {o.dias.map((d) => (
+                          <div key={d.d}>
+                            <dt>{d.d}</dt>
+                            <dd>{d.h}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                      {o.nota ? <p className="pq-horarios__nota">{o.nota}</p> : null}
+                      {o.fonte ? <p className="pq-horarios__fonte">Divulgado em {o.fonte} — confirme antes de ir.</p> : null}
+                      {PERFIS[o.n] ? (
+                        <a className="pq-horarios__perfil" href={PERFIS[o.n]} target="_blank" rel="noopener noreferrer">
+                          Ver no Instagram
+                        </a>
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+
+                <p className="pq-gastro__nota">
+                  Levantamento feito a partir do{' '}
+                  <a href={INSTAGRAM_PERFIL} target="_blank" rel="noopener noreferrer">Instagram oficial do parque</a>.
+                  Horário pode mudar sem aviso — sobretudo fora do fim de semana.
+                </p>
+              </div>
+            </section>
+          </details>
+          <details className="pq-disclosure" id="detalhes-incluso">
+            <summary>O que é gratuito e o que é pago<span>Planeje os gastos do passeio.</span></summary>
+            <section className="pq-sec" id="incluso">
+              <div className="pq-wrap pq-wrap--larga">
+                <p className="pq-cap"><span>Antes de ir</span></p>
+                <h2 className="pq-display">O que é livre<br />e o que se paga.</h2>
+                <span className="pq-rule" aria-hidden="true" />
+
+                <div className="pq-incluso">
+                  <div className="pq-incluso__col pq-incluso__col--livre">
+                    <h3>Livre para qualquer visitante</h3>
+                    <ul>
+                      {INCLUSO.livre.map((i) => <li key={i}>{i}</li>)}
+                    </ul>
+                  </div>
+
+                  <div className="pq-incluso__col pq-incluso__col--pago">
+                    <h3>Pago à parte</h3>
+                    <ul>
+                      {INCLUSO.pago.map((i) => <li key={i}>{i}</li>)}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="pq-incluso__aviso">
+                  <strong>Ainda não confirmamos com o parque:</strong>
+                  <ul>
+                    {INCLUSO.confirmar.map((i) => <li key={i}>{i}</li>)}
+                  </ul>
+                  <p>
+                    Preferimos deixar em branco a publicar número errado. Cada operação é independente e
+                    define o próprio horário e preço.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </details>
+          <details className="pq-disclosure" id="detalhes-servicos">
+            <summary>Estrutura e serviços<span>Estacionamento, banheiros e comodidades.</span></summary>
+            <section className="pq-sec pq-sec--escura" id="servicos">
+              <div className="pq-wrap pq-wrap--larga">
+                <p className="pq-cap"><span>Serviços</span></p>
+                <h2 className="pq-display">O que está de pé<br />o ano inteiro.</h2>
+                <span className="pq-rule" aria-hidden="true" />
+
+                <ul className="pq-servicos">
+                  {SERVICOS.map((s) => {
+                    const Icone = ICONES[s.icone] || TreePine;
+                    return (
+                      <li key={s.t}>
+                        <span className="pq-servicos__icone"><Icone aria-hidden="true" size={22} /></span>
+                        <h3>{s.t}</h3>
+                        <p>{s.d}</p>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </section>
+          </details>
+        </div>
+      </section>
+
+      <section className="pq-sec pq-sec--escura" id="mapa">
+        <div className="pq-wrap pq-wrap--larga">
+          <p className="pq-cap"><span>Nossas atrações</span></p>
+          <h2 className="pq-display">Seu passeio,<br />ponto por ponto.</h2>
+          <span className="pq-rule" aria-hidden="true" />
+          <p className="pq-lead">
+            Toque um número no mapa — ou um card na lista — para abrir a ficha do setor. Os filtros
+            mostram só o tipo de programa que interessa.
+          </p>
+
+          <ParqueMapa />
+        </div>
+      </section>
+
+      <section className="pq-sec pq-sec--escura" id="experiencias">
+        <div className="pq-wrap pq-wrap--larga">
+          <p className="pq-cap"><span>Experiências</span></p>
+          <h2 className="pq-display">Encontre seu jeito<br />de viver o parque.</h2>
+          <span className="pq-rule" aria-hidden="true" />
+          <Experiencias />
+        </div>
+      </section>
+
       <section className="pq-destaque" id="destaque">
         <div className="pq-wrap pq-wrap--larga">
           <div className="pq-destaque__in">
             <div className="pq-destaque__texto">
               <p className="pq-eyebrow">Sábado e domingo</p>
               <h2 className="pq-display">Pedalinho no lago,<br />de graça.</h2>
-              <p className="pq-lead">
-                Cisne branco, amarelo ou azul — a criança escolhe, e a escolha é séria. Colete no
-                píer, meia hora pedalando e a única vista do parque que só existe de dentro da
-                água: a serra de um lado, o deck do outro, o resto do mundo esperando em terra firme.
-                Nos sábados e domingos, sem cobrar nada.
-              </p>
+              <p className="pq-lead">A vista muda quando você sai do píer. Pedale pelo lago com a Mantiqueira ao fundo e aproveite o passeio gratuito aos sábados e domingos. Confirme as condições de funcionamento antes de ir.</p>
               <div className="pq-hero__acoes pq-hero__acoes--esq">
-                <a className="pq-btn pq-btn--gold" href="#mapa">Saber mais</a>
+                <a className="pq-btn pq-btn--gold" href="#mapa">Localizar no mapa</a>
                 <a className="pq-btn" href="#experiencias">Ver todas as experiências</a>
               </div>
             </div>
@@ -438,208 +581,27 @@ export default async function ParqueDaCidadePage() {
         </div>
       </section>
 
-      {/* ── EXPERIÊNCIAS (modelo Hopi Hari: carrossel de cards) ── */}
-      <section className="pq-sec pq-sec--escura" id="experiencias">
-        <div className="pq-wrap pq-wrap--larga">
-          <p className="pq-cap"><span>Experiências</span></p>
-          <h2 className="pq-display">{EXPERIENCIAS.length} motivos<br />para subir a serra.</h2>
-          <span className="pq-rule" aria-hidden="true" />
-          <Experiencias />
-        </div>
-      </section>
-
-      {/* ── O PARQUE ── */}
-      <section className="pq-sec" id="parque">
-        <div className="pq-wrap">
-          <p className="pq-cap"><span>O parque</span></p>
-          <h2 className="pq-display">Não é uma praça grande.<br />É um bairro de lazer.</h2>
-          <span className="pq-rule" aria-hidden="true" />
-
-          <div className="pq-duo">
-            <div className="pq-duo__texto">
-              <p className="pq-lead">
-                O Parque da Cidade é hoje um dos complexos de lazer e eventos mais bem equipados
-                e dinâmicos do Sul de Minas Gerais — e a lista explica por quê. Parque público
-                costuma ser grama, banco e um quiosque. Este seguiu
-                outro caminho: dentro dos mesmos portões cabem uma pista de kart, quadras de tênis,
-                campos de society, quadras de areia para beach tennis, uma parede de escalada, um
-                boliche, um pavilhão de eventos e
-                vinte operações de comida e bebida listadas — todas no entorno do mesmo lago.
-              </p>
-              <p>
-                O efeito prático é que o parque não tem hora morta. De manhã ele é caminhada, treino
-                na pista e café; à tarde vira pedalinho, quadra e kart; no fim do dia, deck; à
-                noite, praça cheia. Quem mora em Itajubá usa o parque durante a semana. Quem vem de
-                fora descobre que dá para passar o dia inteiro sem sair de lá.
-              </p>
-              <p>
-                E é o parque que a cidade usa para se juntar: prova de rua dando a volta no lago,
-                festa da espuma e touro mecânico em data comemorativa, festival de comida com show
-                no palco de frente para a água e, em dezembro, o Natal <b>Brilha Itajubá</b> com a
-                queima de fogos refletindo no lago inteiro.
-              </p>
-              <p>
-                É também o que explica por que a cidade escolheu esse endereço para receber evento
-                grande: a estrutura já está de pé o ano todo.
-              </p>
-            </div>
-
-            <figure className="pq-reel">
-              <video
-                src="/motosul/parque.mp4"
-                poster="/motosul/parque-poster.jpg"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="none"
-                aria-label="Imagens do Parque da Cidade de Itajubá"
-              />
-              <figcaption>O parque em movimento</figcaption>
-            </figure>
-          </div>
-        </div>
-      </section>
-
-      {/* ── TRILHAS E CICLOTURISMO ── */}
-      <section className="pq-sec pq-sec--escura" id="pedal">
-        <div className="pq-wrap pq-wrap--larga">
-          <p className="pq-cap"><span>Trilhas &amp; bike</span></p>
-          <h2 className="pq-display">A pista do parque<br />é só o aquecimento.</h2>
-          <span className="pq-rule" aria-hidden="true" />
-
-          <div className="pq-pedal__abre">
-            <p className="pq-lead">
-              A volta no lago serve para aquecer; a serra em volta é que faz de Itajubá endereço de
-              trilha e cicloturismo. A cidade integra os <b>Caminhos da Mantiqueira</b>, circuito
-              que desde 2017 mapeia percursos em treze municípios, com três níveis em cada um.
-            </p>
-            <figure className="pq-pedal__foto">
-              <img
-                src="/parque/corrida-lago.jpg"
-                alt="Corredores na pista de caminhada em volta do lago do Parque da Cidade, com os morros de Itajubá ao fundo"
-                loading="lazy"
-                decoding="async"
-                width="1600"
-                height="1067"
-              />
-              <figcaption>A pista do parque, onde tudo começa</figcaption>
-            </figure>
-          </div>
-
-          <h3 className="pq-pedal__titulo">A pé</h3>
-          <ul className="pq-pedal">
-            {TRILHAS_PE.map((t) => (
-              <li key={t.nome} style={{ '--tint': t.cor }}>
-                <span className="pq-pedal__tipo">{t.tipo}</span>
-                <h4>{t.nome}</h4>
-                <dl className="pq-pedal__nums">
-                  <div><dt>Distância</dt><dd>{t.km}</dd></div>
-                  <div><dt>Subida</dt><dd>{t.subida}</dd></div>
-                  <div><dt>Nível</dt><dd>{t.nivel}</dd></div>
-                </dl>
-                <p>{t.d}</p>
-                <a href={t.href} target="_blank" rel="noopener noreferrer">Ver a ficha da trilha</a>
-              </li>
-            ))}
-          </ul>
-
-          <h3 className="pq-pedal__titulo">De bicicleta, saindo do centro</h3>
-          <ul className="pq-pedal">
-            {ROTAS_BIKE.map((r) => (
-              <li key={r.nome} style={{ '--tint': r.cor }}>
-                <span className="pq-pedal__tipo">{r.tipo}</span>
-                <h4>{r.nome}</h4>
-                <dl className="pq-pedal__nums">
-                  <div><dt>Distância</dt><dd>{r.km}</dd></div>
-                  <div><dt>Subida</dt><dd>{r.subida}</dd></div>
-                  <div><dt>Nível</dt><dd>{r.nivel}</dd></div>
-                </dl>
-                <p>{r.d}</p>
-                <a href={r.href} target="_blank" rel="noopener noreferrer" title={`No komoot: ${r.orig}`}>
-                  Ver o traçado
-                </a>
-              </li>
-            ))}
-          </ul>
-
-          <div className="pq-pedal__fontes">
-            <p>
-              <strong>Onde achar o traçado.</strong> O Wikiloc reúne trilhas enviadas por quem já
-              percorreu Itajubá, separadas por atividade:{' '}
-              <a href={WIKILOC.caminhada} target="_blank" rel="noopener noreferrer">caminhada</a>,{' '}
-              <a href={WIKILOC.mtb} target="_blank" rel="noopener noreferrer">mountain bike</a>,{' '}
-              <a href={WIKILOC.cicloturismo} target="_blank" rel="noopener noreferrer">cicloturismo</a>,{' '}
-              <a href={WIKILOC.moto} target="_blank" rel="noopener noreferrer">moto de estrada</a> e{' '}
-              <a href={WIKILOC.offroad} target="_blank" rel="noopener noreferrer">off-road</a>.
-            </p>
-            <p>
-              Distâncias e desníveis das rotas de bike vêm dos guias do komoot (
-              <a href={KOMOOT_MTB} target="_blank" rel="noopener noreferrer">mountain bike</a> e{' '}
-              <a href={KOMOOT_ESTRADA} target="_blank" rel="noopener noreferrer">cicloturismo</a>);
-              os das trilhas a pé, das fichas do Wikiloc e do AllTrails. Confira o traçado na fonte
-              antes de sair — trilha de serra muda com a chuva.
-            </p>
-            <p>
-              Vai subir de moto em vez de bike? Veja a{' '}
-              <Link href="/estradas/serra-da-mantiqueira">Serra da Mantiqueira</Link> e monte o
-              trajeto no <Link href="/rotas">planejador de rotas</Link>.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── HISTÓRIA (modelo Bambuí) — renderiza só quando houver conteúdo ── */}
-      {HISTORIA.length > 0 && (
-        <section className="pq-sec" id="historia">
-          <div className="pq-wrap">
-            <p className="pq-cap"><span>História</span></p>
-            <h2 className="pq-display">Como o parque<br />virou o que é.</h2>
-            <span className="pq-rule" aria-hidden="true" />
-            <ol className="pq-historia">
-              {HISTORIA.map((h) => (
-                <li key={h.t}>
-                  <span className="pq-historia__marco">{h.t}</span>
-                  <p>{h.d}</p>
-                </li>
-              ))}
-            </ol>
-
-            <p className="pq-historia__fonte">
-              O parque na TV: o <a href={MATERIA_EPTV} target="_blank" rel="noopener noreferrer">Espia
-              Só, da EPTV</a>, percorreu as atrações em outubro de 2024 — quadras de vôlei, basquete
-              e areia, pista de corrida, paredão de escalada, pedalinho, patinete e kart.
-            </p>
-          </div>
-        </section>
-      )}
-
-      {/* ── ATRAÇÕES + MAPA (modelo Capivari: grade de atrações e mapa com pontos) ── */}
-      <section className="pq-sec pq-sec--escura" id="mapa">
-        <div className="pq-wrap pq-wrap--larga">
-          <p className="pq-cap"><span>Nossas atrações</span></p>
-          <h2 className="pq-display">Planta viva.<br />{ATRACOES.length} setores.</h2>
-          <span className="pq-rule" aria-hidden="true" />
-          <p className="pq-lead">
-            Toque um número no mapa — ou um card na lista — para abrir a ficha do setor. Os filtros
-            mostram só o tipo de programa que interessa.
-          </p>
-
-          <ParqueMapa />
-        </div>
-      </section>
-
-      {/* ── GASTRONOMIA (modelo Bambuí: ficha por estabelecimento) ── */}
       <section className="pq-sec" id="gastronomia">
         <div className="pq-wrap pq-wrap--larga">
           <p className="pq-cap"><span>Onde comer</span></p>
-          <h2 className="pq-display">Vinte opções listadas,<br />um endereço só.</h2>
+          <h2 className="pq-display">Uma pausa.<br />Muitos sabores.</h2>
           <span className="pq-rule" aria-hidden="true" />
           <p className="pq-lead">
             A praça de alimentação do parque reúne operações independentes lado a lado. Dá para
             começar num café e terminar numa cervejaria sem sair do mesmo quarteirão.
           </p>
 
+          <ul className="pq-gastro">
+            {GASTRONOMIA.slice(0, 6).map((g) => (
+              <li key={g.n}>
+                <span className="pq-gastro__tipo">{g.t}</span>
+                <strong>{g.n}</strong>
+              </li>
+            ))}
+          </ul>
+
+          <details className="pq-disclosure">
+            <summary>Ver todas as opções de comida e bebida <span>Diretório de operações do parque</span></summary>
           <ul className="pq-gastro">
             {GASTRONOMIA.map((g) => (
               <li key={g.n}>
@@ -649,6 +611,7 @@ export default async function ParqueDaCidadePage() {
             ))}
           </ul>
 
+          </details>
           <p className="pq-gastro__nota">
             Cada operação tem horário próprio — confirme antes de ir, principalmente fora do fim
             de semana.
@@ -656,50 +619,6 @@ export default async function ParqueDaCidadePage() {
         </div>
       </section>
 
-      {/* ── HORÁRIOS por operação (modelo Bambuí: ficha com horário) ── */}
-      <section className="pq-sec pq-sec--escura" id="horarios">
-        <div className="pq-wrap pq-wrap--larga">
-          <p className="pq-cap"><span>Horários</span></p>
-          <h2 className="pq-display">Quem abre quando.</h2>
-          <span className="pq-rule" aria-hidden="true" />
-          <p className="pq-lead">
-            O parque não tem um horário único: cada operação define o seu. Estes foram divulgados
-            pelos próprios estabelecimentos nos stories do Instagram oficial do parque.
-          </p>
-
-          <ul className="pq-horarios">
-            {HORARIOS.map((o) => (
-              <li key={o.n}>
-                <span className="pq-horarios__tipo">{o.tipo}</span>
-                <h3>{o.n}</h3>
-                <dl>
-                  {o.dias.map((d) => (
-                    <div key={d.d}>
-                      <dt>{d.d}</dt>
-                      <dd>{d.h}</dd>
-                    </div>
-                  ))}
-                </dl>
-                {o.nota ? <p className="pq-horarios__nota">{o.nota}</p> : null}
-                {o.fonte ? <p className="pq-horarios__fonte">Divulgado em {o.fonte} — confirme antes de ir.</p> : null}
-                {PERFIS[o.n] ? (
-                  <a className="pq-horarios__perfil" href={PERFIS[o.n]} target="_blank" rel="noopener noreferrer">
-                    Ver no Instagram
-                  </a>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-
-          <p className="pq-gastro__nota">
-            Levantamento feito a partir do{' '}
-            <a href={INSTAGRAM_PERFIL} target="_blank" rel="noopener noreferrer">Instagram oficial do parque</a>.
-            Horário pode mudar sem aviso — sobretudo fora do fim de semana.
-          </p>
-        </div>
-      </section>
-
-      {/* ── CINE A (diferencial da cidade: cinema autossustentável) ── */}
       <section className="pq-sec pq-sec--escura" id="cinea">
         <div className="pq-wrap pq-wrap--larga">
           <p className="pq-cap"><span>Cine A Itajubá</span></p>
@@ -741,46 +660,17 @@ export default async function ParqueDaCidadePage() {
         </div>
       </section>
 
-      {/* ── UM DIA AQUI ── */}
-      <section className="pq-sec" id="dia">
-        <div className="pq-wrap">
-          <p className="pq-cap"><span>Um dia aqui</span></p>
-          <h2 className="pq-display">O mesmo parque,<br />quatro personagens.</h2>
-          <span className="pq-rule" aria-hidden="true" />
-          <p className="pq-lead">
-            Vale escolher o horário pelo programa que você quer — a diferença entre 9h e 20h aqui é
-            grande.
-          </p>
-
-          <ol className="pq-arco">
-            {ARCO_DO_DIA.map((h, i) => (
-              <li key={h.hora} className="pq-arco__item" style={{ '--i': i }}>
-                <span className="pq-arco__hora">{h.hora}</span>
-                <h3>{h.titulo}</h3>
-                <p>{h.texto}</p>
-                <ul className="pq-arco__setores">
-                  {h.setores.map((s) => <li key={s}>{s}</li>)}
-                </ul>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* ── EVENTOS (modelo Capivari: "Nossos eventos" por categoria) ── */}
       <section className="pq-sec pq-sec--evento" id="eventos">
         <div className="pq-wrap pq-wrap--larga">
           <p className="pq-cap"><span>Nossos eventos</span></p>
           <h2 className="pq-display">Quando o parque<br />vira palco.</h2>
           <span className="pq-rule" aria-hidden="true" />
-          <p className="pq-lead">
-            Área verde grande, pavilhão coberto, praça pronta e estacionamento de sobra: dá para
-            montar um festival aqui sem construir uma cidade temporária antes. Ao longo do ano
-            passam por aqui encontro de carro antigo, Volks4Fun, o maior encontro de caminhões do
-            país, motos, rodeio, Festival de Inverno, Carnaval, virada de ano e o Natal Brilha
-            Itajubá.
-          </p>
+          <p className="pq-lead">Festivais, encontros e celebrações mudam o ritmo do parque ao longo do ano. Consulte a agenda e confira as informações de cada organização.</p>
 
+          <div className="pq-festival-feature">
+            <img src="/motosul/g-publico-palco.jpg" alt="Público reunido em frente ao palco do Motosul Festival" width="1200" height="800" loading="lazy" />
+            <div><p className="pq-eyebrow">Encontro marcado · 2027</p><h3>Motosul Festival</h3><Contagem /><Link className="pq-btn pq-btn--gold" href="/motosul">Conhecer a edição 2027 ↗</Link></div>
+          </div>
           <Agenda />
 
           <ul className="pq-eventos">
@@ -799,155 +689,6 @@ export default async function ParqueDaCidadePage() {
         </div>
       </section>
 
-      {/* ── INCLUÍDO x PAGO (modelo Bambuí: dizer com todas as letras) ── */}
-      <section className="pq-sec" id="incluso">
-        <div className="pq-wrap pq-wrap--larga">
-          <p className="pq-cap"><span>Antes de ir</span></p>
-          <h2 className="pq-display">O que é livre<br />e o que se paga.</h2>
-          <span className="pq-rule" aria-hidden="true" />
-
-          <div className="pq-incluso">
-            <div className="pq-incluso__col pq-incluso__col--livre">
-              <h3>Livre para qualquer visitante</h3>
-              <ul>
-                {INCLUSO.livre.map((i) => <li key={i}>{i}</li>)}
-              </ul>
-            </div>
-
-            <div className="pq-incluso__col pq-incluso__col--pago">
-              <h3>Pago à parte</h3>
-              <ul>
-                {INCLUSO.pago.map((i) => <li key={i}>{i}</li>)}
-              </ul>
-            </div>
-          </div>
-
-          <div className="pq-incluso__aviso">
-            <strong>Ainda não confirmamos com o parque:</strong>
-            <ul>
-              {INCLUSO.confirmar.map((i) => <li key={i}>{i}</li>)}
-            </ul>
-            <p>
-              Preferimos deixar em branco a publicar número errado. Cada operação é independente e
-              define o próprio horário e preço.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SERVIÇOS (modelo Capivari: faixa de serviços com ícone) ── */}
-      <section className="pq-sec pq-sec--escura" id="servicos">
-        <div className="pq-wrap pq-wrap--larga">
-          <p className="pq-cap"><span>Serviços</span></p>
-          <h2 className="pq-display">O que está de pé<br />o ano inteiro.</h2>
-          <span className="pq-rule" aria-hidden="true" />
-
-          <ul className="pq-servicos">
-            {SERVICOS.map((s) => {
-              const Icone = ICONES[s.icone] || TreePine;
-              return (
-                <li key={s.t}>
-                  <span className="pq-servicos__icone"><Icone aria-hidden="true" size={22} /></span>
-                  <h3>{s.t}</h3>
-                  <p>{s.d}</p>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </section>
-
-      {/* ── PLANEJE A VISITA (modelo Hopi Hari: escolha o dia antes de tudo) ── */}
-      {/* ── CLIMA & MELHOR ÉPOCA (intenção de busca: "clima em Itajubá", "faz frio") ── */}
-      <section className="pq-sec" id="clima">
-        <div className="pq-wrap">
-          <p className="pq-cap"><span>Clima &amp; melhor época</span></p>
-          <h2 className="pq-display">Serra a 856 m.<br />Cada estação<br />muda o parque.</h2>
-          <span className="pq-rule" aria-hidden="true" />
-          <p className="pq-lead">
-            Itajubá fica a {CLIMA.altitude} de altitude, na Serra da Mantiqueira, com clima {CLIMA.koppen}.
-            A média anual é de {CLIMA.mediaAnual} — máxima média de {CLIMA.maximaMedia} e mínima média
-            de {CLIMA.minimaMedia} —, com {CLIMA.chuvaAnual} de chuva por ano concentrados no verão.
-            Na prática: dia de sol e noite de casaco no mesmo passeio.
-          </p>
-
-          <dl className="pq-clima">
-            <div><dt>Altitude</dt><dd>{CLIMA.altitude}</dd></div>
-            <div><dt>Média anual</dt><dd>{CLIMA.mediaAnual}</dd></div>
-            <div><dt>Máxima média</dt><dd>{CLIMA.maximaMedia}</dd></div>
-            <div><dt>Mínima média</dt><dd>{CLIMA.minimaMedia}</dd></div>
-            <div><dt>Recorde de calor</dt><dd>{CLIMA.recordeQuente}</dd></div>
-            <div><dt>Recorde de frio</dt><dd>{CLIMA.recordeFrio}</dd></div>
-          </dl>
-
-          <ol className="pq-historia pq-clima__estacoes">
-            {CLIMA.estacoes.map((e) => (
-              <li key={e.nome}>
-                <span className="pq-historia__marco">{e.nome}</span>
-                <p>{e.resumo}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <section className="pq-sec" id="visita">
-        <div className="pq-wrap pq-wrap--larga">
-          <p className="pq-cap"><span>Planeje a visita</span></p>
-          <h2 className="pq-display">Quando você vai?</h2>
-          <span className="pq-rule" aria-hidden="true" />
-          <p className="pq-lead">
-            O parque muda de cara conforme o dia. Escolha o seu e receba o roteiro que combina.
-          </p>
-
-          <PlanejeVisita />
-
-          <div className="pq-chegar">
-            {DIRECOES.map((d) => (
-              <div key={d.de}>
-                <h3>{d.de}</h3>
-                <p>{d.txt}</p>
-              </div>
-            ))}
-            <div>
-              <h3>Rotas de moto</h3>
-              <p>
-                O mapa de chegada com as quatro entradas clássicas da região está na página do
-                Motosul — serve para qualquer visita ao parque.
-              </p>
-              <Link className="pq-link" href="/motosul#planeje">Ver o mapa de rotas</Link>
-            </div>
-          </div>
-
-          <div className="pq-endereco">
-            <div>
-              <h3>Endereço</h3>
-              <p>{PARQUE_ENDERECO}</p>
-            </div>
-            <a className="pq-btn pq-btn--gold" href={PARQUE_MAPS} target="_blank" rel="noopener noreferrer">
-              Abrir rota no Google Maps
-            </a>
-          </div>
-
-          <div className="pq-fonte-oficial">
-            <div>
-              <strong>Informação oficial de turismo</strong>
-              <span>Secretaria Municipal de Cultura e Turismo · acesso regional pelo Circuito Caminhos da Mantiqueira</span>
-            </div>
-            <a href={TURISMO_TELEFONE_HREF}><Phone aria-hidden="true" size={16} />{TURISMO_TELEFONE}</a>
-            <div className="pq-fonte-oficial__links">
-              <a href={PARQUE_OFICIAL} target="_blank" rel="noopener noreferrer">
-                Prefeitura <ExternalLink aria-hidden="true" size={15} />
-              </a>
-              <a href={CIRCUITO_MANTIQUEIRA_ITAJUBA} target="_blank" rel="noopener noreferrer">
-                Caminhos da Mantiqueira <ExternalLink aria-hidden="true" size={15} />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── HOTÉIS — curadoria transparente, contato direto e avaliações externas ── */}
       <section className="pq-sec pq-sec--stay" id="hoteis">
         <div className="pq-wrap pq-wrap--larga">
           <p className="pq-cap"><span>Onde ficar em Itajubá</span></p>
@@ -955,8 +696,7 @@ export default async function ParqueDaCidadePage() {
           <span className="pq-rule" aria-hidden="true" />
           <p className="pq-lead">
             Quatro opções com endereço e contato direto conferidos. Notas vêm do Tripadvisor e
-            comentários abaixo resumem pontos positivos e ressalvas recorrentes — sem esconder
-            crítica útil para escolher melhor.
+            comentários reúnem pontos positivos e ressalvas para ajudar na escolha.
           </p>
 
           <ul className="pq-hoteis">
@@ -981,10 +721,10 @@ export default async function ParqueDaCidadePage() {
                 <p className="pq-hotel__endereco"><MapPin aria-hidden="true" size={16} />{hotel.endereco}</p>
                 <p className="pq-hotel__resumo">{hotel.resumo}</p>
 
-                <div className="pq-hotel__comentario">
-                  <strong>Leitura das avaliações</strong>
+                <details className="pq-hotel__comentario">
+                  <summary>Leitura das avaliações</summary>
                   <p>{hotel.comentario}</p>
-                </div>
+                </details>
 
                 <div className="pq-hotel__acoes">
                   <a href={hotel.telefoneHref}><Phone aria-hidden="true" size={16} />{hotel.telefone}</a>
@@ -1032,42 +772,249 @@ export default async function ParqueDaCidadePage() {
         </div>
       </section>
 
-      {/* ── CASA INTEIRA (complementa a lista de hotéis em #hoteis) ── */}
-      <section className="pq-sec" id="dormir">
+      <section className="pq-sec pq-more" id="explore" aria-labelledby="pq-more-title">
         <div className="pq-wrap pq-wrap--larga">
-          <p className="pq-cap"><span>Casa inteira</span></p>
-          <h2 className="pq-display">Prefere cozinha<br />e casa só sua?</h2>
-          <span className="pq-rule" aria-hidden="true" />
-          <p className="pq-lead">
-            Além dos hotéis, Itajubá tem casa e apartamento inteiros para alugar — no centro, perto
-            do parque e na parte alta da serra. Cada botão abre a busca do Airbnb na cidade já
-            filtrada pelo tamanho do seu grupo.
-          </p>
+          <p className="pq-eyebrow">Continue explorando</p>
+          <h2 className="pq-display" id="pq-more-title">Mais tempo?<br />Mais possibilidades.</h2>
+          <details className="pq-disclosure" id="detalhes-dormir">
+            <summary>Casas e apartamentos<span>Outras formas de ficar em Itajubá.</span></summary>
+            <section className="pq-sec" id="dormir">
+              <div className="pq-wrap pq-wrap--larga">
+                <p className="pq-cap"><span>Casa inteira</span></p>
+                <h2 className="pq-display">Prefere cozinha<br />e casa só sua?</h2>
+                <span className="pq-rule" aria-hidden="true" />
+                <p className="pq-lead">
+                  Além dos hotéis, Itajubá tem casa e apartamento inteiros para alugar — no centro, perto
+                  do parque e na parte alta da serra. Cada botão abre a busca do Airbnb na cidade já
+                  filtrada pelo tamanho do seu grupo.
+                </p>
 
-          <ul className="pq-dormir__cards">
-            {HOSPEDAGEM.map((h) => (
-              <li key={h.t} style={{ '--tint': h.cor }}>
-                <strong>{h.t}</strong>
-                <p>{h.d}</p>
-                <a href={h.href} target="_blank" rel="noopener noreferrer nofollow">{h.acao}</a>
-              </li>
-            ))}
-          </ul>
+                <ul className="pq-dormir__cards">
+                  {HOSPEDAGEM.map((h) => (
+                    <li key={h.t} style={{ '--tint': h.cor }}>
+                      <strong>{h.t}</strong>
+                      <p>{h.d}</p>
+                      <a href={h.href} target="_blank" rel="noopener noreferrer nofollow">{h.acao}</a>
+                    </li>
+                  ))}
+                </ul>
 
-          <p className="pq-dormir__nota">
-            Preço, disponibilidade e fotos ficam no Airbnb — esta página não republica anúncio de
-            ninguém, nem ganha comissão.{' '}
-            <a href={AIRBNB_BASE} target="_blank" rel="noopener noreferrer nofollow">
-              Ver todas as estadias em Itajubá
-            </a>{' '}
-            ou <a href="#hoteis">voltar aos hotéis com contato direto</a>.
-          </p>
+                <p className="pq-dormir__nota">
+                  Preço, disponibilidade e fotos ficam no Airbnb — esta página não republica anúncio de
+                  ninguém, nem ganha comissão.{' '}
+                  <a href={AIRBNB_BASE} target="_blank" rel="noopener noreferrer nofollow">
+                    Ver todas as estadias em Itajubá
+                  </a>{' '}
+                  ou <a href="#hoteis">voltar aos hotéis com contato direto</a>.
+                </p>
+              </div>
+            </section>
+          </details>
+          <details className="pq-disclosure" id="detalhes-pedal">
+            <summary>Trilhas e cicloturismo<span>Percursos para explorar a região.</span></summary>
+            <section className="pq-sec pq-sec--escura" id="pedal">
+              <div className="pq-wrap pq-wrap--larga">
+                <p className="pq-cap"><span>Trilhas &amp; bike</span></p>
+                <h2 className="pq-display">A pista do parque<br />é só o aquecimento.</h2>
+                <span className="pq-rule" aria-hidden="true" />
+
+                <div className="pq-pedal__abre">
+                  <p className="pq-lead">
+                    A volta no lago serve para aquecer; a serra em volta é que faz de Itajubá endereço de
+                    trilha e cicloturismo. A cidade integra os <b>Caminhos da Mantiqueira</b>, circuito
+                    que desde 2017 mapeia percursos em treze municípios, com três níveis em cada um.
+                  </p>
+                  <figure className="pq-pedal__foto">
+                    <img
+                      src="/parque/corrida-lago.jpg"
+                      alt="Corredores na pista de caminhada em volta do lago do Parque da Cidade, com os morros de Itajubá ao fundo"
+                      loading="lazy"
+                      decoding="async"
+                      width="1600"
+                      height="1067"
+                    />
+                    <figcaption>A pista do parque, onde tudo começa</figcaption>
+                  </figure>
+                </div>
+
+                <h3 className="pq-pedal__titulo">A pé</h3>
+                <ul className="pq-pedal">
+                  {TRILHAS_PE.map((t) => (
+                    <li key={t.nome} style={{ '--tint': t.cor }}>
+                      <span className="pq-pedal__tipo">{t.tipo}</span>
+                      <h4>{t.nome}</h4>
+                      <dl className="pq-pedal__nums">
+                        <div><dt>Distância</dt><dd>{t.km}</dd></div>
+                        <div><dt>Subida</dt><dd>{t.subida}</dd></div>
+                        <div><dt>Nível</dt><dd>{t.nivel}</dd></div>
+                      </dl>
+                      <p>{t.d}</p>
+                      <a href={t.href} target="_blank" rel="noopener noreferrer">Ver a ficha da trilha</a>
+                    </li>
+                  ))}
+                </ul>
+
+                <h3 className="pq-pedal__titulo">De bicicleta, saindo do centro</h3>
+                <ul className="pq-pedal">
+                  {ROTAS_BIKE.map((r) => (
+                    <li key={r.nome} style={{ '--tint': r.cor }}>
+                      <span className="pq-pedal__tipo">{r.tipo}</span>
+                      <h4>{r.nome}</h4>
+                      <dl className="pq-pedal__nums">
+                        <div><dt>Distância</dt><dd>{r.km}</dd></div>
+                        <div><dt>Subida</dt><dd>{r.subida}</dd></div>
+                        <div><dt>Nível</dt><dd>{r.nivel}</dd></div>
+                      </dl>
+                      <p>{r.d}</p>
+                      <a href={r.href} target="_blank" rel="noopener noreferrer" title={`No komoot: ${r.orig}`}>
+                        Ver o traçado
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="pq-pedal__fontes">
+                  <p>
+                    <strong>Onde achar o traçado.</strong> O Wikiloc reúne trilhas enviadas por quem já
+                    percorreu Itajubá, separadas por atividade:{' '}
+                    <a href={WIKILOC.caminhada} target="_blank" rel="noopener noreferrer">caminhada</a>,{' '}
+                    <a href={WIKILOC.mtb} target="_blank" rel="noopener noreferrer">mountain bike</a>,{' '}
+                    <a href={WIKILOC.cicloturismo} target="_blank" rel="noopener noreferrer">cicloturismo</a>,{' '}
+                    <a href={WIKILOC.moto} target="_blank" rel="noopener noreferrer">moto de estrada</a> e{' '}
+                    <a href={WIKILOC.offroad} target="_blank" rel="noopener noreferrer">off-road</a>.
+                  </p>
+                  <p>
+                    Distâncias e desníveis das rotas de bike vêm dos guias do komoot (
+                    <a href={KOMOOT_MTB} target="_blank" rel="noopener noreferrer">mountain bike</a> e{' '}
+                    <a href={KOMOOT_ESTRADA} target="_blank" rel="noopener noreferrer">cicloturismo</a>);
+                    os das trilhas a pé, das fichas do Wikiloc e do AllTrails. Confira o traçado na fonte
+                    antes de sair — trilha de serra muda com a chuva.
+                  </p>
+                  <p>
+                    Vai subir de moto em vez de bike? Veja a{' '}
+                    <Link href="/estradas/serra-da-mantiqueira">Serra da Mantiqueira</Link> e monte o
+                    trajeto no <Link href="/rotas">planejador de rotas</Link>.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </details>
+          <details className="pq-disclosure" id="detalhes-clima">
+            <summary>Clima e melhor época<span>Entenda as estações na Mantiqueira.</span></summary>
+            <section className="pq-sec" id="clima">
+              <div className="pq-wrap">
+                <p className="pq-cap"><span>Clima &amp; melhor época</span></p>
+                <h2 className="pq-display">Serra a 856 m.<br />Cada estação<br />muda o parque.</h2>
+                <span className="pq-rule" aria-hidden="true" />
+                <p className="pq-lead">
+                  Itajubá fica a {CLIMA.altitude} de altitude, na Serra da Mantiqueira, com clima {CLIMA.koppen}.
+                  A média anual é de {CLIMA.mediaAnual} — máxima média de {CLIMA.maximaMedia} e mínima média
+                  de {CLIMA.minimaMedia} —, com {CLIMA.chuvaAnual} de chuva por ano concentrados no verão.
+                  Na prática: dia de sol e noite de casaco no mesmo passeio.
+                </p>
+
+                <dl className="pq-clima">
+                  <div><dt>Altitude</dt><dd>{CLIMA.altitude}</dd></div>
+                  <div><dt>Média anual</dt><dd>{CLIMA.mediaAnual}</dd></div>
+                  <div><dt>Máxima média</dt><dd>{CLIMA.maximaMedia}</dd></div>
+                  <div><dt>Mínima média</dt><dd>{CLIMA.minimaMedia}</dd></div>
+                  <div><dt>Recorde de calor</dt><dd>{CLIMA.recordeQuente}</dd></div>
+                  <div><dt>Recorde de frio</dt><dd>{CLIMA.recordeFrio}</dd></div>
+                </dl>
+
+                <ol className="pq-historia pq-clima__estacoes">
+                  {CLIMA.estacoes.map((e) => (
+                    <li key={e.nome}>
+                      <span className="pq-historia__marco">{e.nome}</span>
+                      <p>{e.resumo}</p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </section>
+          </details>
+          <details className="pq-disclosure" id="detalhes-dia">
+            <summary>O parque ao longo do dia<span>Ideias para montar seu passeio.</span></summary>
+            <section className="pq-sec" id="dia">
+              <div className="pq-wrap">
+                <p className="pq-cap"><span>Um dia aqui</span></p>
+                <h2 className="pq-display">O mesmo parque,<br />quatro personagens.</h2>
+                <span className="pq-rule" aria-hidden="true" />
+                <p className="pq-lead">
+                  Vale escolher o horário pelo programa que você quer — a diferença entre 9h e 20h aqui é
+                  grande.
+                </p>
+
+                <ol className="pq-arco">
+                  {ARCO_DO_DIA.map((h, i) => (
+                    <li key={h.hora} className="pq-arco__item" style={{ '--i': i }}>
+                      <span className="pq-arco__hora">{h.hora}</span>
+                      <h3>{h.titulo}</h3>
+                      <p>{h.texto}</p>
+                      <ul className="pq-arco__setores">
+                        {h.setores.map((s) => <li key={s}>{s}</li>)}
+                      </ul>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </section>
+          </details>
+          <details className="pq-disclosure" id="detalhes-parque">
+            <summary>Conheça o parque<span>Uma volta pelo complexo.</span></summary>
+            <section className="pq-sec" id="parque">
+              <div className="pq-wrap">
+                <p className="pq-cap"><span>O parque</span></p>
+                <h2 className="pq-display">O encontro da cidade.</h2>
+                <span className="pq-rule" aria-hidden="true" />
+
+                <div className="pq-duo">
+                  <div className="pq-duo__texto"><p className="pq-lead">Caminhada, esportes, cinema e gastronomia ao redor do mesmo lago. O parque reúne espaços para moradores e visitantes aproveitarem Itajubá em diferentes ritmos.</p><p>De manhã, movimento na pista. À tarde, passeio e lazer. À noite, encontro na praça de alimentação.</p></div>
+
+                  <figure className="pq-reel">
+                    <video
+                      src="/motosul/parque.mp4"
+                      poster="/motosul/parque-poster.jpg"
+                      controls
+                      muted
+                      loop
+                      playsInline
+                      preload="none"
+                      aria-label="Imagens do Parque da Cidade de Itajubá"
+                    />
+                    <figcaption>O parque em movimento</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </section>
+          </details>
+          <details className="pq-disclosure" id="detalhes-historia">
+            <summary>História do parque<span>Como este ponto de encontro ganhou forma.</span></summary>
+            <section className="pq-sec" id="historia">
+              <div className="pq-wrap">
+                <p className="pq-cap"><span>História</span></p>
+                <h2 className="pq-display">Como o parque<br />virou o que é.</h2>
+                <span className="pq-rule" aria-hidden="true" />
+                <ol className="pq-historia">
+                  {HISTORIA.map((h) => (
+                    <li key={h.t}>
+                      <span className="pq-historia__marco">{h.t}</span>
+                      <p>{h.d}</p>
+                    </li>
+                  ))}
+                </ol>
+
+                <p className="pq-historia__fonte">
+                  O parque na TV: o <a href={MATERIA_EPTV} target="_blank" rel="noopener noreferrer">Espia
+                  Só, da EPTV</a>, percorreu as atrações em outubro de 2024 — quadras de vôlei, basquete
+                  e areia, pista de corrida, paredão de escalada, pedalinho, patinete e kart.
+                </p>
+              </div>
+            </section>
+          </details>
         </div>
       </section>
 
-
-      {/* ── GALERIA — renderiza só quando houver fotos em /public/parque/ ── */}
-      {FOTOS.length > 0 && (
         <section className="pq-sec" id="galeria">
           <div className="pq-wrap pq-wrap--larga">
             <p className="pq-cap"><span>O parque por dentro</span></p>
@@ -1075,7 +1022,7 @@ export default async function ParqueDaCidadePage() {
             <span className="pq-rule" aria-hidden="true" />
 
             <div className="pq-galeria">
-              {FOTOS.map((f) => (
+              {FOTOS.slice(0, 6).map((f) => (
                 <figure key={f.src} style={f.span ? { gridColumn: `span ${f.span}` } : undefined}>
                   <img src={f.src} alt={f.alt} loading="lazy" decoding="async" />
                   {f.legenda ? <figcaption>{f.legenda}</figcaption> : null}
@@ -1084,9 +1031,36 @@ export default async function ParqueDaCidadePage() {
             </div>
           </div>
         </section>
-      )}
 
-      {/* ── NOVIDADES (modelo Capivari/Hopi: grade do blog) ── */}
+      <section className="pq-sec" id="duvidas">
+        <div className="pq-wrap">
+          <p className="pq-cap"><span>Dúvidas</span></p>
+          <h2 className="pq-display">Tem alguma dúvida?</h2>
+          <span className="pq-rule" aria-hidden="true" />
+
+          <ul className="pq-faq">
+            {DUVIDAS.map((d) => (
+              <li key={d.p}>
+                <details>
+                  <summary>{d.p}</summary>
+                  <p>{d.r}</p>
+                </details>
+              </li>
+            ))}
+          </ul>
+
+          <p className="pq-faq__nota">
+            Cada operação do parque tem horário e política próprios. Confirme direto com o setor
+            que você quer visitar, sobretudo fora do fim de semana.
+          </p>
+
+          <div className="pq-hero__acoes pq-hero__acoes--esq">
+            <Link className="pq-btn pq-btn--gold" href="/contato">Falar com a gente</Link>
+            <a className="pq-btn" href={PARQUE_MAPS} target="_blank" rel="noopener noreferrer">Ver no mapa</a>
+          </div>
+        </div>
+      </section>
+
       {posts.length > 0 && (
         <section className="pq-sec pq-sec--escura" id="novidades">
           <div className="pq-wrap pq-wrap--larga">
@@ -1115,7 +1089,6 @@ export default async function ParqueDaCidadePage() {
         </section>
       )}
 
-      {/* ── DEPOIMENTOS (modelo Bondinhos Canela) — só com avaliação real ── */}
       {DEPOIMENTOS.length > 0 && (
         <section className="pq-sec" id="depoimentos">
           <div className="pq-wrap pq-wrap--larga">
@@ -1153,115 +1126,10 @@ export default async function ParqueDaCidadePage() {
         </section>
       )}
 
-      {/* ── INSTAGRAM — só quando houver posts do parque ── */}
-      {INSTAGRAM_POSTS.length > 0 && (
-        <section className="pq-sec pq-sec--escura" id="instagram">
-          <div className="pq-wrap pq-wrap--larga">
-            <p className="pq-cap"><span>No Instagram</span></p>
-            <h2 className="pq-display">O parque visto<br />por quem esteve lá.</h2>
-            <span className="pq-rule" aria-hidden="true" />
-            <div className="pq-insta">
-              <InstagramEmbeds urls={INSTAGRAM_POSTS} />
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ── DÚVIDAS (modelo Capivari: "Tem alguma dúvida?" + contato) ── */}
-      <section className="pq-sec" id="duvidas">
-        <div className="pq-wrap">
-          <p className="pq-cap"><span>Dúvidas</span></p>
-          <h2 className="pq-display">Tem alguma dúvida?</h2>
-          <span className="pq-rule" aria-hidden="true" />
-
-          <ul className="pq-faq">
-            {DUVIDAS.map((d) => (
-              <li key={d.p}>
-                <details>
-                  <summary>{d.p}</summary>
-                  <p>{d.r}</p>
-                </details>
-              </li>
-            ))}
-          </ul>
-
-          <p className="pq-faq__nota">
-            Cada operação do parque tem horário e política próprios. Confirme direto com o setor
-            que você quer visitar, sobretudo fora do fim de semana.
-          </p>
-
-          <div className="pq-hero__acoes pq-hero__acoes--esq">
-            <Link className="pq-btn pq-btn--gold" href="/contato">Falar com a gente</Link>
-            <a className="pq-btn" href={PARQUE_MAPS} target="_blank" rel="noopener noreferrer">Ver no mapa</a>
-          </div>
-        </div>
-      </section>
-
-      {/* ── TEXTO DE APOIO (cobertura de busca long-tail) ── */}
-      <section className="pq-sec pq-sec--escura" id="guia">
-        <div className="pq-wrap">
-          <p className="pq-cap"><span>Guia rápido</span></p>
-          <h2 className="pq-display">Parque da Cidade de Itajubá:<br />o resumo de tudo.</h2>
-          <span className="pq-rule" aria-hidden="true" />
-
-          <div className="pq-guia">
-            <h3>O que fazer no Parque da Cidade de Itajubá</h3>
-            <p>
-              Com 21 setores mapeados no mesmo endereço — do kartódromo ao teatro de 706 lugares,
-              do cinema autossustentável às quadras de areia —, o Parque da Cidade é um dos
-              complexos de lazer e eventos mais bem equipados e dinâmicos do Sul de Minas Gerais.
-            </p>
-            <p>
-              O parque concentra num só endereço o que costuma estar espalhado por uma cidade
-              inteira: pedalinho no lago, pista de caminhada e corrida em volta da água, fonte interativa e
-              beach tennis, parede de escalada, kartódromo, quadras de tênis e campos de society,
-              boliche coberto, playground, cinema, pavilhão de eventos e vinte operações de
-              comida e bebida listadas neste guia. É um dos passeios mais completos do Sul de Minas para quem tem um dia livre em
-              Itajubá.
-            </p>
-
-            <h3>O pedalinho é gratuito?</h3>
-            <p>
-              Sim. Aos sábados e domingos o pedalinho no lago do parque é gratuito, com colete
-              salva-vidas entregue no píer. É a atração mais procurada por famílias com criança, e a
-              fila costuma aumentar no fim da tarde.
-            </p>
-
-            <h3>Vale a pena com criança?</h3>
-            <p>
-              Vale. Além do pedalinho grátis, há área kids, playground à vista das mesas da praça,
-              boliche coberto para dia de chuva e a fonte interativa. Em datas comemorativas o
-              pátio recebe festa da espuma, brinquedos infláveis, touro mecânico e palco infantil.
-            </p>
-
-            <h3>Quais eventos acontecem no parque</h3>
-            <p>
-              O calendário vai de prova de rua dando a volta no lago a festival de comida
-              com show ao vivo, passando pelo Motosul Festival, que ocupa o parque com milhares de
-              motos, e pelo Natal <b>Brilha Itajubá</b>, quando a iluminação e a queima de fogos
-              refletem na água.
-            </p>
-
-            <h3>O que a escadaria do parque tem de especial</h3>
-            <p>
-              A escadaria que liga o Teatro Municipal Christiane Riera ao Parque da Cidade é
-              revestida por um mosaico do artista brazopolense <b>André Visoto</b>, entregue em
-              julho de 2024 pelos 205 anos de Itajubá. Os painéis retratam a Igreja Matriz Nossa
-              Senhora da Soledade, a Estação Ferroviária, a Casa Wenceslau Braz — a Casa Rosada — e
-              o antigo posto ESSO: a história da cidade contada degrau a degrau, algo que não
-              existe igual na região.
-            </p>
-
-            <h3>Onde fica e como chegar</h3>
-            <p>
-              O Parque da Cidade fica na área urbana de Itajubá, no Sul de Minas Gerais, aos pés da
-              Serra da Mantiqueira, com portaria e estacionamento próprios. Quem vem de São Paulo
-              chega pela Fernão Dias ou pela Dutra, entrando por Piranguinho ou São Bento do
-              Sapucaí; do Sul de Minas, a BR-459 liga Pouso Alegre e Santa Rita do Sapucaí à cidade.
-            </p>
-          </div>
-        </div>
-      </section>
+      <aside className="pq-visit-dock" aria-label="Planejar visita ao Parque da Cidade">
+        <span><strong>Parque da Cidade</strong><small>Itajubá · MG</small></span>
+        <a href={PARQUE_MAPS} target="_blank" rel="noopener noreferrer">Como chegar ↗</a>
+      </aside>
 
       {/* ── FECHO ── */}
       <section className="pq-fecho">
@@ -1275,9 +1143,9 @@ export default async function ParqueDaCidadePage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Seguir @parqueitajubaoficial
+              Ver novidades no Instagram
             </a>
-            <Link className="pq-btn" href="/rotas">Planejar a rota até Itajubá</Link>
+            <a className="pq-btn" href={PARQUE_MAPS} target="_blank" rel="noopener noreferrer">Abrir rota até o parque</a>
           </div>
         </div>
       </section>

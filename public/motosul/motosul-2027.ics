@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Pistaviva//Motosul Festival//PT-BR
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:motosul-2027@pistavivamototurismo.com.br
+DTSTAMP:20260908T120000Z
+DTSTART;VALUE=DATE:20270410
+DTEND;VALUE=DATE:20270412
+SUMMARY:Motosul Festival 2027
+LOCATION:Parque da Cidade - Itajubá - MG
+DESCRIPTION:3ª edição. Programação e condições de entrada a divulgar
+ .
+URL:https://www.pistavivamototurismo.com.br/motosul
+END:VEVENT
+END:VCALENDAR
