@@ -112,3 +112,56 @@
 @media (max-width: 640px) {
   .ms-2027 .ms-place-carousel__viewport { margin-inline: 0; padding-inline: 0; }
 }
+
+/* ── Mascote ───────────────────────────────────────────────────────
+   Material do mascote é ilustração, não registro de edição passada.
+   Por isso a faixa leva legenda dizendo isso, e nada disso encosta na
+   galeria, que é foto do que aconteceu de fato.                      */
+
+.ms-2027 .ms-mascote-faixa {
+  margin: 0 0 clamp(32px, 5vw, 56px);
+  position: relative;
+}
+
+.ms-2027 .ms-mascote-faixa img {
+  display: block;
+  width: 100%;
+  height: clamp(260px, 38vw, 470px);
+  object-fit: cover;
+  /* 36% mantém cabeça, olhos e a camiseta MOTOSUL dentro do corte em
+     qualquer largura; acima disso a testa da coruja some. */
+  object-position: center 36%;
+}
+
+.ms-2027 .ms-mascote-faixa figcaption {
+  position: absolute;
+  right: var(--gut);
+  bottom: var(--pv-space-1);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--pv-white);
+  text-shadow: 0 1px 4px rgba(12,12,13,.72);
+}
+
+.ms-2027 .ms-cidade-fecho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pv-space-5);
+  flex-wrap: wrap;
+}
+
+.ms-2027 .ms-cidade-fecho .ms-kicker-big { margin: 0; }
+
+.ms-2027 .ms-cidade-selo {
+  width: clamp(120px, 15vw, 190px);
+  height: auto;
+  flex: 0 0 auto;
+}
+
+@media (max-width:640px) {
+  .ms-2027 .ms-cidade-fecho { gap: var(--pv-space-3); }
+  .ms-2027 .ms-cidade-selo { width: 116px; }
+}

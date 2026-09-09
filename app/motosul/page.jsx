@@ -636,6 +636,17 @@ export default function MotosulPage() {
       </section>
 
       <section className="ms-pulse" id="experiencia" aria-labelledby="ms-pulse-title">
+        <figure className="ms-mascote-faixa">
+          <img
+            src="/motosul/mascote/estrada.jpg"
+            alt="A coruja do Motosul, de camiseta do festival, ao lado de um capacete na estrada do parque"
+            width="2000"
+            height="1341"
+            loading="lazy"
+            sizes="100vw"
+          />
+          <figcaption>Ilustração · mascote do Motosul</figcaption>
+        </figure>
         <div className="ms-wrap--wide">
           <header className="ms-pulse__head">
             <div>
@@ -900,7 +911,17 @@ export default function MotosulPage() {
             </div>
           </div>
 
-          <p className="ms-kicker-big">A cidade abraçou<br /><span className="is-accent">o motociclismo.</span></p>
+          <div className="ms-cidade-fecho">
+            <p className="ms-kicker-big">A cidade abraçou<br /><span className="is-accent">o motociclismo.</span></p>
+            <img
+              className="ms-cidade-selo"
+              src="/motosul/mascote/selo.png"
+              alt="Selo de Itajubá, a cidade do motociclista, com a coruja do Motosul sobre a estação ferroviária"
+              width="876"
+              height="900"
+              loading="lazy"
+            />
+          </div>
 
         </div>
       </section>
