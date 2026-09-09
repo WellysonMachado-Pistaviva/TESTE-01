@@ -529,7 +529,7 @@ export default function MotosulPage() {
                 <span className="ms-hero__pre">Mototurismo · Gastronomia · Rock</span>
                 <span className="ms-hero__big">Motosul<br />Festival<span className="ms-hero__edition">2027</span></span>
               </h1>
-              <p className="ms-hero__tagline">A estrada traz você. O encontro fica.</p>
+              <p className="ms-hero__tagline">O maior encontro de mototurismo gastronômico do Sul de Minas.</p>
               <p className="ms-hero__dek">Dois dias de motos, sabores mineiros e música no Parque da Cidade. Seu próximo destino é Itajubá.</p>
               <div className="ms-actions ms-actions--left ms-hero__actions">
                 <a className="ms-btn" href="#planeje">Planejar minha viagem ↗</a>
