@@ -369,7 +369,7 @@ const ANCORAS = [
 export const metadata = {
   title: { absolute: 'Motosul Festival 2027 em Itajubá | Evento de Moto' },
   description:
-    'Motosul Festival 2027 em Itajubá (MG), 10 e 11 de abril: evento de moto, gastronomia, rock e roteiros por Itajubá, Maria da Fé e Cristina.',
+    'O maior encontro de mototurismo gastronômico do Sul de Minas. Motosul Festival 2027 em Itajubá (MG), 10 e 11 de abril: motos, sabores mineiros e rock.',
   keywords: [
     'Motosul Festival',
     'Motosul Itajubá',
@@ -392,7 +392,7 @@ export const metadata = {
   },
   openGraph: {
     title: 'Motosul Festival 2027 · 10 e 11 de abril em Itajubá',
-    description: 'Mototurismo, gastronomia mineira e rock no Parque da Cidade de Itajubá, no coração da Serra da Mantiqueira.',
+    description: 'O maior encontro de mototurismo gastronômico do Sul de Minas. Dois dias de motos, sabores mineiros e rock no Parque da Cidade de Itajubá.',
     url: `${BASE}/motosul`,
     type: 'website',
     locale: 'pt_BR',
@@ -407,7 +407,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Motosul Festival 2027 · 10 e 11 de abril · Itajubá · MG',
-    description: 'Evento de moto, mototurismo, gastronomia mineira e rock no Parque da Cidade de Itajubá.',
+    description: 'O maior encontro de mototurismo gastronômico do Sul de Minas. Motos, gastronomia mineira e rock no Parque da Cidade de Itajubá.',
     images: [`${BASE}/motosul/hero-publico.jpg`],
   },
 };
@@ -421,7 +421,7 @@ export default function MotosulPage() {
         '@id': `${BASE}/motosul#pagina`,
         url: `${BASE}/motosul`,
         name: 'Motosul Festival 2027 em Itajubá',
-        description: 'Página oficial do Motosul Festival: evento de moto, mototurismo, gastronomia e rock no Parque da Cidade de Itajubá.',
+        description: 'Página oficial do Motosul Festival, o maior encontro de mototurismo gastronômico do Sul de Minas, no Parque da Cidade de Itajubá.',
         inLanguage: 'pt-BR',
         dateModified: '2026-09-08',
         mainEntity: { '@id': `${BASE}/motosul#festival` },
@@ -433,7 +433,7 @@ export default function MotosulPage() {
         '@id': `${BASE}/motosul#festival`,
         name: 'Motosul Festival',
         alternateName: ['Motosul Itajubá', 'Motosul Festival de Mototurismo e Gastronomia'],
-        description: 'Festival de motos em Itajubá que reúne mototurismo, gastronomia mineira, rock, turismo e cultura motociclista na Serra da Mantiqueira.',
+        description: 'O maior encontro de mototurismo gastronômico do Sul de Minas: festival de motos em Itajubá que reúne mototurismo, gastronomia mineira, rock e cultura motociclista na Serra da Mantiqueira.',
         image: [
           `${BASE}/motosul/hero-publico.jpg`,
           `${BASE}/motosul/parque-aereo.jpg`,
