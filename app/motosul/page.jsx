@@ -347,6 +347,7 @@ const PARCEIROS = [
   { nome: 'Master Botas', src: '/motosul/parceiros/master-botas.png' },
   { nome: 'Clothes Canvas', src: '/motosul/parceiros/clothes-canvas.png', tema: 'dark' },
   { nome: 'Higienização Capacete', src: '/motosul/parceiros/higienizacao-capacete.png' },
+  { nome: 'Pilar Supermercado', src: '/motosul/parceiros/pilar-supermercado.png' },
 ];
 
 const COTAS = [
